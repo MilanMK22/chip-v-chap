@@ -15,16 +15,16 @@ import org.jdom2.input.SAXBuilder;
 
 public class ReadXML {
 
-    public record gameData(int w, int h, String board, String description){}
+    public record gameData(int w, int h, String board, String description, String id, int tres){}
 
-    static int wid,hei;
-    static String board;
+    static int wid,hei,tres;
+    static String board, id;
     static String desc;
 
    public static void main(String[] args) throws Exception {
       try {
-        long t1 = System.currentTimeMillis();
-         File inputFile = new File("levelPers.xml");
+       
+         File inputFile = new File("levels/level1.xml");
          SAXBuilder saxBuilder = new SAXBuilder();
          Document document = saxBuilder.build(inputFile);
          Element rootElement = document.getRootElement();
@@ -44,20 +44,32 @@ public class ReadXML {
                 case "desc":
                     desc = curr.getText();
                     break;
+                case "id":
+                    id = curr.getText();
+                    break;
+                case "tres":
+                    tres =  Integer.parseInt(curr.getText());
+                    break;
                 default:
                     throw new Exception("malformed xml, unexpected element: "+curr.getText());
             }
          }
 
-         System.out.println("Root: "+rootElement.getName()+"\n---------------");
-         System.out.println("Width: "+wid);
-         System.out.println("Height: "+hei);
-         System.out.println("Board: "+board);
-         System.out.println("Descripton: "+desc);
-        System.out.println("-----Total Time: " +(System.currentTimeMillis()-t1)+"ms-----");
+         if(board.length()!=wid*hei){
+            throw new JDOMException("Malformed xml, board size does not match width*height");
+            
+         } else {
+            System.out.println("check-passed\n");
+            gameData d = new gameData(wid, hei, board, desc, id, tres);
+            System.out.println("Width: "+d.w());
+            System.out.println("Heigth: "+d.h());
+            System.out.println("Desc: "+d.description());
+            System.out.println("ID: "+d.id());
+            System.out.println("Tresures: "+d.tres());
+            System.out.println("BoardStr: "+d.board());
+         }
 
-        gameData d = new gameData(wid, hei, board, desc);
-
+        
       } catch(JDOMException e) {
          e.printStackTrace();
       } catch(IOException ioe) {
