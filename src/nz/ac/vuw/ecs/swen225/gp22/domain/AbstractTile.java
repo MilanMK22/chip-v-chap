@@ -1,5 +1,5 @@
-package src.domain;
-import src.domain.Pickup;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
 
 interface Tile{
 
