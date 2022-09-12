@@ -1,8 +1,8 @@
-package src.app;
+package nz.ac.vuw.ecs.swen225.gp22.app;
 
 class Controller extends Keys{
 
-  public Controller(Camera c, int[] keys){
+  public Controller(Chap c, int[] keys){
     setAction(keys[0],c.set(Direction::up),c.set(Direction::unUp));
     setAction(keys[1],c.set(Direction::down),c.set(Direction::unDown));
     setAction(keys[2],c.set(Direction::left),c.set(Direction::unLeft));

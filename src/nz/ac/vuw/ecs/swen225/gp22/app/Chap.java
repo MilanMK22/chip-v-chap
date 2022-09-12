@@ -1,5 +1,5 @@
-package src.app;
-import src.domain.*;
+package nz.ac.vuw.ecs.swen225.gp22.app;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
