@@ -1,4 +1,4 @@
-package src.app;
+package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

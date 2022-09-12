@@ -1,7 +1,6 @@
-package src.app;
+package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import java.awt.*;
-import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
