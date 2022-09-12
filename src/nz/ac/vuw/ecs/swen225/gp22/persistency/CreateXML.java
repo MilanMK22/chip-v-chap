@@ -17,11 +17,13 @@ public class CreateXML {
             Element levelElement = new Element("level");
             Document doc = new Document(levelElement);
             //width element
-            Element widthElement = new Element("width").setText("9");
+            Element widthElement = new Element("width").setText("11");
             //height element
-            Element heightElement = new Element("height").setText("9");
+            Element heightElement = new Element("height").setText("11");
+             //treasure element
+             Element tresElement = new Element("tres").setText("5");
             //board element
-            Element boardElement = new Element("board").setText("");
+            Element boardElement = new Element("board").setText("WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWooCooWWWWoWgooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW");
            
             // WallTile:	W
             // FreeTile:	o
@@ -48,9 +50,10 @@ public class CreateXML {
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
             doc.getRootElement().addContent(idElement);
+            doc.getRootElement().addContent(tresElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             //setup printstream
-            PrintStream writeLevel = new PrintStream(new FileOutputStream("level1.xml", false));
+            PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/level1.xml", false));
             // write xml
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(doc,writeLevel); 
