@@ -19,19 +19,38 @@ public class CreateXML {
             //width element
             Element widthElement = new Element("width").setText("9");
             //height element
-            Element heightElement = new Element("height").setText("16");
+            Element heightElement = new Element("height").setText("9");
             //board element
-            Element boardElement = new Element("board").setText("** * *** **** *");
+            Element boardElement = new Element("board").setText("");
+           
+            // WallTile:	W
+            // FreeTile:	o
+            // BlueKey: 	b
+            // RedKey:		r
+            // GreenKey:	g
+            // BlueDoor(L):	B
+            // RedDoor(L):	R
+            // GrnDoor(L):	G
+            // Info:		i
+            // Treasure:	t
+            // ExitLock:	l
+            // Exit:		X
+            // Chap:		C
+
+
             //description element
             Element descElement = new Element("desc").setText("level 1: easy");
+            //id element
+            Element idElement = new Element("id").setText("level1");
             //add elems
             doc.getRootElement().addContent(widthElement);
             doc.getRootElement().addContent(heightElement);
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
+            doc.getRootElement().addContent(idElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             //setup printstream
-            PrintStream writeLevel = new PrintStream(new FileOutputStream("levelPers.xml", false));
+            PrintStream writeLevel = new PrintStream(new FileOutputStream("level1.xml", false));
             // write xml
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(doc,writeLevel); 
