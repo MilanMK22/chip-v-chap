@@ -23,7 +23,6 @@ public class ReadXML {
 
    public static void main(String[] args) throws Exception {
       try {
-       
          File inputFile = new File("levels/level1.xml");
          SAXBuilder saxBuilder = new SAXBuilder();
          Document document = saxBuilder.build(inputFile);
