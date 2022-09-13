@@ -79,7 +79,7 @@ public class Persistency {
             //width element
             Element widthElement = new Element("width").setText(tiles.length);
             //height element
-            Element heightElement = new Element("height").setText(tiles[i].length);
+            Element heightElement = new Element("height").setText(tiles[0].length);
              //treasure element
              Element tresElement = new Element("tres").setText("5");
             //board element
