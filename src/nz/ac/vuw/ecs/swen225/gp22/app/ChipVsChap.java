@@ -36,7 +36,7 @@ public class ChipVsChap extends JFrame{
                 component.addKeyListener(new KeyListener(){
                     public void keyTyped(KeyEvent e) {}
                     public void keyPressed(KeyEvent e) {
-                        if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
+                        if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar())) && Arrays.stream(characters).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
                             characterControls[code] = Character.toUpperCase(e.getKeyChar());
                             component.setText(""+ characterControls[code]);
                             component.removeKeyListener(this);
@@ -76,9 +76,13 @@ public class ChipVsChap extends JFrame{
         var menu = new JButton("Back to main menu");
         JPanel frame = new JPanel();
         frame.setLayout(new FlowLayout());
+        var upLabel = new JLabel("Up");
         var up = new JButton("" + characterControls[0]);
+        var downLabel = new JLabel("Down");
         var down = new JButton("" + characterControls[1]);
+        var leftLabel = new JLabel("Left");
         var left = new JButton("" + characterControls[2]);
+        var rightLabel = new JLabel("Right");
         var right = new JButton("" + characterControls[3]);
         
 
@@ -97,9 +101,13 @@ public class ChipVsChap extends JFrame{
         add(BorderLayout.CENTER,controls);
         add(frame);
         add(BorderLayout.NORTH,menu);
+        frame.add(upLabel);
         frame.add(up);
+        frame.add(downLabel);
         frame.add(down);
+        frame.add(leftLabel);
         frame.add(left);
+        frame.add(rightLabel);
         frame.add(right);
 
         up.addActionListener(reMap(0,up));
