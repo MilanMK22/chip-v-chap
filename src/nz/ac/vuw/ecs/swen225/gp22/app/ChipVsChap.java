@@ -30,8 +30,7 @@ public class ChipVsChap extends JFrame{
 
     
     public ActionListener reMap(int code, JButton component){
-        return new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        return (e) -> {
                 component.setText("Waiting for input");
                 component.addKeyListener(new KeyListener(){
                     public void keyTyped(KeyEvent e) {}
@@ -51,9 +50,10 @@ public class ChipVsChap extends JFrame{
                     }
                     public void keyReleased(KeyEvent e) {} 
                 });
-            }
+            };
         };
-    }
+        
+    
 
 
 
