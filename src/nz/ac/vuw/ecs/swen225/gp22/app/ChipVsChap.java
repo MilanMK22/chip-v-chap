@@ -1,7 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
+import imgs.Img;
 
 import java.awt.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,13 +17,10 @@ import java.util.Arrays;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.*; 
-
 /*
  * Game components will run from this class.
  */
 public class ChipVsChap extends JFrame{
-
-
     public Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     public int[] controls = new int[]{KeyEvent.VK_W,KeyEvent.VK_S,KeyEvent.VK_A,KeyEvent.VK_D};
     public Character[] characterControls = new Character[]{'W','S','A','D'};
@@ -134,6 +133,7 @@ public class ChipVsChap extends JFrame{
             remove(header);
             remove(start);
             remove(controls);
+            remove(panel);
         };
         add(BorderLayout.CENTER,header);
         add(BorderLayout.SOUTH,panel);
@@ -141,7 +141,7 @@ public class ChipVsChap extends JFrame{
         panel.add(load);
         panel.add(start);
 
-        start.addActionListener(s -> levelOne());
+        start.addActionListener(s -> testLevel());
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
         pack();
@@ -157,5 +157,52 @@ public class ChipVsChap extends JFrame{
         pack();                   
       }
     
+     
+    private void testLevel(){
+        var level = new JLabel("LEVEL");
+        level.setBounds(600,83,100, 30);
+        var time = new JLabel("TIME");
+        time.setBounds(600, 166,100, 30);
+        var chips = new JLabel("CHIPS");
+        chips.setBounds(600, 250,100, 30);
+
+        var backgroundImage = new JLabel();
+        backgroundImage.setBounds(0,0,800,375);
+
+        var background = new JLabel("");
+
+        time.setOpaque(true);
+        chips.setOpaque(true);
+        level.setOpaque(true);
+        background.setBounds(10, 10, 550, 350);
+        background.setBackground(Color.red);
+        time.setBackground(Color.red);
+
+        chips.setBackground(Color.red);
+        level.setBackground(Color.red);
+
+        backgroundImage.setOpaque(true);
+
+        JPanel panel = new JPanel();
+        
+        ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
+        backgroundImage.setIcon(img);
+
+        panel.setLayout(null);
+        
+        closePhase.run();
+        closePhase=()->{
+            remove(panel);
+        };
+        add(panel);
+        panel.add(backgroundImage);
+        panel.add(level);
+        panel.add(time);
+        panel.add(chips);
+        panel.add(background);
+
+        setPreferredSize(new Dimension(800,400));
+        pack();
+    }   
     
 }

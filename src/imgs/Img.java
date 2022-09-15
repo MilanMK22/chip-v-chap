@@ -13,7 +13,7 @@ public enum Img{
     key,
     door,
     chips,
-    player,
+    player, 
 public final BufferedImage image;
 Img(){image=loadImage(this.name());}
 static private BufferedImage loadImage(String name){
