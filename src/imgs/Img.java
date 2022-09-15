@@ -7,13 +7,23 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public enum Img{
-    floor,
-    wall,
+    floor_tiles,
+    walls,
     exit,
-    key,
-    door,
-    chips,
-    player,
+    yellow_lock,
+    yellow_key,
+    red_key,
+    red_lock,
+    green_key,
+    green_lock,
+    blue_key,
+    blue_lock,
+    info,
+    fullmap,
+    exitlock,
+    coin,
+    Marco,
+    
 public final BufferedImage image;
 Img(){image=loadImage(this.name());}
 static private BufferedImage loadImage(String name){
