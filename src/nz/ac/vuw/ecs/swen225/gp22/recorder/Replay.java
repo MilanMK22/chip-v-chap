@@ -69,7 +69,7 @@ public class Replay {
             
             XMLOutputter xmlOutput = new XMLOutputter();
             //setup printstream
-            PrintStream writeLevel = new PrintStream(new FileOutputStream(Name + ".xml", false));
+            PrintStream writeLevel = new PrintStream(new FileOutputStream("Replays/" + Name + ".xml", false));
             // write xml
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(doc,writeLevel); 
