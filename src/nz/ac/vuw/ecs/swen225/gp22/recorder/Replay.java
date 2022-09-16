@@ -17,11 +17,13 @@ public class Replay {
   
 	private Stack<String> moves;
 	private int level;
+    private String Name = "Replay-";
 	
 
-	public Replay(Stack<String> moves, int level) {
+	public Replay(Stack<String> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
+        this.Name = this.Name + Name;
 	}
 	
 	
@@ -55,16 +57,19 @@ public class Replay {
             Element movesElement = new Element("Moves");
             //height element
             Element levelNumElement = new Element("LevelNumber").setText("" + level);
+            Element NameAndDate = new Element("NameAndDate").setText("" + Name);
              
             moves.stream().forEach(r -> movesElement.addContent(new Element(r)));
             
             //add elems
             doc.getRootElement().addContent(levelNumElement);
+            doc.getRootElement().addContent(NameAndDate);
             doc.getRootElement().addContent(movesElement);
+            
             
             XMLOutputter xmlOutput = new XMLOutputter();
             //setup printstream
-            PrintStream writeLevel = new PrintStream(new FileOutputStream("Replay-Level:" + level + ".xml", false));
+            PrintStream writeLevel = new PrintStream(new FileOutputStream(Name + ".xml", false));
             // write xml
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(doc,writeLevel); 
