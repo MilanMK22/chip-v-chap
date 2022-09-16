@@ -18,6 +18,8 @@ enum Direction {
     };
 
     Direction up(){
+
+        
         return UP;
     }
     Direction down(){

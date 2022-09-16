@@ -15,12 +15,12 @@ import org.jdom2.output.XMLOutputter;
 
 public class Replay {
   
-	private Stack<String> moves;
+	private Stack<Action> moves;
 	private int level;
     private String Name = "Replay-";
 	
 
-	public Replay(Stack<String> moves, int level, String Name) {
+	public Replay(Stack<Action> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
         this.Name = this.Name + Name;
@@ -28,11 +28,11 @@ public class Replay {
 	
 	
 	
-	public Stack<String> getMoves() {
+	public Stack<Action> getMoves() {
 		return moves;
 	}
 
-	public void setMoves(Stack<String> moves) {
+	public void setMoves(Stack<Action> moves) {
 		this.moves = moves;
 	}
 
@@ -59,14 +59,19 @@ public class Replay {
             Element levelNumElement = new Element("LevelNumber").setText("" + level);
             Element NameAndDate = new Element("NameAndDate").setText("" + Name);
              
-            moves.stream().forEach(r -> movesElement.addContent(new Element(r)));
+            moves.stream().forEach(r -> {
+                Element Action = new Element("Action");
+                Element AName = new Element("ActionName").setText(r.name);
+                Element numPings = new Element("NumPings").setText("" + r.numPings);
+                Action.addContent(AName);
+                Action.addContent(numPings);
+                movesElement.addContent(Action);});
             
             //add elems
             doc.getRootElement().addContent(levelNumElement);
             doc.getRootElement().addContent(NameAndDate);
             doc.getRootElement().addContent(movesElement);
-            
-            
+
             XMLOutputter xmlOutput = new XMLOutputter();
             //setup printstream
             PrintStream writeLevel = new PrintStream(new FileOutputStream("Replays/" + Name + ".xml", false));
