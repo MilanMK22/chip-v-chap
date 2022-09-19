@@ -7,15 +7,16 @@ public class Maze {
     int keyCount;
     int totalTreasure;
     int totalKeys;
-
+    int xlen;
+    int ylen;
 
     private Tile[][] tiles;
 
-    Maze(){
+    public Maze(){
         // generate first maze
     }
 
-    Maze(Tile[][] tiles){
+    public Maze(Tile[][] tiles){
         // generate maze from set of tiles (i.e load game or testing)
         this.tiles = tiles;
         this.pickupCount = getNumPickups();
@@ -23,12 +24,14 @@ public class Maze {
         this.keyCount = getNumKey();
         this.totalKeys = keyCount +0;
         this.totalTreasure = treasureCount +0;
+        this.xlen = tiles.length;
+        this.ylen = tiles[0].length;
     }
     
 
 
 
-    public Point getChapLocation(){
+    public Point findChapLocation(){
         Tile temp = this.stream().filter(t->t.hasEntity()).filter(t->t.getEntity().isChap()).findFirst().get();
         return temp.getLocation();
     }
@@ -60,13 +63,13 @@ public class Maze {
     public int totalKeys(){ return totalKeys; }
     public int totalTreasure(){ return totalTreasure; }
 
-    Tile getTile(int x, int y){ return tiles[x][y]; }
-    Tile getTile(Point p){ return tiles[p.getX()][p.getY()]; }
+    public Tile getTile(int x, int y){ return tiles[x][y]; }
+    public Tile getTile(Point p){ return tiles[p.getX()][p.getY()]; }
 
-    void setTile(int x, int y, Tile tile){ this.tiles[x][y] = tile; }
-    void setTile(Point loc, Tile tile){ this.tiles[loc.getX()][loc.getY()] = tile; }
+    public void setTile(int x, int y, Tile tile){ this.tiles[x][y] = tile; }
+    public void setTile(Point loc, Tile tile){ this.tiles[loc.getX()][loc.getY()] = tile; }
 
-    private Stream<Tile> stream(){
+    public Stream<Tile> stream(){
         return IntStream.range(0, tiles.length)
         .mapToObj(r -> IntStream.range(0, tiles[r].length)
         .mapToObj(c -> tiles[r][c]))

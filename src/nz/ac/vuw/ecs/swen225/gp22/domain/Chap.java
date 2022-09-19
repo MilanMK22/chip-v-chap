@@ -16,6 +16,11 @@ public class Chap implements Entity{
     public boolean isPickup() { return false; }
 
 
+    public void up(){ move(location.up()); }
+    public void down(){ move(location.down()); }
+    public void left(){ move(location.left()); }
+    public void right(){ move(location.right()); }
+
     //Chap Methods
 
     public Chap(Maze m, Point location){

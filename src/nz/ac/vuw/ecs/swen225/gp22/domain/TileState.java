@@ -77,7 +77,8 @@ class LockedDoorTile implements TileState {
 }
 
 class InfoTile implements TileState{
-
+    @Override
+    public boolean isFree() { return true; }
     @Override
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
@@ -86,6 +87,10 @@ class InfoTile implements TileState{
 }
 
 class TreasureTile implements TileState{
+
+    @Override
+    public boolean isFree() { return true; }
+
     @Override
     public boolean interact(Tile t, Chap c, Maze m){
         if(t.getEntity() instanceof Pickup.Treasure){
@@ -113,6 +118,8 @@ class ExitTile implements TileState{
 
     @Override
     public boolean isExit() { return true; }
+    @Override
+    public boolean isFree() { return true; }
     @Override
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
