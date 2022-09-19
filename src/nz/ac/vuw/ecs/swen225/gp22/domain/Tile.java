@@ -1,4 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 public class Tile{
 
@@ -18,6 +19,21 @@ public class Tile{
         this.entity = entity;
         this.location = location;
     }
+
+
+    //Factory Patterns
+    static public Tile wallTile(Point location){ return new Tile(new WallTile(), location); }
+    static public Tile freeTile(Point location){ return new Tile(new FreeTile(), location); }
+    static public Tile keyTile(Point location, KEYCOLOR color){ return new Tile(new Pickup().new Key(location, color), new KeyTile(), location); }
+    static public Tile treasureTile(Point location){ return new Tile(new Pickup().new Treasure(location), new TreasureTile(), location); }
+    static public Tile lockedDoorTile(Point location, KEYCOLOR color){ return new Tile(new LockedDoorTile(color), location); }
+    static public Tile infoTile(Point location){ return new Tile(new InfoTile(), location); }
+    static public Tile exitLockTile(Point location){ return new Tile(new ExitLockTile(), location); }
+    static public Tile exitTile(Point location){ return new Tile(new ExitTile(), location); }
+
+
+
+
     public void setEntity(Entity e){
         this.entity = e;
     }

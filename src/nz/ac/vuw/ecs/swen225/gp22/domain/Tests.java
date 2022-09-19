@@ -1,9 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.*;
 
 public class Tests {
 

@@ -20,7 +20,7 @@ public class ArrayMaker {
                 char c = chars[(i*h)+j];
                 switch (c) {
                     case 'W':
-                        tiles[i][j] = new WallTile();
+                        tiles[i][j] = wallTile();
                         break;
                     case 'o':
                         tiles[i][j] = new FreeTile();

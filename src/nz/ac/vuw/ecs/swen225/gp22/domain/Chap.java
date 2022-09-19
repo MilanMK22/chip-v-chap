@@ -1,4 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -15,6 +16,11 @@ public class Chap implements Entity{
     public boolean isChap(){ return true; }
     public boolean isPickup() { return false; }
 
+
+    public void up(){ move(location.up()); }
+    public void down(){ move(location.down()); }
+    public void left(){ move(location.left()); }
+    public void right(){ move(location.right()); }
 
     //Chap Methods
 

@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
-interface TileState{
+public interface TileState{
 
     default boolean isFree(){ return false; }
     default boolean isExit(){ return false; }
@@ -11,7 +12,7 @@ interface TileState{
 
 class FreeTile implements TileState {
 
-    FreeTile(){
+    public FreeTile(){
 
     }
 
@@ -27,6 +28,9 @@ class FreeTile implements TileState {
 
 class WallTile implements TileState {
 
+    public WallTile(){
+
+    }
     public boolean interact(Tile t, Chap c, Maze m){
         return false;       
     }
@@ -35,7 +39,7 @@ class WallTile implements TileState {
 
 class KeyTile implements TileState {;
 
-    KeyTile(){}
+    public KeyTile(){}
     
     @Override
     public boolean isFree(){ return true; }
@@ -74,7 +78,8 @@ class LockedDoorTile implements TileState {
 }
 
 class InfoTile implements TileState{
-
+    @Override
+    public boolean isFree() { return true; }
     @Override
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
@@ -83,6 +88,10 @@ class InfoTile implements TileState{
 }
 
 class TreasureTile implements TileState{
+
+    @Override
+    public boolean isFree() { return true; }
+
     @Override
     public boolean interact(Tile t, Chap c, Maze m){
         if(t.getEntity() instanceof Pickup.Treasure){
@@ -110,6 +119,8 @@ class ExitTile implements TileState{
 
     @Override
     public boolean isExit() { return true; }
+    @Override
+    public boolean isFree() { return true; }
     @Override
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
