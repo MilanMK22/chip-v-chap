@@ -84,8 +84,6 @@ public class ChipVsChap extends JFrame{
         var rightLabel = new JLabel("Right");
         var right = new JButton("" + characterControls[3]);
         
-
-
         closePhase.run();
         closePhase=()->{
          remove(controls);
@@ -159,47 +157,34 @@ public class ChipVsChap extends JFrame{
     
      
     private void testLevel(){
-        var level = new JLabel("LEVEL");
-        level.setBounds(600,83,100, 30);
-        var time = new JLabel("TIME");
-        time.setBounds(600, 166,100, 30);
-        var chips = new JLabel("CHIPS");
-        chips.setBounds(600, 250,100, 30);
+        var level = new JLabel("test",SwingConstants.CENTER);
+        level.setBounds(615,75,60, 30);
+        var time = new JLabel("test",SwingConstants.CENTER);
+        time.setBounds(615, 140,60, 30);
+        var chips = new JLabel("test",SwingConstants.CENTER);
+        chips.setBounds(615, 203,60, 30);
 
         var backgroundImage = new JLabel();
         backgroundImage.setBounds(0,0,800,375);
-
-        var background = new JLabel("");
-
-        time.setOpaque(true);
-        chips.setOpaque(true);
-        level.setOpaque(true);
+        ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
+        var background = new JLabel();
+        background.setOpaque(true);
         background.setBounds(10, 10, 550, 350);
         background.setBackground(Color.red);
-        time.setBackground(Color.red);
-
-        chips.setBackground(Color.red);
-        level.setBackground(Color.red);
-
-        backgroundImage.setOpaque(true);
-
         JPanel panel = new JPanel();
-        
-        ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
+        panel.setLayout(null);
         backgroundImage.setIcon(img);
 
-        panel.setLayout(null);
-        
         closePhase.run();
         closePhase=()->{
             remove(panel);
         };
         add(panel);
         panel.add(backgroundImage);
-        panel.add(level);
-        panel.add(time);
-        panel.add(chips);
-        panel.add(background);
+        backgroundImage.add(level);
+        backgroundImage.add(time);
+        backgroundImage.add(chips);
+        backgroundImage.add(background);
 
         setPreferredSize(new Dimension(800,400));
         pack();
