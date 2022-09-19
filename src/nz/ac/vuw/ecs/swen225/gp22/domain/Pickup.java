@@ -1,13 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-enum KEYCOLOR {
+public class Pickup{
+
+    public enum KEYCOLOR {
     RED,
     GREEN,
     BLUE,
-}
-
-public class Pickup{
-
+    YELLOW,
+    }
 
     class Treasure implements Entity{
 
