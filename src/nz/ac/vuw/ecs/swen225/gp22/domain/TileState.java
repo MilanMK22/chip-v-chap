@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-interface TileState{
+public interface TileState{
 
     default boolean isFree(){ return false; }
     default boolean isExit(){ return false; }
@@ -11,7 +11,7 @@ interface TileState{
 
 class FreeTile implements TileState {
 
-    FreeTile(){
+    public FreeTile(){
 
     }
 
@@ -27,6 +27,9 @@ class FreeTile implements TileState {
 
 class WallTile implements TileState {
 
+    public WallTile(){
+
+    }
     public boolean interact(Tile t, Chap c, Maze m){
         return false;       
     }
@@ -35,7 +38,7 @@ class WallTile implements TileState {
 
 class KeyTile implements TileState {;
 
-    KeyTile(){}
+    public KeyTile(){}
     
     @Override
     public boolean isFree(){ return true; }
