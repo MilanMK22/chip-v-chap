@@ -8,7 +8,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 record Level(Controller c) {
     static Level level1(Runnable next, Runnable back, int[] keys){
         Maze m = new Maze(){
-            public Chap[] chap(){ return c; }
+
+            
           };
         Chap c = new Chap(m, new Point(5,5));
 
