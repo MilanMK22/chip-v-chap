@@ -61,6 +61,8 @@ public class ReadXMLFile {
          ReadReplay.getMoves().stream().forEach(r -> {
             System.out.println(r.getName() + "(" + r.getNumPings() + ")");});
 
+        ReadReplay.saveReplay();
+
 
 
 
