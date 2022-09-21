@@ -31,9 +31,9 @@ public class Maze {
 
 
 
-    public Point findChapLocation(){
+    public Chap getChap(){
         Tile temp = this.stream().filter(t->t.hasEntity()).filter(t->t.getEntity().isChap()).findFirst().get();
-        return temp.getLocation();
+        return (Chap)temp.getEntity();
     }
 
     //Pickup Methods
@@ -63,8 +63,16 @@ public class Maze {
     public int totalKeys(){ return totalKeys; }
     public int totalTreasure(){ return totalTreasure; }
 
-    public Tile getTile(int x, int y){ return tiles[x][y]; }
-    public Tile getTile(Point p){ return tiles[p.getX()][p.getY()]; }
+    public Tile getTile(Point p){ return getTile(p.getX(), p.getY()); }
+    public Tile getTile(int x, int y){ 
+        if(bound(x, y)){
+            return tiles[x][y];
+        }
+        else throw new Error("Chap cannot move off of the map"); 
+    }
+
+    public boolean bound(Point p){ return bound(p.getX(), p.getY()); }
+    public boolean bound(int x, int y){ return x >= 0 && x <= xlen && y >= 0 && y <= ylen; }
 
     public void setTile(int x, int y, Tile tile){ this.tiles[x][y] = tile; }
     public void setTile(Point loc, Tile tile){ this.tiles[loc.getX()][loc.getY()] = tile; }

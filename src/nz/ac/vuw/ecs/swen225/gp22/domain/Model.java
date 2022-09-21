@@ -8,10 +8,10 @@ public class Model {
     Chap chap;
     List<Entity> entities;
     
-    public Model(Maze m, Chap c){
+    public Model(Maze m){
         this.maze = m;
-        this.chap = c;
-        c.setMaze(m);
+        this.chap = m.getChap();
+        this.chap.setMaze(m);
         this.entities = m.stream().filter(t-> t.hasEntity()).map(t->t.getEntity()).toList();
     }
 
@@ -19,10 +19,10 @@ public class Model {
     public Maze maze(){ return this.maze; }
 
     private void win(){
-        
+
     }
     private void loss(){
-
+        
     }
 
     public void tick(){
