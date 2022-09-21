@@ -40,6 +40,10 @@ public class Replay {
 		return level;
 	}
 
+    public String getName() {
+		return Name;
+	}
+
 	public void setLevel(int level) {
 		this.level = level;
 	}
@@ -53,9 +57,9 @@ public class Replay {
             //root element
             Element replayElement = new Element("Replay");
             Document doc = new Document(replayElement);
-            //width element
+           
             Element movesElement = new Element("Moves");
-            //height element
+            
             Element levelNumElement = new Element("LevelNumber").setText("" + level);
             Element NameAndDate = new Element("NameAndDate").setText("" + Name);
              
