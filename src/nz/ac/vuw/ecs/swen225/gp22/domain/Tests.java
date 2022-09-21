@@ -20,14 +20,14 @@ public class Tests {
 
     @Test
     public void keyTest1(){
-        Chap c = new Chap(new Maze(), new Point(0,0));
+        Chap c = new Chap(new Point(0,0));
         c.pickUpKey(new Pickup().new Key(new Point(0,0), KEYCOLOR.BLUE));
 
         assertFalse("Invalid Key",c.useKey(KEYCOLOR.RED));
     }
     @Test
     public void keyTest2(){
-        Chap c = new Chap(new Maze(), new Point(0,0));
+        Chap c = new Chap(new Point(0,0));
         c.pickUpKey(new Pickup().new Key(new Point(0,0), KEYCOLOR.BLUE));
 
         assertTrue("Valid Key",c.useKey(KEYCOLOR.BLUE));

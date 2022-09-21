@@ -24,8 +24,8 @@ public class Chap implements Entity{
 
     //Chap Methods
 
-    public Chap(Maze m, Point location){
-        this.maze = m;
+    public Chap(Point location){
+        this.maze = null;
         this.location = location;
     }
 
@@ -34,6 +34,7 @@ public class Chap implements Entity{
     }
 
     public Point getLocation(){ return location; }
+    public void setMaze(Maze m){ this.maze = m; }
     
     private boolean hasKey(KEYCOLOR color){
         return Stream.of(inventory).filter(t -> t!= null).filter(t -> t.color == color).count() >= 1;
