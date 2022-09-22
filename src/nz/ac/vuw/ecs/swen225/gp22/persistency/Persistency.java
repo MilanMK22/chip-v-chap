@@ -19,9 +19,12 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
 public class Persistency {
 
-    public Tile[][] readXML(String level) {
-        int wid, hei, tres;
-        String board, id;
+    public static Tile[][] readXML(String level) throws Exception {
+        int wid = -1;
+        int hei = -1;
+        int tres;
+        String board = null;
+        String id;
         String desc;
         try {
             File inputFile = new File("levels/" + level + ".xml");
@@ -71,20 +74,21 @@ public class Persistency {
     }
 
     public void createPXML(Tile[][] tiles) {
+        //String board = strFromArray(tiles);
 
         try {
             // root element
             Element levelElement = new Element("level");
             Document doc = new Document(levelElement);
             // width element
-            Element widthElement = new Element("width").setText(tiles.length);
+            Element widthElement = new Element("width").setText(String.valueOf(tiles.length));
             // height element
-            Element heightElement = new Element("height").setText(tiles[0].length);
+            Element heightElement = new Element("height").setText(String.valueOf(tiles[0].length));
             // treasure element
             Element tresElement = new Element("tres").setText("5");
             // board element
             Element boardElement = new Element("board").setText(
-                    "WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWooCooWWWWoWgooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW");
+                    "");
             // description element
             Element descElement = new Element("desc").setText("saved progress");
             // id element
@@ -98,7 +102,7 @@ public class Persistency {
             doc.getRootElement().addContent(tresElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             // setup printstream
-            PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/level1.xml", false));
+            PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/levelPers.xml", false));
             // write xml
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(doc, writeLevel);
@@ -106,4 +110,59 @@ public class Persistency {
             e.printStackTrace();
         }
     }
+
+//     private String strFromArray(Tile[][] tiles) {
+//         char[] boardChars = new char[tiles.length*tiles[0].length];
+//         for (int i = 0; i < tiles.length; i++) {
+//             for (int j = 0; j < tiles[0].length; j++) {
+//                 Tile t = tiles[i][j];
+//                 switch (t.getClass()) {
+//                     case 'W':
+//                         tiles[i][j] = Tile.wallTile(loc);
+//                         break;
+//                     case 'o':
+//                         tiles[i][j] = Tile.freeTile(loc);
+//                         break;
+//                     case 'b':
+//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.BLUE);
+//                         break;
+//                     case 'r':
+//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.RED);
+//                         break;
+//                     case 'g':
+//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.GREEN);
+//                         break;
+//                     case 'B':
+//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.BLUE);
+//                         break;
+//                     case 'R':
+//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.RED);
+//                         break;
+//                     case 'G':
+//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.GREEN);
+//                         break;
+//                     case 'i':
+//                         tiles[i][j] = Tile.infoTile(loc);
+//                         break;
+//                     case 't':
+//                         tiles[i][j] = Tile.treasureTile(loc);
+//                         break;
+//                     case 'l':
+//                         tiles[i][j] = Tile.exitLockTile(loc);
+//                         break;
+//                     case 'X':
+//                         tiles[i][j] = Tile.exitTile(loc);
+//                         break;
+//                     case 'C':
+//                         tiles[i][j] = Tile.freeTile(loc);
+//                         break;
+//                     default:
+//                         throw new IllegalArgumentException("Invalid tile char");
+                        
+//                 }  
+                
+//                 boardChars[(i*tiles.length)+j] = 
+//             }
+//     }
+// }
 }
