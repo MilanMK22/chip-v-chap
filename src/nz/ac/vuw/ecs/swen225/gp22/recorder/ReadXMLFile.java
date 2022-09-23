@@ -11,17 +11,27 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import java.util.Stack;
 
+import javax.swing.JFileChooser;
+
 public class ReadXMLFile {
   
     public static void main(String argv[])   
     {  
+
+    JFileChooser jfc = new JFileChooser("Replays/");
+    jfc.showDialog(null,"Please Select the File");
+    jfc.setVisible(true);
+    File filename = jfc.getSelectedFile();
+    System.out.println("File name "+filename.getName());
+
+    
             String Name = "";
             int Level = 0;
             Stack<Action> moves = new Stack<Action>();
             Replay ReadReplay = new Replay();
 
         try {
-            File inputFile = new File("Replays/Replay-16|09|22-16:20:54.xml");
+            File inputFile = new File("Replays/" + filename.getName());
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();

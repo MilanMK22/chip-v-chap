@@ -10,7 +10,7 @@ public class CreatRepXML {
 
 
     public static void main(String[] args) throws Exception {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd|MM|yy-HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yy--HH-mm-ss");
         LocalDateTime now = LocalDateTime.now();
         Stack<Action> s = new Stack<Action>();
         s.push(new Action("UP", 30));
