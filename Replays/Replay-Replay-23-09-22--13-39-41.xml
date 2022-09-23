@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Replay>
+  <LevelNumber>1</LevelNumber>
+  <NameAndDate>Replay-Replay-23-09-22--13-39-41</NameAndDate>
+  <Moves>
+    <Action>
+      <ActionName>UP</ActionName>
+      <NumPings>30</NumPings>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <NumPings>45</NumPings>
+    </Action>
+    <Action>
+      <ActionName>left</ActionName>
+      <NumPings>60</NumPings>
+    </Action>
+    <Action>
+      <ActionName>right</ActionName>
+      <NumPings>20</NumPings>
+    </Action>
+    <Action>
+      <ActionName>down</ActionName>
+      <NumPings>90</NumPings>
+    </Action>
+    <Action>
+      <ActionName>UP</ActionName>
+      <NumPings>30</NumPings>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <NumPings>45</NumPings>
+    </Action>
+    <Action>
+      <ActionName>left</ActionName>
+      <NumPings>60</NumPings>
+    </Action>
+    <Action>
+      <ActionName>right</ActionName>
+      <NumPings>20</NumPings>
+    </Action>
+    <Action>
+      <ActionName>down</ActionName>
+      <NumPings>90</NumPings>
+    </Action>
+  </Moves>
+</Replay>
