@@ -17,8 +17,8 @@ public class ArrayMaker {
     public Tile[][] makeArray(){
         Tile[][] tiles = new Tile[w][h];
         char[] chars = board.toCharArray();
-            for (int j = 0; j < w; j++) {
-                for (int i = 0; i < h; i++) {
+            for (int j = 0; j < h; j++) {
+                for (int i = 0; i < w; i++) {
                 char c = chars[(i*h)+j];
                 Point loc = new Point(j,i);
                 switch (c) {
