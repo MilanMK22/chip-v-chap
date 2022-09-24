@@ -24,6 +24,9 @@ public class Model {
     private void loss(){
         
     }
+      public Maze getMaze() {
+        return maze;
+    }
 
     public void tick(){
         entities.forEach(e->e.tick());
