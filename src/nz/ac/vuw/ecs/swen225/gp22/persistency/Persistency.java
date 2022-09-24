@@ -19,7 +19,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
 public class Persistency {
 
-    public static Tile[][] readXML(String level) throws Exception {
+    public static Tile[][] readXML(String level) throws ArithmeticException {
         int wid = -1;
         int hei = -1;
         int tres;
@@ -54,7 +54,7 @@ public class Persistency {
                         tres = Integer.parseInt(curr.getText());
                         break;
                     default:
-                        throw new Exception("malformed xml, unexpected element: " + curr.getText());
+                        throw new ArithmeticException("malformed xml, unexpected element: " + curr.getText());
                 }
             }
 
