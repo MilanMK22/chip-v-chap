@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import javax.swing.Renderer;
+
+import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
+import java.awt.image.BufferedImage;
 
 public interface TileState{
 
@@ -8,6 +12,7 @@ public interface TileState{
     default boolean hasPickup(){ return false; }
     default boolean isDoor() { return false; }
     boolean interact(Tile t, Chap c, Maze m);
+    public BufferedImage getImage();
 }
 
 class FreeTile implements TileState {
@@ -22,7 +27,10 @@ class FreeTile implements TileState {
     public boolean interact(Tile t, Chap c, Maze m){
         return true;
     }
-
+    @Override
+    public BufferedImage getImage() {
+        return Img.floor_tiles.image;
+    }
 
 }
 
@@ -34,7 +42,10 @@ class WallTile implements TileState {
     public boolean interact(Tile t, Chap c, Maze m){
         return false;       
     }
-
+    @Override
+    public BufferedImage getImage() {
+        return Img.walls.image;
+    }
 }
 
 class KeyTile implements TileState {;
@@ -53,6 +64,10 @@ class KeyTile implements TileState {;
         t.setState(new FreeTile());
         return true;
     }
+    @Override
+    public BufferedImage getImage() {
+        return Img.floor_tiles.image;
+    }
 }
 
 class LockedDoorTile implements TileState {
@@ -70,10 +85,15 @@ class LockedDoorTile implements TileState {
             else{
                 return false;
             }
+        
     }
 
     @Override
     public boolean isDoor(){ return true; }
+    @Override
+    public BufferedImage getImage() {
+        return color.lock();
+    }
 
 }
 
@@ -84,7 +104,10 @@ class InfoTile implements TileState{
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
     }
-    
+    public BufferedImage getImage() {
+        return Img.info.image;
+    }
+
 }
 
 class TreasureTile implements TileState{
@@ -101,6 +124,9 @@ class TreasureTile implements TileState{
         }
         else throw new Error("No treasure on this treasure tile!");
     }
+    public BufferedImage getImage() {
+        return Img.floor_tiles.image;
+    }
 }
 
 class ExitLockTile implements TileState{
@@ -111,6 +137,9 @@ class ExitLockTile implements TileState{
             return true;
         }
         else return false;
+    }
+    public BufferedImage getImage() {
+        return Img.exitlock.image;
     }
 }
 
@@ -124,6 +153,10 @@ class ExitTile implements TileState{
     @Override
     public boolean interact(Tile t, Chap c, Maze m) {
         return true;
+    }
+    
+    public BufferedImage getImage() {
+        return Img.exit.image;
     }
     
 }
