@@ -1,60 +1,38 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
 import imgs.Img;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import java.awt.Graphics2D;
+import java.util.Map;
+
+import javax.swing.JLabel;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
 
 public class Mapprint {
 
       
-    public static void printMap(Maze maze, Graphics2D g2d, int width, int height){
-     
-        //get maze dimensions
-        int x = maze.getTiles().length;
-        int y = maze.getTiles()[0].length;
-        //get tile size
-        int tileWidth = width/x;
-        int tileHeight = height/y;
-        //print tiles
-        for(int i = 0; i < x; i++){
-            for(int j = 0; j < y; j++){
-                //get tile
-                Tile tile = maze.getTile(i, j);
-                //get tile type
-                String type = tile.getType();
-                //get tile position
-                int xPos = i*tileWidth;
-                int yPos = j*tileHeight;
-                //set tile colour
-                switch(type){
-                    case "wall":
-                       
+    public static void printMap(Model m, Graphics g){
+       
+        int x =-40;
+        int y =0;
+        for(int i = 0 ; i < m.getMaze().xlen; i++){
+            for(int j = 0; j < m.getMaze().ylen; j++){
+                 java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].state.getImage();
+                 g.drawImage(cur, x, y, 40, 40, null);
+                 x+=40;
+                 if(x >= 440){
+                    x = 0;
+                    y+=40;
+                    if(y > 440){
                         break;
-                    case "floor":
-                       
-                        break;
-                    case "exit":
-                       
-                        break;
-                    case "key":
-                        
-                        break;
-                    case "door":
-                       
-                        break;
-                    case "chips":
-                       
-                        break;
-                    case "player":
-                       
-                        break;
-                    default:
-                        
-                        break;
-                }
-                //draw tile
-                g2d.fillRect(xPos, yPos, tileWidth, tileHeight);
-            }
+                    }
+                 }
+            } 
         }
-    }
-    
-
+      
+     }
 }
