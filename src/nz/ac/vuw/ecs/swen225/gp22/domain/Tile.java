@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
+import java.awt.image.BufferedImage;
 
 public class Tile{
 
@@ -49,7 +50,6 @@ public class Tile{
         this.state = newState;
     }
 
-
     //Util methods
     Point getLocation(){ return this.location;}
     boolean isFree(){ return state.isFree(); }
@@ -58,5 +58,5 @@ public class Tile{
     boolean isDoor() { return state.isDoor(); }
     boolean hasEntity(){ return entity != null; }
     Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }
-
+    BufferedImage getImage(){ return state.getImage(); }
 }

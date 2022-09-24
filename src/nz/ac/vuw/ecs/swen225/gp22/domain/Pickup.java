@@ -1,12 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.awt.image.BufferedImage;
+import imgs.Img;
+
 public class Pickup{
 
+    
     public enum KEYCOLOR {
-    RED,
-    GREEN,
-    BLUE,
-    YELLOW,
+    RED(Img.red_key.image, Img.red_lock.image),
+    GREEN(Img.green_key.image,Img.green_lock.image),
+    BLUE(Img.blue_key.image, Img.blue_lock.image),
+    YELLOW(Img.yellow_key.image, Img.yellow_lock.image);
+
+    public final BufferedImage key;
+    public final BufferedImage lock;
+    
+    KEYCOLOR(BufferedImage key, BufferedImage lock){
+        this.key = key;
+        this.lock = lock;
+    }
+    public BufferedImage key(){ return this.key; }
+    public BufferedImage lock(){ return this.lock; }
     }
 
     class Treasure implements Entity{
