@@ -7,6 +7,7 @@ public class TestFunct {
     public static void main(String[] args) {
         try {
             Tile[][] readTiles = Persistency.readXML("level1");
+            Tile[][] readTiles2 = Persistency.readXML("level1");
             System.out.println(readTiles.length);
             System.out.println(readTiles[0].length);
             System.out.println();
