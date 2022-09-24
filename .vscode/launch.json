@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.app.Main",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        },
+        {
+            "type": "java",
+            "name": "Launch CreateXML",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.persistency.CreateXML",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReadXML",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.persistency.ReadXML",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestFunct",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.persistency.TestFunct",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        },
+        {
+            "type": "java",
+            "name": "Launch CreatRepXML",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.recorder.CreatRepXML",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReadXMLFile",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.recorder.ReadXMLFile",
+            "projectName": "chip-vs-chap_d2fac4b3"
+        }
+    ]
+}
