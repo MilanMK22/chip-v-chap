@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+  <width>24</width>
+  <height>20</height>
+  <board>WWWWWWWWWWWWWWWWWWWWWWWWWWWooWWWWooWWWooWWWoWWWWWWoooWWWooooWooooWoooWWWWorooWWoooooWooooootoWWWWooooWWoboooWooooooooWWWWooooWoooooWWWoooooooWWWWorooWoooooolRoooWooooWWWooooBoooooWWWooWWWoooWWWWoooWooioooWoooWWWooooWWWWWWWooooooWooooWoooooWWooWWooooCooWooooooooooWWoooWooooooWWooooooooooWWotoWooooooWWooooooooooWWoooWooooooWWooooooooooWWoooRooooooWWWooooWoWoWWWoooWoooooWWWWoooWWGWWWWWogoWooooWWWWWoooWWoooWWWoooWoooWWWWWWooWWoooooWWooWWWoWWWWWWWoWWWolXooWWWWWWWWWWWWWWWWWWWWWWWWW</board>
+  <desc>level 2: medium</desc>
+  <id>level2</id>
+  <tres>2</tres>
+</level>

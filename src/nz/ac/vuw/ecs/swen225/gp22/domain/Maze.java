@@ -7,8 +7,8 @@ public class Maze {
     int keyCount;
     int totalTreasure;
     int totalKeys;
-    int xlen;
-    int ylen;
+    public int xlen;
+    public int ylen;
 
     private Tile[][] tiles;
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+  <width>11</width>
+  <height>11</height>
+  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWooCooWWWWoWgooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
+  <desc>level 1: easy</desc>
+  <if>level1</if>
+  <tres>5</tres>
+</level>

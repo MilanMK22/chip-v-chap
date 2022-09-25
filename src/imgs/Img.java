@@ -22,7 +22,8 @@ public enum Img{
     fullmap,
     exitlock,
     coin,
-    Marco,
+    Marco, 
+    homeScreen;
     
 public final BufferedImage image;
 Img(){image=loadImage(this.name());}
@@ -32,3 +33,4 @@ static private BufferedImage loadImage(String name){
   catch(IOException e) { throw new Error(e); }
 }
 }
+

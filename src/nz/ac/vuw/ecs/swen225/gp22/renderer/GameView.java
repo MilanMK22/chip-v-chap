@@ -7,6 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
-class GameView extedns JPanel{
+class GameView extends JPanel{
     
 }
