@@ -16,11 +16,11 @@ class Keys implements KeyListener {
     }
   public void keyTyped(KeyEvent e){}
   public void keyPressed(KeyEvent e){
-   // assert SwingUtilities.isEventDispatchThread();
+   assert SwingUtilities.isEventDispatchThread();
     actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
   }
   public void keyReleased(KeyEvent e){
-    //assert SwingUtilities.isEventDispatchThread();
+    assert SwingUtilities.isEventDispatchThread();
     actionsReleased.getOrDefault(e.getKeyCode(),()->{}).run();
   }
 }
