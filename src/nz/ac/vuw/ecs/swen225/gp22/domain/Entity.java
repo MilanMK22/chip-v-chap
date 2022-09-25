@@ -5,4 +5,5 @@ public interface Entity{
     default boolean isTreasure(){ return false; }
     default boolean isChap(){ return false; }
     default boolean isPickup(){ return false; }
+    default void tick(){ return; }
 }

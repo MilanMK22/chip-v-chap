@@ -30,7 +30,7 @@ public class Tile{
     static public Tile infoTile(Point location){ return new Tile(new InfoTile(), location); }
     static public Tile exitLockTile(Point location){ return new Tile(new ExitLockTile(), location); }
     static public Tile exitTile(Point location){ return new Tile(new ExitTile(), location); }
-
+    static public Tile chapTile(Point location){ return new Tile(new Chap(location), new FreeTile(), location); }
 
 
 

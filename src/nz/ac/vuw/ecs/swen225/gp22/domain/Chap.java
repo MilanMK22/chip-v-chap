@@ -5,27 +5,35 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Chap implements Entity{
+
+    public enum DIRECTION{
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
+
     private Maze maze;
     private Point location;
     private static Pickup.Key[] inventory = new Pickup.Key[8];
     private static int heldItems = 0;
     private static int heldTreasure = 0;
-    
+    private DIRECTION direction = DIRECTION.DOWN;
     
     //Entity Methods
     public boolean isChap(){ return true; }
     public boolean isPickup() { return false; }
 
 
-    public void up(){ move(location.up()); }
-    public void down(){ move(location.down()); }
-    public void left(){ move(location.left()); }
-    public void right(){ move(location.right()); }
+    public void up(){ move(location.up()); direction = DIRECTION.UP; }
+    public void down(){ move(location.down()); direction = DIRECTION.DOWN; }
+    public void left(){ move(location.left()); direction = DIRECTION.LEFT; }
+    public void right(){ move(location.right()); direction = DIRECTION.RIGHT; }
 
     //Chap Methods
 
-    public Chap(Maze m, Point location){
-        this.maze = m;
+    public Chap(Point location){
+        this.maze = null;
         this.location = location;
     }
 
@@ -34,6 +42,8 @@ public class Chap implements Entity{
     }
 
     public Point getLocation(){ return location; }
+    public DIRECTION getDirection(){ return direction; }
+    public void setMaze(Maze m){ this.maze = m; }
     
     private boolean hasKey(KEYCOLOR color){
         return Stream.of(inventory).filter(t -> t!= null).filter(t -> t.color == color).count() >= 1;
