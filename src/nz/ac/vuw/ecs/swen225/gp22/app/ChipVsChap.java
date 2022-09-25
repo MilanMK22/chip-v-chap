@@ -1,8 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
-import imgs.Img;
-
 import java.awt.*;
 
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,11 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Arrays;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.*; 
 /*
  * Game components will run from this class.
@@ -29,6 +24,13 @@ public class ChipVsChap extends JFrame{
     public int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
     public int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
+
+    Timer timer;
+    int count = 0;
+    int delay = 1000;
+
+    private JLabel timerLabel = new JLabel("test");
+    
 
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
@@ -46,6 +48,24 @@ public class ChipVsChap extends JFrame{
        return '\u2190';
     }
 
+    public void startTimer(int timeDone){
+        ActionListener action = (e) -> {
+            if(count == 0){
+                timer.stop();
+                timerLabel.setText("No time");
+            }else{
+                int minutes = count /60;
+                int seconds = count% 60;
+                timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
+                count --;
+            }
+        };
+        timer = new Timer(delay, action);
+        timer.setInitialDelay(0);
+        count = timeDone;  
+        timer.start();
+    }
+    
 
     public ActionListener reMap(int code, JButton component){
         return (e) -> {
@@ -71,15 +91,12 @@ public class ChipVsChap extends JFrame{
                                 component.setText(""+ characterControls[code]);
                                 component.removeKeyListener(this);
                             }
-
                             else if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar())) && Arrays.stream(characters).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
                                 System.out.println("true 2");
                                 characterControls[code] = Character.toUpperCase(e.getKeyChar());
                                 component.setText(""+ characterControls[code]);
-                                component.removeKeyListener(this);
-                                
+                                component.removeKeyListener(this);   
                             }  
-                           
                             else{
                             JOptionPane.showMessageDialog(null, "Key is Invalid");
                             component.setText(""+characterControls[code]);
@@ -87,15 +104,10 @@ public class ChipVsChap extends JFrame{
                             }
                         updateKeys();
                     }
-                       
                     public void keyReleased(KeyEvent e) {} 
                 });
             };
         };
-        
-    
-
-
 
     Runnable closePhase = () -> {};
 
@@ -110,7 +122,6 @@ public class ChipVsChap extends JFrame{
         
     }
 
- 
     public void controls(){
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
@@ -181,12 +192,8 @@ public class ChipVsChap extends JFrame{
         panel.add(load);
         panel.add(start);
         this.setFocusable(true);
-        addKeyListener(new KeyListener(){
-            @Override
-            public void keyTyped(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
+        KeyListener menuKeyListener = new KeyListener(){
+            public void keyTyped(KeyEvent e) {}
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
@@ -204,21 +211,20 @@ public class ChipVsChap extends JFrame{
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
+                    System.out.println("level 1");
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_2) && e.isControlDown()){
                     // opens new game at level 2
-                }   
-            
+                    System.out.println("level 2");
+                }        
             }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
+            public void keyReleased(KeyEvent e) {}
+        };
+        addKeyListener(menuKeyListener);
+        start.addActionListener(s -> {
+            testLevel();
+            removeKeyListener(menuKeyListener);
         });
-        start.addActionListener(s -> testLevel());
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
         pack();
@@ -237,16 +243,16 @@ public class ChipVsChap extends JFrame{
      
     private void testLevel(){
 
-        
-
-        Timer timer = new Timer(10000, null);
         var level = new JLabel("test",SwingConstants.CENTER);
+
         level.setBounds(615,75,60, 30);
-        var time = new JLabel("test",SwingConstants.CENTER);
-        time.setBounds(615, 140,60, 30);
+        timerLabel.setBounds(630, 140,60, 30);
+
+
         var chips = new JLabel("test",SwingConstants.CENTER);
         chips.setBounds(615, 203,60, 30);
-        boolean paused = false;
+
+
         var backgroundImage = new JLabel();
         backgroundImage.setBounds(0,0,800,375);
         ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
@@ -257,8 +263,8 @@ public class ChipVsChap extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(null);
         backgroundImage.setIcon(img);
-        System.out.println(timer);
 
+        startTimer(20);
 
         JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = pane .createDialog(null, "Paused");
@@ -270,14 +276,9 @@ public class ChipVsChap extends JFrame{
             remove(panel);
         };
         add(panel);
-        addKeyListener(new KeyListener(){
-
+        KeyListener gameKeyListener = new KeyListener(){
             @Override
-            public void keyTyped(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
-
+            public void keyTyped(KeyEvent e) {}
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
@@ -288,20 +289,16 @@ public class ChipVsChap extends JFrame{
                     dialog.setVisible(false);
                 }  
             }
-
             @Override
-            public void keyReleased(KeyEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
+            public void keyReleased(KeyEvent e) {}
             
-        });
+        };
+        addKeyListener(gameKeyListener);
         panel.add(backgroundImage);
         backgroundImage.add(level);
-        backgroundImage.add(time);
+        backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
         backgroundImage.add(background);
-
         setPreferredSize(new Dimension(800,400));
         pack();
     }   
