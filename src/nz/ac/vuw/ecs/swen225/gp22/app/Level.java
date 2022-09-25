@@ -5,8 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 /*
  * This class will contain the levels within the game.
  */
-record Level(Controller c) {
-    static Level level1(Runnable next, Runnable back, int[] keys){
+public record Level(Controller c) {
+    public static Level level1(Runnable next, Runnable back, int[] keys){
         Chap c = new Chap(new Point(5,5));
         // Maze cells = new Maze();
         // var m = new Model(){

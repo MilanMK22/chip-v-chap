@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-class Controller extends Keys{
+public class Controller extends Keys{
 
   public Controller(Chap c, int[] keys){
     setAction(keys[0],c.set(Direction::up),c.set(Direction::unUp));
