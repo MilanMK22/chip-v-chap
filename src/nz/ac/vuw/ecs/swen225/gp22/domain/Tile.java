@@ -6,7 +6,7 @@ public class Tile{
 
 
     Point location;
-    TileState state;
+    public TileState state;
     Entity entity;
 
     Tile(TileState tileState, Point location){
