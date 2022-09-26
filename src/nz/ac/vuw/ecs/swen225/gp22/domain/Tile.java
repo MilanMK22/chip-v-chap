@@ -49,6 +49,9 @@ public class Tile{
     public void setState(TileState newState){
         this.state = newState;
     }
+    public TileState getState(){
+        return this.state;
+    }
 
     //Util methods
     Point getLocation(){ return this.location;}
