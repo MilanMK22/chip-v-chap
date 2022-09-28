@@ -14,9 +14,12 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import imgs.Img;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 
@@ -59,6 +62,7 @@ public class ChipVsChap extends JFrame{
 
 
 
+
     public void startTimer(int timeDone){
        
        
@@ -71,6 +75,7 @@ public class ChipVsChap extends JFrame{
                 int seconds = count% 60;
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
                 Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
+               
                 count --;
             }
         };
@@ -276,7 +281,7 @@ public class ChipVsChap extends JFrame{
 
         var backgroundImage = new JLabel();
         backgroundImage.setBounds(0,0,800,375);
-        ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
+        ImageIcon img = new ImageIcon(Img.fullmap.image);
        
         JPanel panel = new JPanel();
         panel.setLayout(null);
