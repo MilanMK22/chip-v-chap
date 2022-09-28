@@ -196,6 +196,7 @@ public class ChipVsChap extends JFrame{
         var controls = new JButton("Controls");
         var load = new JButton("Load Game");
         JFileChooser open = new JFileChooser();
+        
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
