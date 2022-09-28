@@ -31,6 +31,8 @@ public class ChipVsChap extends JFrame{
     public int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
     public int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
+    public  JLabel background = new JLabel();
+   
 
     Timer timer;
     int count = 0;
@@ -55,7 +57,11 @@ public class ChipVsChap extends JFrame{
        return '\u2190';
     }
 
+
+
     public void startTimer(int timeDone){
+       
+       
         ActionListener action = (e) -> {
             if(count == 0){
                 timer.stop();
@@ -64,6 +70,7 @@ public class ChipVsChap extends JFrame{
                 int minutes = count /60;
                 int seconds = count% 60;
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
+                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
                 count --;
             }
         };
@@ -263,14 +270,14 @@ public class ChipVsChap extends JFrame{
         var chips = new JLabel("test",SwingConstants.CENTER);
         chips.setBounds(615, 203,60, 30);
 
+        background.setOpaque(true);
+        background.setBounds(67, 52, 380, 280);
+        background.setBackground(Color.black);
 
         var backgroundImage = new JLabel();
         backgroundImage.setBounds(0,0,800,375);
         ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
-        var background = new JLabel();
-        background.setOpaque(true);
-        background.setBounds(67, 52, 380, 280);
-        background.setBackground(Color.red);
+       
         JPanel panel = new JPanel();
         panel.setLayout(null);
         backgroundImage.setIcon(img);
@@ -307,18 +314,17 @@ public class ChipVsChap extends JFrame{
         };
         addKeyListener(gameKeyListener);
        
-
+        panel.add(background);
         panel.add(backgroundImage);
         backgroundImage.add(level);
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
-       
+      
         setPreferredSize(new Dimension(800,400));
         pack();
 
-        backgroundImage.add(background);
-        Mapprint.printMap(m, background.getGraphics());
-        backgroundImage.repaint();
+       
+        //backgroundImage.repaint();
     }   
     
    

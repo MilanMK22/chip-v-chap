@@ -110,7 +110,8 @@ public class Chap implements Entity{
             case RIGHT: return Img.Marco.image;
             default: return Img.Marco.image;
         }
-        
+   
+    
 
     }
 }
