@@ -6,7 +6,7 @@ public class Tile{
 
 
     Point location;
-    public TileState state;
+    TileState state;
     Entity entity;
 
     Tile(TileState tileState, Point location){
@@ -61,5 +61,5 @@ public class Tile{
     boolean isDoor() { return state.isDoor(); }
     boolean hasEntity(){ return entity != null; }
     Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }
-    BufferedImage getImage(){ return state.getImage(); }
+    public BufferedImage getImage(){ return state.getImage(); }
 }

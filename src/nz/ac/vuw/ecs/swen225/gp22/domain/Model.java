@@ -17,16 +17,11 @@ public class Model {
 
     public Chap chap(){ return this.chap; }
     public Maze maze(){ return this.maze; }
+    public List<Entity> entities(){ return this.entities; }
+    private void win(){}
+    private void loss(){}
 
-    private void win(){
-
-    }
-    private void loss(){
-        
-    }
-      public Maze getMaze() {
-        return maze;
-    }
+    public Maze getMaze() { return maze; }
 
     public void tick(){
         entities.forEach(e->e.tick());

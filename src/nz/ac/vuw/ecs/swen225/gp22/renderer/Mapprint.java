@@ -21,7 +21,7 @@ public class Mapprint {
         int y =0;
         for(int i = 0 ; i < m.getMaze().xlen; i++){
             for(int j = 0; j < m.getMaze().ylen; j++){
-                 java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].state.getImage();
+                 java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
                  g.drawImage(cur, x, y, 40, 40, null);
                  x+=40;
                  if(x >= 440){

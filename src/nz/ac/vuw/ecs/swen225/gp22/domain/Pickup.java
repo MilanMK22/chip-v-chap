@@ -30,6 +30,7 @@ public class Pickup{
         Treasure(Point loc){
             this.location = loc;
         }
+        public BufferedImage getImage(){ return Img.coin.image; }
         public boolean isKey(){ return true; }
         public boolean isChap(){ return false; }
         public boolean isTreasure() { return false; }
@@ -44,7 +45,7 @@ public class Pickup{
             color = col;
             location = loc;
         }
-
+        public BufferedImage getImage(){ return color.key(); }
         public boolean isKey(){ return true; }
         public boolean isChap(){ return false; }
         public boolean isTreasure() { return false; }

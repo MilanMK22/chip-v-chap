@@ -1,5 +1,4 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import javax.swing.Renderer;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
@@ -122,7 +121,7 @@ class TreasureTile implements TileState{
             t.setState(new FreeTile());
             return true;
         }
-        else throw new Error("No treasure on this treasure tile!");
+        else throw new IllegalStateException("No treasure on this treasure tile!");
     }
     public BufferedImage getImage() {
         return Img.floor_tiles.image;

@@ -3,6 +3,9 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.awt.image.BufferedImage;
+
+import imgs.Img;
 
 public class Chap implements Entity{
 
@@ -87,16 +90,27 @@ public class Chap implements Entity{
             heldItems -= 1;
         }
         else{
-            throw new Error("No key of type " + color + " present in inventory: \n" + inventory.toString());
+            throw new IllegalArgumentException("No key of type " + color + " present in inventory: \n" + inventory.toString());
         }
     }
     private void addToInventory(Pickup.Key p){
         //Check if overwriting another item;
         if(inventory[heldItems] != null){
-            throw new Error("Overwriting Inventory Slot " + heldItems + ": " 
+            throw new IllegalStateException("Overwriting Inventory Slot " + heldItems + ": " 
             + inventory[heldItems].toString() + " with " + p.toString()); }
         else{
             inventory[heldItems] = p;
         }
+    }
+    public BufferedImage getImage(){
+        switch(this.direction){
+            case DOWN: return Img.Marco.image;
+            case UP: return Img.Marco.image;
+            case LEFT: return Img.Marco.image;
+            case RIGHT: return Img.Marco.image;
+            default: return Img.Marco.image;
+        }
+        
+
     }
 }

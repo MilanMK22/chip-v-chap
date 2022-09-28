@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import imgs.Img;
+import java.awt.image.BufferedImage;
+
 public class Monster implements Entity{
 
     MonsterState state;
@@ -13,11 +16,16 @@ public class Monster implements Entity{
     @Override
     public Point getLocation() { return location; }
     public void setState(MonsterState s){ this.state = s; }
-    public void setLocation(Point p){ this.location = p; }
+    private void setLocation(Point p){ this.location = p; }
     public void tick(){ this.state.tick(); }
+    public BufferedImage getImage(){ return Img.Marco.image; }
 }
+
+
+
+
 interface MonsterState{
-    public void tick();
+    public void tick(Monster m);
 }
 
 class MappedMonster implements MonsterState{
@@ -30,8 +38,8 @@ class MappedMonster implements MonsterState{
 
 
     @Override
-    public void tick(){
-           
+    public void tick(Monster m){
+        
     }
 
 }
