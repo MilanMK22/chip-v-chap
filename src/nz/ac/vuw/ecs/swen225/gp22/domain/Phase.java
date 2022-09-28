@@ -29,7 +29,4 @@ public record Phase(Model model) {
             throw new IllegalArgumentException("Unnable to Load Level 2 from XML", e);
         }
     }
-
-    
-    
 }

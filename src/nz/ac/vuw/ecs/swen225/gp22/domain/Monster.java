@@ -17,7 +17,7 @@ public class Monster implements Entity{
     public Point getLocation() { return location; }
     public void setState(MonsterState s){ this.state = s; }
     private void setLocation(Point p){ this.location = p; }
-    public void tick(){ this.state.tick(); }
+    public void tick(){ state.tick(this); }
     public BufferedImage getImage(){ return Img.Marco.image; }
 }
 
@@ -39,7 +39,7 @@ class MappedMonster implements MonsterState{
 
     @Override
     public void tick(Monster m){
-        
+
     }
 
 }
