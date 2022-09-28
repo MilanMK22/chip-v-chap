@@ -12,8 +12,8 @@ interface draw {
     void draw(Graphics g, Point center, Dimension size);
     default void drawImg(BufferedImage img, Graphics g, Point center, Dimension size){
         var l = this.location();
-        var lx = (l.x()-center.x())*Cell.renderX;
-        var ly = (l.y()-center.y())*Cell.renderY;
+        var lx = (l.getX()-center.getX())*15;
+        var ly = (l.getY()-center.getY())*15;
         double iw = img.getWidth()/2d;
         double ih = img.getHeight()/2d;
         int w1 = (int)(lx-iw);

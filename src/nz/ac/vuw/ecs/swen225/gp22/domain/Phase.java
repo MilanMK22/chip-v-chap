@@ -2,7 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 
 public record Phase(Model model) {
-    static Phase level1(Runnable win, Runnable loss){
+    public static Phase level1(Runnable win, Runnable loss){
         try{
         Model model = new Model(new Maze(Persistency.readXML("level1"))){
 

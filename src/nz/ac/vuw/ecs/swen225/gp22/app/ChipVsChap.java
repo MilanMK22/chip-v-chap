@@ -14,8 +14,15 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
+
 import java.util.Arrays;
-import java.awt.event.*; 
+import java.awt.event.*;
+import java.lang.System.Logger.Level; 
 /*
  * Game components will run from this class.
  */
@@ -242,10 +249,14 @@ public class ChipVsChap extends JFrame{
     
      
     private void testLevel(){
-
+        closePhase.run();//close phase before adding any element of the new phase
+        closePhase=()->{};
+        setPreferredSize(getSize());
+        pack(); 
+        repaint();
         var level = new JLabel("test",SwingConstants.CENTER);
 
-        level.setBounds(615,75,60, 30);
+        level.setBounds(67, 52, 380, 280);
         timerLabel.setBounds(630, 140,60, 30);
 
 
@@ -258,7 +269,7 @@ public class ChipVsChap extends JFrame{
         ImageIcon img = new ImageIcon("src/imgs/fullmap.png");
         var background = new JLabel();
         background.setOpaque(true);
-        background.setBounds(10, 10, 550, 350);
+        background.setBounds(67, 52, 380, 280);
         background.setBackground(Color.red);
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -270,7 +281,8 @@ public class ChipVsChap extends JFrame{
         JDialog dialog = pane .createDialog(null, "Paused");
         dialog.setModal(false);
         dialog.setVisible(false);
-        
+        //for renderer 
+        Model m = new Model(new Maze(Persistency.readXML("level1")));
         closePhase.run();
         closePhase=()->{
             remove(panel);
@@ -294,13 +306,20 @@ public class ChipVsChap extends JFrame{
             
         };
         addKeyListener(gameKeyListener);
+       
+
         panel.add(backgroundImage);
         backgroundImage.add(level);
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
-        backgroundImage.add(background);
+       
         setPreferredSize(new Dimension(800,400));
         pack();
+
+        backgroundImage.add(background);
+        Mapprint.printMap(m, background.getGraphics());
+        backgroundImage.repaint();
     }   
     
+   
 }
