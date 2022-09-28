@@ -8,5 +8,6 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 class GameView extends JPanel{
-    
+    //makes maptpritn map in regars to chaps location
+   
 }
