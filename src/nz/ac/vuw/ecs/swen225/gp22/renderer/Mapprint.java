@@ -6,6 +6,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
+
 import java.awt.Graphics2D;
 import java.util.Map;
 
@@ -25,11 +27,16 @@ public class Mapprint {
         for(int i = 0 ; i < m.getMaze().xlen; i++){
             for(int j = 0; j < m.getMaze().ylen; j++){
                  java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
-                 if(cur == Img.Marco.image){
-                  Chap chap = new Chap(new Point(x, y));
-                    cur = chap.getImage();
-                    g.drawImage(Img.Marco.image, x, y, 42, 42, null);
-                 }
+                    if(m.getMaze().getTiles()[i][j].entity != null){
+                        if(m.getMaze().getTiles()[i][j].entity instanceof Chap){
+                            cur = Img.Marco.image;
+                        }
+                        else{
+                            cur = m.getMaze().getTiles()[i][j].entity.getImage();
+                        }
+
+                
+                    }
                  g.drawImage(cur, x, y, 42, 42, null);
                  x+=42;
                  if(x >= 440){

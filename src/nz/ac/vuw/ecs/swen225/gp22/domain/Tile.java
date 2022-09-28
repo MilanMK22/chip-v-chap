@@ -7,7 +7,7 @@ public class Tile{
 
     Point location;
     TileState state;
-    Entity entity;
+    public Entity entity;
 
     Tile(TileState tileState, Point location){
         this.state = tileState;
