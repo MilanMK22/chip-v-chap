@@ -24,20 +24,27 @@ public class Mapprint {
        
         int x =-40;
         int y =0;
+        int size = 43;
         for(int i = 0 ; i < m.getMaze().xlen; i++){
             for(int j = 0; j < m.getMaze().ylen; j++){
                  java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
                     if(m.getMaze().getTiles()[i][j].entity != null){
                         if(m.getMaze().getTiles()[i][j].entity instanceof Chap){
+
                             cur = Img.Marco.image;
+                            size = 42;
                         }
                         else{
                             cur = m.getMaze().getTiles()[i][j].entity.getImage();
+                        
                         }
 
                 
                     }
-                 g.drawImage(cur, x, y, 42, 42, null);
+                 g.drawImage(Img.floor_tiles.image, x, y, 42, 42, null);
+                 g.drawImage(cur, x, y, size, size, null);
+                 size = 42;
+               
                  x+=42;
                  if(x >= 440){
                     x = 0;
