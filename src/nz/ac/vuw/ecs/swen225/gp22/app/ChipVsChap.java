@@ -319,6 +319,7 @@ public class ChipVsChap extends JFrame{
         JDialog dialog = pane .createDialog(null, "Paused");
         dialog.setModal(false);
         dialog.setVisible(false);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
         Model m = new Model(new Maze(Persistency.readXML("level1")));
         closePhase.run();
@@ -336,8 +337,15 @@ public class ChipVsChap extends JFrame{
                     dialog.setVisible(true);
                 } 
                 if((e.getKeyCode() == KeyEvent.VK_ESCAPE)){
-                    dialog.setVisible(false);
-                }  
+                    if(dialog.isVisible()){
+                        dialog.setVisible(false);
+                    }
+                    else{
+                    closePhase.run();
+                    menu();
+                    } 
+                } 
+                
             }
             @Override
             public void keyReleased(KeyEvent e) {}
@@ -345,6 +353,8 @@ public class ChipVsChap extends JFrame{
         };
         addKeyListener(gameKeyListener);
        
+       
+
         panel.add(background);
         panel.add(backgroundImage);
         backgroundImage.add(level);
