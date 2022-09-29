@@ -22,12 +22,12 @@ import javax.swing.JFileChooser;
 
 public class Replay {
   
-	private Stack<Action> moves;
+	private Stack<GameAction> moves;
 	private int level;
     private String Name = "Replay--";
 	
 
-	public Replay(Stack<Action> moves, int level, String Name) {
+	public Replay(Stack<GameAction> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
         this.Name = this.Name + Name;
@@ -35,15 +35,15 @@ public class Replay {
 	
 	
 	
-	public Stack<Action> getMoves() {
+	public Stack<GameAction> getMoves() {
 		return moves;
 	}
 
-	public void setMoves(Stack<Action> moves) {
+	public void setMoves(Stack<GameAction> moves) {
 		this.moves = moves;
 	}
 
-    public void addMove(Action move){
+    public void addMove(GameAction move){
         moves.push(move);
     }
 
@@ -116,7 +116,7 @@ public class Replay {
     
             String Name = "";
             int Level = 0;
-            Stack<Action> moves = new Stack<Action>();
+            Stack<GameAction> moves = new Stack<GameAction>();
             Replay ReadReplay = new Replay();
 
         try {
@@ -138,7 +138,7 @@ public class Replay {
                 List<Element> details = Action.getChildren();
                 String direction = details.get(0).getText();
                 int pings = Integer.parseInt(details.get(1).getText());
-                Action A = new Action(direction, pings);
+                GameAction A = new GameAction(direction, pings);
                 moves.add(A);
             }
 

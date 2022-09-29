@@ -6,7 +6,7 @@ public class GameAction {
     int numPings;  //number of pings since last action 
 
 
-    GameAction(String name, int pings){
+    public GameAction(String name, int pings){
 
         this.name = name;
         this.numPings = pings;
