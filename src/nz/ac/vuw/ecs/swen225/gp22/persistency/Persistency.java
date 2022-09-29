@@ -22,6 +22,18 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
  */
 public class Persistency {
 
+    // HashMap<TileState, Character> stateMap = Map.ofEntries(
+    //     entry(WallTile.Class, 'W'),
+    //     entry(FreeTile.Class, 'o'),
+    //     entry(InfoTile.Class, 'i'),
+    //     entry(ExitLockTile.Class, 'l'),
+    //     entry(TreasureTile.Class, 't'),
+    //     entry(ExitTile.Class, 'X'),
+    //     entry(LockedDoorTile.Class, 'o'), ///nah
+    //     entry(KeyTile.Class, 'o') ///nah
+    // );
+
+
     /** 
      * Reads an XML path and returns a 2D array of tiles for level creation
      * Uses an array maker object to convert the board string from XML to tiles
@@ -80,7 +92,7 @@ public class Persistency {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
+        // returns board string converted to 2D array
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
@@ -90,7 +102,7 @@ public class Persistency {
      * @param tiles current tiles of game
      */
     public void createPXML(Tile[][] tiles) {
-        //String board = strFromArray(tiles);
+        String board = ""; //strFromArray(tiles);
 
         try {
             // root element
@@ -103,8 +115,7 @@ public class Persistency {
             // treasure element
             Element tresElement = new Element("tres").setText("5");
             // board element
-            Element boardElement = new Element("board").setText(
-                    "");
+            Element boardElement = new Element("board").setText(board);
             // description element
             Element descElement = new Element("desc").setText("saved progress");
             // id element
@@ -127,58 +138,18 @@ public class Persistency {
         }
     }
 
-//     private String strFromArray(Tile[][] tiles) {
-//         char[] boardChars = new char[tiles.length*tiles[0].length];
-//         for (int i = 0; i < tiles.length; i++) {
-//             for (int j = 0; j < tiles[0].length; j++) {
-//                 Tile t = tiles[i][j];
-//                 switch (t.getClass()) {
-//                     case 'W':
-//                         tiles[i][j] = Tile.wallTile(loc);
-//                         break;
-//                     case 'o':
-//                         tiles[i][j] = Tile.freeTile(loc);
-//                         break;
-//                     case 'b':
-//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.BLUE);
-//                         break;
-//                     case 'r':
-//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.RED);
-//                         break;
-//                     case 'g':
-//                         tiles[i][j] = Tile.keyTile(loc, KEYCOLOR.GREEN);
-//                         break;
-//                     case 'B':
-//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.BLUE);
-//                         break;
-//                     case 'R':
-//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.RED);
-//                         break;
-//                     case 'G':
-//                         tiles[i][j] = Tile.lockedDoorTile(loc, KEYCOLOR.GREEN);
-//                         break;
-//                     case 'i':
-//                         tiles[i][j] = Tile.infoTile(loc);
-//                         break;
-//                     case 't':
-//                         tiles[i][j] = Tile.treasureTile(loc);
-//                         break;
-//                     case 'l':
-//                         tiles[i][j] = Tile.exitLockTile(loc);
-//                         break;
-//                     case 'X':
-//                         tiles[i][j] = Tile.exitTile(loc);
-//                         break;
-//                     case 'C':
-//                         tiles[i][j] = Tile.freeTile(loc);
-//                         break;
-//                     default:
-//                         throw new IllegalArgumentException("Invalid tile char");
-                        
-//                 }  
+    // private String strFromArray(Tile[][] tiles) {
+    //     char[] boardChars = new char[tiles.length*tiles[0].length];
+    //     for (int i = 0; i < tiles.length; i++) {
+    //         for (int j = 0; j < tiles[0].length; j++) {
+    //             Tile t = tiles[i][j];
                 
-//                 boardChars[(i*tiles.length)+j] = 
-//             }
-//     }
-// }
+                     
+    //             boardChars[(i*tiles.length)+j] = stateMap.get(t.getState());
+    //             }  
+                
+                 
+    //         }
+    // }
 }
+
