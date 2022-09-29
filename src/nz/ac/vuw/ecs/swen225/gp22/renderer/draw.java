@@ -7,8 +7,25 @@ import java.awt.image.BufferedImage;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
+
+/**
+ * 
+ * 
+ * @author Jack Grunfeld
+ * @version 1.0
+ * draw method
+ */
 interface draw {
+  /*
+   * @param m
+   */
     void ping(Maze m);
+    /*
+     * @param g
+     * @param center
+     * @param size
+     */
+     
     void draw(Graphics g, Point center, Dimension size);
     default void drawImg(BufferedImage img, Graphics g, Point center, Dimension size){
         var l = this.location();
@@ -25,6 +42,10 @@ interface draw {
         g.drawImage(img,w1,h1,w2,h2,0,0,img.getWidth(),img.getHeight(),null);
         }
 
+        /*
+         * 
+         * @return
+         */
         Point location();
         default void location(Point p){
           throw new Error("This entity can not move");
