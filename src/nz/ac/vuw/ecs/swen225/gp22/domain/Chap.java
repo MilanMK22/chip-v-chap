@@ -44,7 +44,7 @@ public class Chap implements Entity{
         return heldTreasure;
     }
 
-    public Point getLocation(){ return location; }
+    public  Point getLocation(){ return location; }
     public DIRECTION getDirection(){ return direction; }
     public void setMaze(Maze m){ this.maze = m; }
     
