@@ -17,11 +17,22 @@ import org.jdom2.output.XMLOutputter;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
+/**
+ * Main class for the persistency package
+ */
 public class Persistency {
 
+    /** 
+     * Reads an XML path and returns a 2D array of tiles for level creation
+     * Uses an array maker object to convert the board string from XML to tiles
+     * 
+     * @param level Level string to be converted to array
+     * @return Array of tiles
+     * @throws ArithmeticException
+     */
     public static Tile[][] readXML(String level) throws ArithmeticException {
-        int wid = -1;
-        int hei = -1;
+        int wid = 0;
+        int hei = 0;
         int tres;
         String board = null;
         String id;
@@ -70,9 +81,14 @@ public class Persistency {
             ioe.printStackTrace();
         }
 
-        return new ArrayMaker(board, wid, hei).makeArray();
+        return ArrayMaker.makeArray(board, wid, hei);
     }
 
+    /**
+     * Creates an XML file of current state of game, acts as saving feature
+     * 
+     * @param tiles current tiles of game
+     */
     public void createPXML(Tile[][] tiles) {
         //String board = strFromArray(tiles);
 
