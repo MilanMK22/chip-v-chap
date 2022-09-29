@@ -21,9 +21,12 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 
 import java.util.Arrays;
+import java.util.Stack;
 import java.awt.event.*;
 import java.lang.System.Logger.Level; 
 /*
@@ -36,7 +39,6 @@ public class ChipVsChap extends JFrame{
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
    
-
     Timer timer;
     int count = 0;
     int delay = 1000;
@@ -44,8 +46,17 @@ public class ChipVsChap extends JFrame{
     private JLabel timerLabel = new JLabel("test");
     
 
+    /**
+     * Updates the keybindings.
+     */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
+
+    /**
+     * Returns the character relative to the character.
+     * @param e
+     * @return
+     */
     public Character getArrow(KeyEvent e){
         switch(e.getKeyCode()){
             case KeyEvent.VK_UP:
@@ -57,15 +68,15 @@ public class ChipVsChap extends JFrame{
             case KeyEvent.VK_RIGHT:
                 return '\u2192';
         }
-       return '\u2190';
-    }
+       return null;
+    }  
 
-
-
-
+    /**
+     * Starts the timer for the game level.
+     * timeDone is set in the levels method and can be set to how many seconds needed.
+     * @param timeDone
+     */
     public void startTimer(int timeDone){
-       
-       
         ActionListener action = (e) -> {
             if(count == 0){
                 timer.stop();
@@ -75,7 +86,6 @@ public class ChipVsChap extends JFrame{
                 int seconds = count% 60;
                 
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
                
                 count --;
             }
@@ -86,6 +96,12 @@ public class ChipVsChap extends JFrame{
         timer.start();
     }
     
+    /**
+     * Updates the keys to be relative to the user input.
+     * @param code
+     * @param component
+     * @return
+     */
 
     public ActionListener reMap(int code, JButton component){
         return (e) -> {
@@ -142,6 +158,9 @@ public class ChipVsChap extends JFrame{
         
     }
 
+    /*
+     * Control frame that allows user to change controls.
+     */
     public void controls(){
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
@@ -191,8 +210,11 @@ public class ChipVsChap extends JFrame{
     }
 
 
+
+    /**
+     * Start menu frame.
+     */
     private void menu(){
-       
         var start = new JButton("");
         start.setOpaque(false);
         start.setContentAreaFilled(false);
@@ -276,29 +298,43 @@ public class ChipVsChap extends JFrame{
     }
 
 
-    private void levelOne(){setLevel(Level.level1(()->levelOne(), ()->menu(), controls)); }
+    /**
+     * Setting to level one.
+     */
+    private void levelOne(){setLevel(Phase.level1(()->levelOne(), ()->menu())); }
 
-    private void setLevel(Level p){
+
+    /**
+     * Set level function to change between levels.
+     * @param p
+     */
+    private void setLevel(Phase p){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         pack();                   
       }
     
-     
+
+    /**
+     * Testing level that is being used to display the game and test the game is functioning as it should.
+     */
+
     private void testLevel(){
+        Replay r = new Replay(new Stack<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         pack(); 
+        Phase p = Phase.level1(()->levelOne(), ()->{});
+        Model model = p.model();
         repaint();
-        var level = new JLabel("test",SwingConstants.CENTER);
+        var level = new JLabel("LEVEL 1",SwingConstants.CENTER);
 
-        level.setBounds(67, 52, 380, 280);
+        level.setBounds(615, 75, 60, 30);
         timerLabel.setBounds(630, 140,60, 30);
 
-
-        var chips = new JLabel("test",SwingConstants.CENTER);
+        var chips = new JLabel("X",SwingConstants.CENTER);
         chips.setBounds(615, 203,60, 30);
 
         background.setOpaque(true);
@@ -312,8 +348,8 @@ public class ChipVsChap extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(null);
         backgroundImage.setIcon(img);
+        startTimer(120);
 
-        startTimer(20);
 
         JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = pane .createDialog(null, "Paused");
@@ -321,10 +357,11 @@ public class ChipVsChap extends JFrame{
         dialog.setVisible(false);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
-        Model m = new Model(new Maze(Persistency.readXML("level1")));
+   
         closePhase.run();
         closePhase=()->{
             remove(panel);
+            r.saveReplay();
         };
         add(panel);
         KeyListener gameKeyListener = new KeyListener(){
@@ -345,24 +382,67 @@ public class ChipVsChap extends JFrame{
                     menu();
                     } 
                 } 
-                
             }
             @Override
             public void keyReleased(KeyEvent e) {}
             
         };
         addKeyListener(gameKeyListener);
-       
-       
 
+        KeyListener movement = new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
+                if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                    r.addMove(new GameAction("Left", 0));
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().left();
+                    Mapprint.printMap(model, background.getGraphics());
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
+                    r.addMove(new GameAction("Right", 0));
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().right();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_UP){
+                    r.addMove(new GameAction("Up", 0));
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().up();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
+                    r.addMove(new GameAction("Down", 0));
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().down();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+        };
+
+
+        addKeyListener(movement);
+       
+    
         panel.add(background);
         panel.add(backgroundImage);
         backgroundImage.add(level);
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
       
+
         setPreferredSize(new Dimension(800,400));
         pack();
+        Mapprint.printMap(model, background.getGraphics());
+
 
        
         //backgroundImage.repaint();
