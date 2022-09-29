@@ -19,14 +19,21 @@ import javax.swing.JFileChooser;
 
 
 
-
+/**
+ * This class stores a Replay with a stack, level number and name
+ */
 public class Replay {
   
 	private Stack<GameAction> moves;
 	private int level;
     private String Name = "Replay--";
 	
-
+/**
+ * 
+ * @param moves The moves that occured in the game e.g "Up,Down..."
+ * @param level The level number that this game was recordered on
+ * @param Name The Name of the Replay
+ */
 	public Replay(Stack<GameAction> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
@@ -34,35 +41,68 @@ public class Replay {
 	}
 	
 	
-	
+	/**
+     * 
+     * @return the moves stack 
+     */
 	public Stack<GameAction> getMoves() {
 		return moves;
 	}
+
+    /**
+     * 
+     * @param moves set our moves list
+     */
 
 	public void setMoves(Stack<GameAction> moves) {
 		this.moves = moves;
 	}
 
+    /**
+     * 
+     * @param move add a move to the stack
+     */
     public void addMove(GameAction move){
         moves.push(move);
     }
 
+    /**
+     * 
+     * @return the level our replay is on
+     */
+
 	public int getLevel() {
 		return level;
 	}
+    /**
+     * 
+     * @return the replay name
+     */
 
     public String getName() {
 		return Name;
 	}
 
+    /**
+     * 
+     * @param level set the level of the replay
+     */
 	public void setLevel(int level) {
 		this.level = level;
 	}
+
+    /**
+     * Empty Constructor
+     */
 
 	public Replay() {
 		
 	}
 
+    
+    /**
+     * Saves a replay to an XML file
+     */
     public void saveReplay(){
         try{
             //root element
@@ -105,6 +145,10 @@ public class Replay {
          }
     }
 
+    /**
+     * 
+     * @return return a Replay Object that was read from the XML file
+     */
     public static Replay readXML(){
 
     JFileChooser jfc = new JFileChooser("Replays/");
