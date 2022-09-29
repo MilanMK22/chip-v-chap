@@ -11,6 +11,8 @@ public class TestFunct {
             System.out.println(readTiles.length);
             System.out.println(readTiles[0].length);
             System.out.println();
+            Tile t = readTiles[0][0];
+            System.out.println(t.getState());
            
             
         } catch (Exception e) {
