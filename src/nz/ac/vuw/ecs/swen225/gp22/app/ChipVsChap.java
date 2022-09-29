@@ -36,7 +36,6 @@ public class ChipVsChap extends JFrame{
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
    
-
     Timer timer;
     int count = 0;
     int delay = 1000;
@@ -57,11 +56,30 @@ public class ChipVsChap extends JFrame{
             case KeyEvent.VK_RIGHT:
                 return '\u2192';
         }
-       return '\u2190';
+       return null;
     }
 
+    public Character getCode(Character e){
+        switch(e){
+            case '\u2191':
+                return KeyEvent.VK_DOWN;
+            case '\u2193':
+                return KeyEvent.VK_DOWN;
+            case  '\u2190':
+               return KeyEvent.VK_LEFT;
+            case '\u2192':
+                return KeyEvent.VK_RIGHT;
+        }
+       return null;
+    }
+
+    
 
 
+    public void draw(Model model){
+        Mapprint.printMap(model, background.getGraphics());
+
+    }
 
     public void startTimer(int timeDone){
        
@@ -75,7 +93,6 @@ public class ChipVsChap extends JFrame{
                 int seconds = count% 60;
                 
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
                
                 count --;
             }
@@ -276,27 +293,32 @@ public class ChipVsChap extends JFrame{
     }
 
 
-    private void levelOne(){setLevel(Level.level1(()->levelOne(), ()->menu(), controls)); }
+    private void levelOne(){setLevel(Phase.level1(()->levelOne(), ()->menu())); }
 
-    private void setLevel(Level p){
+    private void setLevel(Phase p){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         pack();                   
       }
     
+
+    /**
+     * 
+     */
      
     private void testLevel(){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         pack(); 
+        Phase p = Phase.level1(()->levelOne(), ()->{});
+        Model model = p.model();
         repaint();
         var level = new JLabel("test",SwingConstants.CENTER);
 
         level.setBounds(67, 52, 380, 280);
         timerLabel.setBounds(630, 140,60, 30);
-
 
         var chips = new JLabel("test",SwingConstants.CENTER);
         chips.setBounds(615, 203,60, 30);
@@ -312,8 +334,8 @@ public class ChipVsChap extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(null);
         backgroundImage.setIcon(img);
+        startTimer(120);
 
-        startTimer(20);
 
         JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = pane .createDialog(null, "Paused");
@@ -321,7 +343,7 @@ public class ChipVsChap extends JFrame{
         dialog.setVisible(false);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
-        Model m = new Model(new Maze(Persistency.readXML("level1")));
+   
         closePhase.run();
         closePhase=()->{
             remove(panel);
@@ -345,24 +367,63 @@ public class ChipVsChap extends JFrame{
                     menu();
                     } 
                 } 
-                
             }
             @Override
             public void keyReleased(KeyEvent e) {}
             
         };
         addKeyListener(gameKeyListener);
-       
-       
 
+        KeyListener movement = new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
+                if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().left();
+                    Mapprint.printMap(model, background.getGraphics());
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().right();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_UP){
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().up();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+                if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
+                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                    model.chap().down();
+                    Mapprint.printMap(model, background.getGraphics());
+
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+        };
+
+
+        addKeyListener(movement);
+       
+    
         panel.add(background);
         panel.add(backgroundImage);
         backgroundImage.add(level);
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
       
+
         setPreferredSize(new Dimension(800,400));
         pack();
+        Mapprint.printMap(model, background.getGraphics());
+
 
        
         //backgroundImage.repaint();
