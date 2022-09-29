@@ -46,8 +46,17 @@ public class ChipVsChap extends JFrame{
     private JLabel timerLabel = new JLabel("test");
     
 
+    /**
+     * Updates the keybindings.
+     */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
+
+    /**
+     * Returns the character relative to the character.
+     * @param e
+     * @return
+     */
     public Character getArrow(KeyEvent e){
         switch(e.getKeyCode()){
             case KeyEvent.VK_UP:
@@ -60,33 +69,14 @@ public class ChipVsChap extends JFrame{
                 return '\u2192';
         }
        return null;
-    }
+    }  
 
-    public Character getCode(Character e){
-        switch(e){
-            case '\u2191':
-                return KeyEvent.VK_DOWN;
-            case '\u2193':
-                return KeyEvent.VK_DOWN;
-            case  '\u2190':
-               return KeyEvent.VK_LEFT;
-            case '\u2192':
-                return KeyEvent.VK_RIGHT;
-        }
-       return null;
-    }
-
-    
-
-
-    public void draw(Model model){
-        Mapprint.printMap(model, background.getGraphics());
-
-    }
-
+    /**
+     * Starts the timer for the game level.
+     * timeDone is set in the levels method and can be set to how many seconds needed.
+     * @param timeDone
+     */
     public void startTimer(int timeDone){
-       
-       
         ActionListener action = (e) -> {
             if(count == 0){
                 timer.stop();
@@ -106,6 +96,12 @@ public class ChipVsChap extends JFrame{
         timer.start();
     }
     
+    /**
+     * Updates the keys to be relative to the user input.
+     * @param code
+     * @param component
+     * @return
+     */
 
     public ActionListener reMap(int code, JButton component){
         return (e) -> {
@@ -162,6 +158,9 @@ public class ChipVsChap extends JFrame{
         
     }
 
+    /*
+     * Control frame that allows user to change controls.
+     */
     public void controls(){
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
@@ -211,8 +210,11 @@ public class ChipVsChap extends JFrame{
     }
 
 
+
+    /**
+     * Start menu frame.
+     */
     private void menu(){
-       
         var start = new JButton("");
         start.setOpaque(false);
         start.setContentAreaFilled(false);
@@ -296,8 +298,16 @@ public class ChipVsChap extends JFrame{
     }
 
 
+    /**
+     * Setting to level one.
+     */
     private void levelOne(){setLevel(Phase.level1(()->levelOne(), ()->menu())); }
 
+
+    /**
+     * Set level function to change between levels.
+     * @param p
+     */
     private void setLevel(Phase p){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
@@ -307,9 +317,9 @@ public class ChipVsChap extends JFrame{
     
 
     /**
-     * 
+     * Testing level that is being used to display the game and test the game is functioning as it should.
      */
-     
+
     private void testLevel(){
         Replay r = new Replay(new Stack<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
@@ -319,12 +329,12 @@ public class ChipVsChap extends JFrame{
         Phase p = Phase.level1(()->levelOne(), ()->{});
         Model model = p.model();
         repaint();
-        var level = new JLabel("test",SwingConstants.CENTER);
+        var level = new JLabel("LEVEL 1",SwingConstants.CENTER);
 
-        level.setBounds(67, 52, 380, 280);
+        level.setBounds(615, 75, 60, 30);
         timerLabel.setBounds(630, 140,60, 30);
 
-        var chips = new JLabel("test",SwingConstants.CENTER);
+        var chips = new JLabel("X",SwingConstants.CENTER);
         chips.setBounds(615, 203,60, 30);
 
         background.setOpaque(true);
