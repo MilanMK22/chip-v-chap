@@ -5,16 +5,24 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 import java.awt.Color;
 
+/**
+ * ArrayMaker class to separate the tile parsing from the XML reading
+ */
 public class ArrayMaker {
-    String board;
-    int w,h;
-    public ArrayMaker(String board, int w, int h) {
-        this.board = board;
-        this.w = w;
-        this.h = h;
+
+    public ArrayMaker() {
+
     }
 
-    public Tile[][] makeArray(){
+    /**
+     * Given a string and dimensions, makes an array of tiles
+     * 
+     * @param board Board string from XML
+     * @param w Level width from XML
+     * @param h Level height from XML
+     * @return
+     */
+    public static Tile[][] makeArray(String board, int w, int h){
         Tile[][] tiles = new Tile[w][h];
         char[] chars = board.toCharArray();
             for (int j = 0; j < h; j++) {
