@@ -1,17 +1,26 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.persistency;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 
 public class PersistencyTest {
     @Test
     public void test1() {
-       assertThrows(ArithmeticException.class, ()->{Tile[][] tiles = Persistency.readXML("level1");});
+        Tile[][] t = Persistency.readXML("level1");
+        assertEquals(10, t.length);
+        assert(t[0].length == 10);
+        for (int i = 0; i < t.length; i++) {
+            for (int j = 0; j < t[0].length; j++) {
+               assert(t[i][j]!= null);
+            }
+        }
+     // assertThrows(ArithmeticException.class, ()->{Tile[][] tiles = Persistency.readXML("level1");});
     }
 
     @Test

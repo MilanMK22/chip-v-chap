@@ -7,17 +7,21 @@ public class TestFunct {
     public static void main(String[] args) {
         try {
             //Tile[][] readTile1s = Persistency.readXML("level1");
-            Tile[][] readTiles = Persistency.readXML("level2");
+            Tile[][] readTiles = Persistency.readXML("level1");
             System.out.println(readTiles.length);
             System.out.println(readTiles[0].length);
             System.out.println();
-            Tile t = readTiles[0][0];
-            System.out.println(t.getState());
+            // Tile t = readTiles[0][0];
+            // String s = t.getState().toString();
+            // String ss = s.substring(34, s.length() - 9);
+            // System.out.println(ss);
+            Persistency.createPXML(readTiles);
            
             
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            System.out.println("caught");
         }
 
         System.out.println("done :)");

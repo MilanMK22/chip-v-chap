@@ -22,16 +22,16 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
  */
 public class Persistency {
 
-    // HashMap<TileState, Character> stateMap = Map.ofEntries(
-    //     entry(WallTile.Class, 'W'),
-    //     entry(FreeTile.Class, 'o'),
-    //     entry(InfoTile.Class, 'i'),
-    //     entry(ExitLockTile.Class, 'l'),
-    //     entry(TreasureTile.Class, 't'),
-    //     entry(ExitTile.Class, 'X'),
-    //     entry(LockedDoorTile.Class, 'o'), ///nah
-    //     entry(KeyTile.Class, 'o') ///nah
-    // );
+    static Map<String, Character> stateMap = Map.ofEntries(
+        Map.entry("WallT", 'W'),
+        Map.entry("FreeT", 'o'),
+        Map.entry("InfoT", 'i'),
+        Map.entry("ExitL", 'l'),
+        Map.entry("Treas", 't'),
+        Map.entry("ExitT", 'X'),
+        Map.entry("Locke", 'o'), ///nah
+        Map.entry("KeyTi", 'o') ///nah
+    );
 
 
     /** 
@@ -101,8 +101,8 @@ public class Persistency {
      * 
      * @param tiles current tiles of game
      */
-    public void createPXML(Tile[][] tiles) {
-        String board = ""; //strFromArray(tiles);
+    public static void createPXML(Tile[][] tiles) {
+        String board = strFromArray(tiles);
 
         try {
             // root element
@@ -112,8 +112,6 @@ public class Persistency {
             Element widthElement = new Element("width").setText(String.valueOf(tiles.length));
             // height element
             Element heightElement = new Element("height").setText(String.valueOf(tiles[0].length));
-            // treasure element
-            Element tresElement = new Element("tres").setText("5");
             // board element
             Element boardElement = new Element("board").setText(board);
             // description element
@@ -126,7 +124,6 @@ public class Persistency {
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
             doc.getRootElement().addContent(idElement);
-            doc.getRootElement().addContent(tresElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             // setup printstream
             PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/levelPers.xml", false));
@@ -138,18 +135,23 @@ public class Persistency {
         }
     }
 
-    // private String strFromArray(Tile[][] tiles) {
-    //     char[] boardChars = new char[tiles.length*tiles[0].length];
-    //     for (int i = 0; i < tiles.length; i++) {
-    //         for (int j = 0; j < tiles[0].length; j++) {
-    //             Tile t = tiles[i][j];
-                
-                     
-    //             boardChars[(i*tiles.length)+j] = stateMap.get(t.getState());
-    //             }  
-                
-                 
-    //         }
-    // }
+    private static String strFromArray(Tile[][] tiles) {
+        char[] boardChars = new char[tiles.length*tiles[0].length];
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                Tile t = tiles[i][j];
+                String s = t.getState().toString();
+                String ss = s.substring(34, 39);
+                if(ss=="KeyTi"){
+                    boardChars[(i*tiles.length)+j] = '=';
+                }else if(ss=="Locke"){
+                    boardChars[(i*tiles.length)+j] = '+';
+                } else {
+                    boardChars[(i*tiles.length)+j] = stateMap.get(ss);
+                }
+                }  
+            }
+            return String.valueOf(boardChars);
+    }
 }
 
