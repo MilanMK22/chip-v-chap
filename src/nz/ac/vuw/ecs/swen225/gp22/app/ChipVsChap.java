@@ -75,7 +75,7 @@ public class ChipVsChap extends JFrame{
                 int seconds = count% 60;
                 
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
+                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level2"))), background.getGraphics());
                
                 count --;
             }
@@ -192,26 +192,50 @@ public class ChipVsChap extends JFrame{
 
 
     private void menu(){
-        var header = new JLabel("Chip Vs Chap", SwingConstants.CENTER);
-        var start = new JButton("Play");
-        var controls = new JButton("Controls");
-        var load = new JButton("Load Game");
+       
+        var start = new JButton("");
+        start.setOpaque(false);
+        start.setContentAreaFilled(false);
+        start.setBorderPainted(false);
+        start.setBounds(315, 235, 170, 70);
+
+        var controls = new JButton("");
+        controls.setOpaque(false);
+        controls.setContentAreaFilled(false);
+        controls.setBorderPainted(false);
+        controls.setBounds(515, 235, 170, 70);
+
+        var load = new JButton("");
+        load.setOpaque(false);
+        load.setContentAreaFilled(false);
+        load.setBorderPainted(false);
+        load.setBounds(115, 235, 170, 70);
+
+        var HomeScreen = new JLabel();
+        HomeScreen.setBounds(0,0,800,375);
+        HomeScreen.setIcon(new ImageIcon(Img.homeScreen.image));
+
         JFileChooser open = new JFileChooser();
         
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
         closePhase=()->{
-            remove(header);
+           
             remove(start);
             remove(controls);
+            remove(HomeScreen);
             remove(panel);
+
         };
-        add(BorderLayout.CENTER,header);
-        add(BorderLayout.SOUTH,panel);
-        add(BorderLayout.NORTH,controls);
-        panel.add(load);
-        panel.add(start);
+       
+        //add(BorderLayout.SOUTH,panel);
+        HomeScreen.add(controls);
+        HomeScreen.add(start);
+        HomeScreen.add(load);
+        add(HomeScreen);
+       
+       
         this.setFocusable(true);
         KeyListener menuKeyListener = new KeyListener(){
             public void keyTyped(KeyEvent e) {}

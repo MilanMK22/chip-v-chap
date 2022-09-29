@@ -17,8 +17,10 @@ public class Mapprint {
     public static void printMap(Model m, Graphics g){
         int vari = 1;
         int x =-42;
-        int y =0;
+        int y =-42;
         int size = 43;
+       
+        
         //for loop for pritnig map
         
         for(int i = 0 ; i < m.getMaze().xlen; i++){
@@ -39,7 +41,7 @@ public class Mapprint {
             } 
         }
         for(Entity e: m.entities()){
-        g.drawImage(e.getImage(), (e.getLocation().getX() * 42)-42, (e.getLocation().getY() * 42), 40,40, null);
+        g.drawImage(e.getImage(), (e.getLocation().getX() * 42)-42, (e.getLocation().getY() * 42)-42, 40,40, null);
         vari = 42;
      }
  
