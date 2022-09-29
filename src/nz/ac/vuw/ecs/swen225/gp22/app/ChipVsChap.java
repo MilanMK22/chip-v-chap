@@ -75,7 +75,7 @@ public class ChipVsChap extends JFrame{
                 int seconds = count% 60;
                 
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level2"))), background.getGraphics());
+                Mapprint.printMap(new Model(new Maze(Persistency.readXML("level1"))), background.getGraphics());
                
                 count --;
             }
