@@ -9,9 +9,9 @@ public class CreatRepXML {
 
     public static void main(String[] args) throws Exception {
         
-        Replay R2 = new Replay(new Stack<Action>(),1, "");
-        R2.addMove(new Action("UP", 30));
-        R2.addMove(new Action("UP", 30));
+        Replay R2 = new Replay(new Stack<GameAction>(),1, "");
+        R2.addMove(new GameAction("UP", 30));
+        R2.addMove(new GameAction("UP", 30));
         R2.saveReplay();
 
 }

@@ -19,50 +19,90 @@ import javax.swing.JFileChooser;
 
 
 
-
+/**
+ * This class stores a Replay with a stack, level number and name
+ */
 public class Replay {
   
-	private Stack<Action> moves;
+	private Stack<GameAction> moves;
 	private int level;
     private String Name = "Replay--";
 	
-
-	public Replay(Stack<Action> moves, int level, String Name) {
+/**
+ * 
+ * @param moves The moves that occured in the game e.g "Up,Down..."
+ * @param level The level number that this game was recordered on
+ * @param Name The Name of the Replay
+ */
+	public Replay(Stack<GameAction> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
         this.Name = this.Name + Name;
 	}
 	
 	
-	
-	public Stack<Action> getMoves() {
+	/**
+     * 
+     * @return the moves stack 
+     */
+	public Stack<GameAction> getMoves() {
 		return moves;
 	}
 
-	public void setMoves(Stack<Action> moves) {
+    /**
+     * 
+     * @param moves set our moves list
+     */
+
+	public void setMoves(Stack<GameAction> moves) {
 		this.moves = moves;
 	}
 
-    public void addMove(Action move){
+    /**
+     * 
+     * @param move add a move to the stack
+     */
+    public void addMove(GameAction move){
         moves.push(move);
     }
+
+    /**
+     * 
+     * @return the level our replay is on
+     */
 
 	public int getLevel() {
 		return level;
 	}
+    /**
+     * 
+     * @return the replay name
+     */
 
     public String getName() {
 		return Name;
 	}
 
+    /**
+     * 
+     * @param level set the level of the replay
+     */
 	public void setLevel(int level) {
 		this.level = level;
 	}
+
+    /**
+     * Empty Constructor
+     */
 
 	public Replay() {
 		
 	}
 
+    
+    /**
+     * Saves a replay to an XML file
+     */
     public void saveReplay(){
         try{
             //root element
@@ -105,6 +145,10 @@ public class Replay {
          }
     }
 
+    /**
+     * 
+     * @return return a Replay Object that was read from the XML file
+     */
     public static Replay readXML(){
 
     JFileChooser jfc = new JFileChooser("Replays/");
@@ -116,7 +160,7 @@ public class Replay {
     
             String Name = "";
             int Level = 0;
-            Stack<Action> moves = new Stack<Action>();
+            Stack<GameAction> moves = new Stack<GameAction>();
             Replay ReadReplay = new Replay();
 
         try {
@@ -138,7 +182,7 @@ public class Replay {
                 List<Element> details = Action.getChildren();
                 String direction = details.get(0).getText();
                 int pings = Integer.parseInt(details.get(1).getText());
-                Action A = new Action(direction, pings);
+                GameAction A = new GameAction(direction, pings);
                 moves.add(A);
             }
 
