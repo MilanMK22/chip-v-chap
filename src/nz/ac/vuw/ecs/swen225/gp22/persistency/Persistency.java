@@ -92,7 +92,7 @@ public class Persistency {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
+        // returns board string converted to 2D array
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
@@ -102,7 +102,7 @@ public class Persistency {
      * @param tiles current tiles of game
      */
     public void createPXML(Tile[][] tiles) {
-        //String board = strFromArray(tiles);
+        String board = ""; //strFromArray(tiles);
 
         try {
             // root element
@@ -115,7 +115,7 @@ public class Persistency {
             // treasure element
             Element tresElement = new Element("tres").setText("5");
             // board element
-            Element boardElement = new Element("board").setText("");
+            Element boardElement = new Element("board").setText(board);
             // description element
             Element descElement = new Element("desc").setText("saved progress");
             // id element
