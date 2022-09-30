@@ -142,12 +142,12 @@ public class Persistency {
                 Tile t = tiles[i][j];
                 String s = t.getState().toString();
                 String ss = s.substring(34, 39);
-                if(ss=="KeyTi"){
-                    boardChars[(i*tiles.length)+j] = '=';
-                }else if(ss=="Locke"){
-                    boardChars[(i*tiles.length)+j] = '+';
+                if(ss.equals("KeyTi")){
+                    boardChars[(i*tiles[0].length)+j] = '=';
+                }else if(ss.equals("Locke")){
+                    boardChars[(i*tiles[0].length)+j] = '+';
                 } else {
-                    boardChars[(i*tiles.length)+j] = stateMap.get(ss);
+                    boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
                 }
                 }  
             }
