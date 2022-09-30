@@ -43,4 +43,9 @@ public class PersistencyTest {
     public void test6() {
         assertThrows(NegativeArraySizeException.class,()->{Tile[][] tiles = Persistency.readXML("levelTest5");});
     }
+    @Test
+    public void test7() {
+        assert(Persistency.readXML("level1") != null);
+        Persistency.createPXML(Persistency.readXML("level1"));
+    }
 }
