@@ -27,36 +27,42 @@ public class Mapprint {
        */
     public static void printMap(Model m, Graphics g){
         int vari = 1;
-        int x =-42;
-        int y =-42;
-        int size = 43;
-       
-        
-        //for loop for pritnig map
-        
-        for(int i = 0 ; i < m.getMaze().xlen; i++){
-            for(int j = 0; j < m.getMaze().ylen; j++){
-                //getting tile image from domain and pritning it
-                java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
-                 g.drawImage(Img.floor_tiles.image, x, y, 42, 42, null);
-                 g.drawImage(cur, x, y, size, size, null);
-                 size = 42;
-               
-                 x+=42;
-                 if(x >= 440){
+        int x = 0;
+        int y = 0;
+        int size = 42;
+
+        Point chaploc = m.chap().getLocation();
+        int chapx = chaploc.getX();
+        int chapy = chaploc.getY();
+
+        // for loop for pritnig map
+
+        for (int i = chapy - 4; i < chapy + 4; i++) {
+            for (int j = chapx - 5; j <= chapx + 5; j++) {
+
+                // getting tile image from domain and pritning it
+                if (i < 0 || j < 0 || i >= m.getMaze().xlen || j >= m.getMaze().ylen) {
+                    g.drawImage(Img.walls.image, x, y, size, size, null);
+                } else {
+                    java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
+                    g.drawImage(Img.floor_tiles.image, x, y, size, size, null);
+                    g.drawImage(cur, x, y, size, size, null);
+                }
+
+                x += size;
+                if (x >= 11 * size) {
                     x = 0;
-                    y+=42;
-                    if(y > 440){
+                    y += size;
+                    if (y > 7 * size) {
                         break;
                     }
-                 }
-            } 
+                }
+            }
         }
-        //geting entitys from domain and pritning them
-        for(Entity e: m.entities()){
-        g.drawImage(e.getImage(), (e.getLocation().getX() * 42)-42, (e.getLocation().getY() * 42)-42, 40,40, null);
-        vari = 42;
-     }
- 
-  }
+        // geting entitys from domain and pritning them
+        for (Entity e : m.entities()) {
+            g.drawImage(e.getImage(), (e.getLocation().getX() * 42)  +- chapx, (e.getLocation().getY() * 42) +- chapy , 40, 40,null);
+        }
+
+    }
 }
