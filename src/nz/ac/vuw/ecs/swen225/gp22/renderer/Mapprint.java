@@ -26,7 +26,7 @@ public class Mapprint {
        * @param g
        */
     public static void printMap(Model m, Graphics g){
-        int vari = 1;
+          int vari = 1;
         int x = 0;
         int y = 0;
         int size = 42;
@@ -47,8 +47,12 @@ public class Mapprint {
                     java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
                     g.drawImage(Img.floor_tiles.image, x, y, size, size, null);
                     g.drawImage(cur, x, y, size, size, null);
+                    if (m.getMaze().getTiles()[i][j].isEntity()) {
+                        if ((m.getMaze().getTiles()[i][j].getEntity() != m.chap())) {
+                            g.drawImage(m.getMaze().getTiles()[i][j].getEntity().getImage(), x, y, size, size, null);
+                        }
+                    }
                 }
-
                 x += size;
                 if (x >= 11 * size) {
                     x = 0;
@@ -60,8 +64,11 @@ public class Mapprint {
             }
         }
         // geting entitys from domain and pritning them
-        for (Entity e : m.entities()) {
-            g.drawImage(e.getImage(), (e.getLocation().getX() * 42)  +- chapx, (e.getLocation().getY() * 42) +- chapy , 40, 40,null);
+        for (nz.ac.vuw.ecs.swen225.gp22.domain.Entity e : m.entities()) {
+            if (e == m.chap()) {
+                g.drawImage(e.getImage(), 5 * size, 4 * size, size, size, null);
+            }
+
         }
 
     }
