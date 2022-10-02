@@ -66,9 +66,10 @@ public class Maze {
     public Tile getTile(Point p){ return getTile(p.getX(), p.getY()); }
     public Tile getTile(int x, int y){ 
         if(bound(x, y)){
-            return tiles[x][y];
+            return tiles[y][x];
         }
-        else throw new Error("Chap cannot move off of the map"); 
+        else return Tile.wallTile(new Point(x, y));
+        // throw new Error("Chap cannot move off of the map"); 
     }
 
     public boolean bound(Point p){ return bound(p.getX(), p.getY()); }

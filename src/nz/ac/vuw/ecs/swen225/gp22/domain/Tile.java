@@ -54,12 +54,12 @@ public class Tile{
     }
 
     //Util methods
-    Point getLocation(){ return this.location;}
+    public Point getLocation(){ return this.location;}
     boolean isFree(){ return state.isFree(); }
     boolean isExit(){ return state.isExit(); }
     boolean hasPickup(){ return state.hasPickup(); }
     boolean isDoor() { return state.isDoor(); }
-    boolean hasEntity(){ return entity != null; }
-    Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }
+    public boolean hasEntity(){ return entity != null; }
+    public Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }
     public BufferedImage getImage(){ return state.getImage(); }
 }
