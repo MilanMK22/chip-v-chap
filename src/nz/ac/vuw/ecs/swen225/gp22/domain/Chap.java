@@ -197,8 +197,8 @@ public class Chap implements Entity{
         switch(this.direction){
             case DOWN: return Img.Marco.image;
             case UP: return Img.Marco.image;
-            case LEFT: return Img.Marco.image;
-            case RIGHT: return Img.Marco.image;
+            case LEFT: return Img.MarcoL.image;
+            case RIGHT: return Img.MarcoR.image;
             default: return Img.Marco.image;
         }
    
