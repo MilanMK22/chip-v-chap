@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 
 import imgs.Img;
 
+
+/**
+ * @author Leo Gaynor: 300437633
+ * 
+ */
 public class Chap implements Entity{
 
     /**
@@ -148,18 +153,37 @@ public class Chap implements Entity{
             throw new IllegalArgumentException("No key of type " + color + " present in inventory: \n" + inventory.toString());
         }
     }
+
+    /**
+     * Add the passed {@code Pickup.Key} to Chap's inventory.
+     * @param p The {@code Pickup.Key} to be added.
+     */
     private void addToInventory(Pickup.Key p){
-        //Check if overwriting another item;
+        //Check if overwriting another item.
         if(inventory[heldItems] != null){
             throw new IllegalStateException("Overwriting Inventory Slot " + heldItems + ": " 
             + inventory[heldItems].toString() + " with " + p.toString()); }
+        //Add the item.
         else{
             inventory[heldItems] = p;
         }
     }
+
+
+    /**
+     * Return a list of the items in Chap's inventory.
+     * 
+     * @return A {@code List<Pickup.Key>} representing Chap's inventory.
+     */
     public List<Pickup.Key> inventory(){
         return Stream.of(inventory).filter(i->i != null).toList();
     }
+
+
+    /**
+     * Get the corresponding Image to Chap's current Direction.
+     * @return a {@code BufferedImage} of Chap's current Direction.
+     */
     public BufferedImage getImage(){
         switch(this.direction){
             case DOWN: return Img.Marco.image;
