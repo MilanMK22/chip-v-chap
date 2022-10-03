@@ -24,6 +24,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import sounds.sounds;
 
 import java.util.Arrays;
@@ -366,7 +367,13 @@ public class ChipVsChap extends JFrame{
         dialog.setVisible(false);
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
-   
+        
+        var inventory = new JLabel();
+        inventory.setBounds(585,253,119,53);
+        //inventory.setBackground(Color.black);
+       
+       
+        
         closePhase.run();
         closePhase=()->{
             remove(panel);
@@ -409,12 +416,14 @@ public class ChipVsChap extends JFrame{
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().left();
                     Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
                     r.addMove(new GameAction("Right", 0));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().right();
                     Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
 
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_UP){
@@ -422,6 +431,7 @@ public class ChipVsChap extends JFrame{
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().up();
                     Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
 
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
@@ -429,6 +439,7 @@ public class ChipVsChap extends JFrame{
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().down();
                     Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
 
                 }
             }
@@ -443,10 +454,12 @@ public class ChipVsChap extends JFrame{
     
         panel.add(background);
         panel.add(backgroundImage);
+       
         backgroundImage.add(level);
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
-      
+        backgroundImage.add(inventory);
+       
 
         setPreferredSize(new Dimension(800,400));
         pack();

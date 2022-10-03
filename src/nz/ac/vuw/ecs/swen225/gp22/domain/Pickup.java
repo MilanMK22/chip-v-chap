@@ -38,7 +38,7 @@ public class Pickup{
         public Point getLocation() { return this.location;}
     }
 
-    class Key implements Entity{
+    public class Key implements Entity{
         KEYCOLOR color;
         Point location;
         Key(Point loc, KEYCOLOR col){

@@ -71,6 +71,7 @@ public class Mapprint {
                 g.drawImage(e.getImage(), 5 * size, 4 * size, size, size, null);
             }
         }
+        
 
     }
 }
