@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -101,6 +104,9 @@ public class Chap implements Entity{
         else{
             inventory[heldItems] = p;
         }
+    }
+    public List<Pickup.Key> inventory(){
+        return Stream.of(inventory).filter(i->i != null).toList();
     }
     public BufferedImage getImage(){
         switch(this.direction){
