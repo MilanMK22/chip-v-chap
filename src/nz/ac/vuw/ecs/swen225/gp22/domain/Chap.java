@@ -196,7 +196,7 @@ public class Chap implements Entity{
     public BufferedImage getImage(){
         switch(this.direction){
             case DOWN: return Img.Marco.image;
-            case UP: return Img.Marco.image;
+            case UP: return Img.MarcoBack.image;
             case LEFT: return Img.MarcoL.image;
             case RIGHT: return Img.MarcoR.image;
             default: return Img.Marco.image;
