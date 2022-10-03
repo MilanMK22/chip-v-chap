@@ -237,6 +237,10 @@ public class ChipVsChap extends JFrame{
         load.setBorderPainted(false);
         load.setBounds(115, 235, 170, 70);
 
+        var replay = new JButton("Replay");
+        replay.setOpaque(true);
+        replay.setBounds(315, 320, 170, 35);
+
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.homeScreen.image));
@@ -247,7 +251,6 @@ public class ChipVsChap extends JFrame{
         panel.setLayout(new FlowLayout());
         closePhase.run();
         closePhase=()->{
-           
             remove(start);
             remove(controls);
             remove(HomeScreen);
@@ -259,6 +262,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.add(controls);
         HomeScreen.add(start);
         HomeScreen.add(load);
+        HomeScreen.add(replay);
         s.play();
         add(HomeScreen);
        
