@@ -125,7 +125,7 @@ public class Replay {
             moves.stream().forEach(r -> {
                 Element Action = new Element("Action");
                 Element AName = new Element("ActionName").setText(r.name);
-                Element numPings = new Element("NumPings").setText("" + r.numPings);
+                Element numPings = new Element("NumPings").setText("" + r.getTime());
                 Action.addContent(AName);
                 Action.addContent(numPings);
                 movesElement.addContent(Action);});
@@ -183,8 +183,8 @@ public class Replay {
                 Element Action = MovesActions.get(i);
                 List<Element> details = Action.getChildren();
                 String direction = details.get(0).getText();
-                int pings = Integer.parseInt(details.get(1).getText());
-                GameAction A = new GameAction(direction, pings);
+                int time = Integer.parseInt(details.get(1).getText());
+                GameAction A = new GameAction(direction, time);
                 moves.add(A);
             }
 

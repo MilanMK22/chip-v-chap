@@ -6,17 +6,17 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 public class GameAction {
 
     String name;   // name of action
-    int numPings;  //number of pings since last action 
+    int Time;  //Time the action occured
 
     /**
      * 
      * @param name The name of the action "UP,DOWN..."
-     * @param pings The amount of pings since the last move
+     * @param Time The Time the action occured
      */
-    public GameAction(String name, int pings){
+    public GameAction(String name, int Time){
 
         this.name = name;
-        this.numPings = pings;
+        this.Time = Time;
 
     }
 
@@ -30,11 +30,11 @@ public class GameAction {
 
     /**
      * 
-     * @return the amount of pings since the last move
+     * @return get the time the moved occured
      */
 
-    public int getNumPings(){
-        return numPings;
+    public int getTime(){
+        return Time;
     }
     
 }
