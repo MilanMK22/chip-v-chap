@@ -76,6 +76,8 @@ public class Persistency {
                     case "tres":
                         tres = Integer.parseInt(curr.getText());
                         break;
+                    case "item":
+                        break;
                     default:
                         throw new ArithmeticException("malformed xml, unexpected element: " + curr.getText());
                 }
