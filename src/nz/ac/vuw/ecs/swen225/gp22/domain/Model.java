@@ -28,5 +28,8 @@ public class Model {
         if(maze.getTile(chap.getLocation()).isExit()){
             win();
         }
+        else if(maze.getTile(chap.getLocation()).getEntity() != chap) {
+            loss();
+        }
     }
 }
