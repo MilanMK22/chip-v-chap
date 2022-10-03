@@ -31,9 +31,9 @@ public class Pickup{
             this.location = loc;
         }
         public BufferedImage getImage(){ return Img.coin.image; }
-        public boolean isKey(){ return true; }
+        public boolean isKey(){ return false; }
         public boolean isChap(){ return false; }
-        public boolean isTreasure() { return false; }
+        public boolean isTreasure() { return true; }
         public boolean isPickup() { return true; }
         public Point getLocation() { return this.location;}
     }

@@ -8,6 +8,6 @@ public interface Entity{
     default boolean isTreasure(){ return false; }
     default boolean isChap(){ return false; }
     default boolean isPickup(){ return false; }
-    default void tick(){ return; }
+    default void tick(Maze m){ return; }
     default BufferedImage getImage(){return Img.coin.image; }
 }
