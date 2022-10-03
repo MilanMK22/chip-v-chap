@@ -398,7 +398,7 @@ public class ChipVsChap extends JFrame{
                     r.addMove(new GameAction("Left", 0));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().left();
-                    chips.setText("" + (4 - model.chap().heldTreasure()));
+                    chips.setText("" + (5 - model.chap().heldTreasure()));
 
                     Mapprint.printMap(model, background.getGraphics());
                     printInventory.printIn(model,backgroundImage.getGraphics());
@@ -407,7 +407,7 @@ public class ChipVsChap extends JFrame{
                     r.addMove(new GameAction("Right", 0));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().right();
-                    chips.setText("" + (4 - model.chap().heldTreasure()));
+                    chips.setText("" + (5 - model.chap().heldTreasure()));
 
                     Mapprint.printMap(model, background.getGraphics());
                     printInventory.printIn(model,backgroundImage.getGraphics());
@@ -417,7 +417,7 @@ public class ChipVsChap extends JFrame{
                     r.addMove(new GameAction("Up", 0));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().up();
-                    chips.setText("" + (4 - model.chap().heldTreasure()));
+                    chips.setText("" + (5 - model.chap().heldTreasure()));
 
                     Mapprint.printMap(model, background.getGraphics());
                     printInventory.printIn(model,backgroundImage.getGraphics());
@@ -427,7 +427,7 @@ public class ChipVsChap extends JFrame{
                     r.addMove(new GameAction("Down", 0));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().down();
-                    chips.setText("" + (4 - model.chap().heldTreasure()));
+                    chips.setText("" + (5 - model.chap().heldTreasure()));
 
                     Mapprint.printMap(model, background.getGraphics());
                     printInventory.printIn(model,backgroundImage.getGraphics());
