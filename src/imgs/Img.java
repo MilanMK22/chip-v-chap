@@ -23,6 +23,8 @@ public enum Img{
     exitlock,
     coin,
     Marco, 
+    MarcoR,
+    MarcoL,
     white,
     homeScreen;
     
