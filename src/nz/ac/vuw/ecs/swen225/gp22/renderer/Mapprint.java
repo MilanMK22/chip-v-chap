@@ -26,7 +26,9 @@ public class Mapprint {
        * @param g
        */
     public static void printMap(Model m, Graphics g){
-          int vari = 1;
+        int MapDim = m.getMaze().xlen;
+       
+
         int x = 0;
         int y = 0;
         int size = 42;
@@ -54,10 +56,10 @@ public class Mapprint {
                     }
                 }
                 x += size;
-                if (x >= 11 * size) {
+                if (x >= MapDim * size) {
                     x = 0;
                     y += size;
-                    if (y > 7 * size) {
+                    if (y > MapDim * size) {
                         break;
                     }
                 }
@@ -68,7 +70,6 @@ public class Mapprint {
             if (e == m.chap()) {
                 g.drawImage(e.getImage(), 5 * size, 4 * size, size, size, null);
             }
-
         }
 
     }
