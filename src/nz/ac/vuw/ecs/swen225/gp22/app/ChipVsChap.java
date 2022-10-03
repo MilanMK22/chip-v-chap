@@ -26,6 +26,7 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Stack;
 import java.awt.event.*;
 import java.lang.System.Logger.Level; 
@@ -321,7 +322,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void testLevel(){
-        Replay r = new Replay(new Stack<GameAction>(),1, "");
+        Replay r = new Replay(new LinkedList<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
@@ -396,27 +397,27 @@ public class ChipVsChap extends JFrame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    r.addMove(new GameAction("Left", 0));
+                    r.addMove(new GameAction("Left", count));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().left();
                     Mapprint.printMap(model, background.getGraphics());
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
-                    r.addMove(new GameAction("Right", 0));
+                    r.addMove(new GameAction("Right", count));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().right();
                     Mapprint.printMap(model, background.getGraphics());
 
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_UP){
-                    r.addMove(new GameAction("Up", 0));
+                    r.addMove(new GameAction("Up", count));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().up();
                     Mapprint.printMap(model, background.getGraphics());
 
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
-                    r.addMove(new GameAction("Down", 0));
+                    r.addMove(new GameAction("Down", count));
                     System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
                     model.chap().down();
                     Mapprint.printMap(model, background.getGraphics());
