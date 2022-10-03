@@ -51,7 +51,17 @@ public class ChipVsChap extends JFrame{
      */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
-
+    /**
+     * ilya did this
+     * @return
+     */
+    public Chap getChap() {
+        Maze m = new Maze(Persistency.readXML("level1"));
+        Model model = new Model(m);
+        Chap chap = model.chap();
+        return chap;
+    }
+    
     /**
      * Returns the character relative to the character.
      * @param e
