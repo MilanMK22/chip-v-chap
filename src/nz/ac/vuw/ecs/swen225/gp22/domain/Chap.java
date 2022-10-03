@@ -184,8 +184,8 @@ public class Chap implements Entity{
      * 
      * @return A {@code List<Pickup.Key>} representing Chap's inventory.
      */
-    public List<Pickup.Key> inventory(){
-        return Stream.of(inventory).filter(i->i != null).toList();
+    public List<BufferedImage> inventory(){
+        return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
     }
 
 
