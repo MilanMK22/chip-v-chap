@@ -23,6 +23,10 @@ public enum Img{
     exitlock,
     coin,
     Marco, 
+    MarcoR,
+    MarcoL,
+    MarcoBack,
+    white,
     homeScreen;
     
 public final BufferedImage image;

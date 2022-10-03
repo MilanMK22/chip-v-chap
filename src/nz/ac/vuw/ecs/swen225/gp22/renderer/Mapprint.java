@@ -26,7 +26,9 @@ public class Mapprint {
        * @param g
        */
     public static void printMap(Model m, Graphics g){
-          int vari = 1;
+        int MapDim = m.getMaze().xlen;
+       
+
         int x = 0;
         int y = 0;
         int size = 42;
@@ -44,20 +46,20 @@ public class Mapprint {
                 if (i < 0 || j < 0 || i >= m.getMaze().xlen || j >= m.getMaze().ylen) {
                     g.drawImage(Img.walls.image, x, y, size, size, null);
                 } else {
-                    java.awt.image.BufferedImage cur = m.getMaze().getTiles()[i][j].getImage();
+                    java.awt.image.BufferedImage cur = m.getMaze().getTile(j,i).getImage();
                     g.drawImage(Img.floor_tiles.image, x, y, size, size, null);
                     g.drawImage(cur, x, y, size, size, null);
-                    if (m.getMaze().getTiles()[i][j].isEntity()) {
-                        if ((m.getMaze().getTiles()[i][j].getEntity() != m.chap())) {
-                            g.drawImage(m.getMaze().getTiles()[i][j].getEntity().getImage(), x, y, size, size, null);
+                    if (m.getMaze().getTile(j,i).hasEntity()) {
+                        if ((m.getMaze().getTile(j,i).getEntity() != m.chap())) {
+                            g.drawImage(m.getMaze().getTile(j,i).getEntity().getImage(), x, y, size, size, null);
                         }
                     }
                 }
                 x += size;
-                if (x >= 11 * size) {
+                if (x >= MapDim * size) {
                     x = 0;
                     y += size;
-                    if (y > 7 * size) {
+                    if (y > MapDim * size) {
                         break;
                     }
                 }
@@ -68,8 +70,8 @@ public class Mapprint {
             if (e == m.chap()) {
                 g.drawImage(e.getImage(), 5 * size, 4 * size, size, size, null);
             }
-
         }
+        
 
     }
 }

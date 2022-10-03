@@ -24,9 +24,12 @@ public class Model {
     public Maze getMaze() { return maze; }
 
     public void tick(){
-        entities.forEach(e->e.tick());
+        entities.forEach(e->e.tick(maze));
         if(maze.getTile(chap.getLocation()).isExit()){
             win();
+        }
+        else if(maze.getTile(chap.getLocation()).getEntity() != chap) {
+            loss();
         }
     }
 }
