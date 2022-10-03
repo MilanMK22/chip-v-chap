@@ -1,13 +1,20 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
+import sounds.sounds;
+
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+
 import java.awt.image.BufferedImage;
 
 import imgs.Img;
 
 public class Chap implements Entity{
+
 
     public enum DIRECTION{
         UP,
@@ -26,8 +33,8 @@ public class Chap implements Entity{
     //Entity Methods
     public boolean isChap(){ return true; }
     public boolean isPickup() { return false; }
-
-
+    public sounds s = new sounds();
+    
     public void up(){ move(location.up()); direction = DIRECTION.UP; }
     public void down(){ move(location.down()); direction = DIRECTION.DOWN; }
     public void left(){ move(location.left()); direction = DIRECTION.LEFT; }
@@ -54,6 +61,8 @@ public class Chap implements Entity{
     
     public boolean useKey(KEYCOLOR color){
         if(hasKey(color)){
+            s.setFile("src/sounds/unlock.wav");
+            s.play();
             removeFromInventory(color);
             return true;
         }
@@ -66,17 +75,24 @@ public class Chap implements Entity{
             maze.getTile(this.location).removeEntity();
             maze.getTile(p).setEntity(this);
             location = p;
+            s.setFile("src/sounds/nope.wav");
+
         }
         else{
-            throw new Error("Chap cannot move to this tile.");
+            s.play();
+            throw new Error("Chap cannot move to this tile." );
         }
     }
     
     public void pickUpTreasure(){
+        s.setFile("src/sounds/collectcoin.wav");
+        s.play();
         heldTreasure += 1;
     }
     
     public void pickUpKey(Pickup.Key key){
+        s.setFile("src/sounds/collectcoin.wav");
+        s.play();
         heldItems += 1;
         addToInventory(key);
     }

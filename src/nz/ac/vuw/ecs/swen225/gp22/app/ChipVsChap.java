@@ -24,10 +24,12 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
+import sounds.sounds;
 
 import java.util.Arrays;
 import java.util.Stack;
 import java.awt.event.*;
+import java.io.IOException;
 import java.lang.System.Logger.Level; 
 /*
  * Game components will run from this class.
@@ -42,7 +44,7 @@ public class ChipVsChap extends JFrame{
     Timer timer;
     int count = 0;
     int delay = 1000;
-
+    public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
     
 
@@ -213,8 +215,9 @@ public class ChipVsChap extends JFrame{
 
     /**
      * Start menu frame.
+     * @throws IOException
      */
-    private void menu(){
+    private void menu() {
         var start = new JButton("");
         start.setOpaque(false);
         start.setContentAreaFilled(false);
@@ -238,7 +241,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setIcon(new ImageIcon(Img.homeScreen.image));
 
         JFileChooser open = new JFileChooser();
-        
+        s.setFile("src/sounds/menu.wav");
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -255,6 +258,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.add(controls);
         HomeScreen.add(start);
         HomeScreen.add(load);
+        s.play();
         add(HomeScreen);
        
        
@@ -290,10 +294,12 @@ public class ChipVsChap extends JFrame{
         addKeyListener(menuKeyListener);
         start.addActionListener(s -> {
             testLevel();
+          
             removeKeyListener(menuKeyListener);
         });
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
+       
         pack();
     }
 
@@ -321,6 +327,9 @@ public class ChipVsChap extends JFrame{
      */
 
     private void testLevel(){
+        s.stop();
+        s.setFile("src/sounds/game.wav");
+        s.play();
         Replay r = new Replay(new Stack<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
