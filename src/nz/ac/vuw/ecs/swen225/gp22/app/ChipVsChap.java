@@ -562,7 +562,8 @@ public class ChipVsChap extends JFrame{
 
             if(rep.getMoves().isEmpty()){
                 System.out.println("empty");
-                
+                dispose();
+                System.exit(ABORT);
             }
             GameAction r = rep.getMoves().peek();
 
