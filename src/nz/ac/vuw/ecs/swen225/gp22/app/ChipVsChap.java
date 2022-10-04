@@ -44,7 +44,7 @@ public class ChipVsChap extends JFrame{
    
     Timer timer;
     int count = 0;
-    int delay = 1000;
+    int delay = 100;
     public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
     
@@ -54,6 +54,7 @@ public class ChipVsChap extends JFrame{
      */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
+<<<<<<< HEAD
     /**
      * ilya did this
      * @return
@@ -65,6 +66,20 @@ public class ChipVsChap extends JFrame{
         return chap;
     }
     
+=======
+
+    private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
+        r.addMove(new GameAction(move, 0));
+        System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+        direction.run();
+        chips.setText("" + (5 - model.chap().heldTreasure()));
+        Mapprint.printMap(model, background.getGraphics());
+        printInventory.printIn(model,backgroundImage.getGraphics());
+    }
+
+
+
+>>>>>>> e061411 (implemented pings into timer)
     /**
      * Returns the character relative to the character.
      * @param e
@@ -89,20 +104,22 @@ public class ChipVsChap extends JFrame{
      * timeDone is set in the levels method and can be set to how many seconds needed.
      * @param timeDone
      */
-    public void startTimer(int timeDone){
+    public void startTimer(int timeDone, Model m){
         ActionListener action = (e) -> {
+        if(timeDone % 1000 ==0){
             if(count == 0){
                 timer.stop();
                 timerLabel.setText("No time");
             }else{
                 int minutes = count /60;
                 int seconds = count% 60;
-                
                 timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-               
                 count --;
             }
+        }
+        m.tick();
         };
+
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
         count = timeDone;  
@@ -278,14 +295,7 @@ public class ChipVsChap extends JFrame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 System.out.println(e.getKeyCode());
-                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){
-                    dispose();
-                    JOptionPane.showMessageDialog(panel, "Closed Game");
-                }   
-                if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
-                    dispose();
-                    JOptionPane.showMessageDialog(panel, "Saved Game");
-                }   
+
                 if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
                     open.showOpenDialog(panel); // needs variable
                 }   
@@ -365,7 +375,7 @@ public class ChipVsChap extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(null);
         backgroundImage.setIcon(img);
-        startTimer(120);
+        startTimer(120,model);
 
 
         JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
@@ -382,7 +392,6 @@ public class ChipVsChap extends JFrame{
         closePhase.run();
         closePhase=()->{
             remove(panel);
-            r.saveReplay();
         };
         add(panel);
         Keys gameKeyListener = new Keys(){
@@ -405,44 +414,24 @@ public class ChipVsChap extends JFrame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    r.addMove(new GameAction("Left", 0));
-                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                    model.chap().left();
-                    chips.setText("" + (5 - model.chap().heldTreasure()));
-
-                    Mapprint.printMap(model, background.getGraphics());
-                    printInventory.printIn(model,backgroundImage.getGraphics());
+                    action(r,model,chips,backgroundImage,"Left",()->model.chap().left());
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
-                    r.addMove(new GameAction("Right", 0));
-                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                    model.chap().right();
-                    chips.setText("" + (5 - model.chap().heldTreasure()));
-
-                    Mapprint.printMap(model, background.getGraphics());
-                    printInventory.printIn(model,backgroundImage.getGraphics());
-
+                    action(r,model,chips,backgroundImage,"Right",()->model.chap().right());
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_UP){
-                    r.addMove(new GameAction("Up", 0));
-                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                    model.chap().up();
-                    chips.setText("" + (5 - model.chap().heldTreasure()));
-
-                    Mapprint.printMap(model, background.getGraphics());
-                    printInventory.printIn(model,backgroundImage.getGraphics());
-
+                    action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
                 }
                 if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
-                    r.addMove(new GameAction("Down", 0));
-                    System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                    model.chap().down();
-                    chips.setText("" + (5 - model.chap().heldTreasure()));
-
-                    Mapprint.printMap(model, background.getGraphics());
-                    printInventory.printIn(model,backgroundImage.getGraphics());
-
+                    action(r,model,chips,backgroundImage,"Down",()->model.chap().down());
                 }
+                if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
+                    dispose();
+                    r.saveReplay();
+                }   
+                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){
+                    dispose();
+                }   
             }
         };
 
