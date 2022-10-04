@@ -46,6 +46,8 @@ public class ChipVsChap extends JFrame{
     int count = 0;
     int delay = 100;
     int timePassed = 0;
+    long now = 0; // the time the move occured
+    long ct =0; // current time when game starts
 
     public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
@@ -58,7 +60,7 @@ public class ChipVsChap extends JFrame{
 
 
     private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
-        r.addMove(new GameAction(move, 0));
+        r.addMove(new GameAction(move, now-ct));
         System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
         direction.run();
         chips.setText("" + (5 - model.chap().heldTreasure()));
@@ -346,6 +348,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void testLevel(){
+        ct = System.currentTimeMillis();
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
@@ -414,6 +417,7 @@ public class ChipVsChap extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
+                    now = System.currentTimeMillis();
 
                     if(e.getKeyCode() == getCode(characterControls[0])){
                         action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
