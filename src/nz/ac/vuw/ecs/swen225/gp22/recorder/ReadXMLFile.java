@@ -9,7 +9,7 @@ public class ReadXMLFile {
         System.out.println(ReadReplay.getLevel() + "   level");
         System.out.println(ReadReplay.getName()+ "    name");
         ReadReplay.getMoves().stream().forEach(r -> {
-        System.out.println(r.getName() + "(" + r.getNumPings() + ")");});
+        System.out.println(r.getName() + "(" + r.getTime() + ")");});
 
 }
 }

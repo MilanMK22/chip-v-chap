@@ -123,7 +123,7 @@ public class Replay {
             moves.stream().forEach(r -> {
                 Element Action = new Element("Action");
                 Element AName = new Element("ActionName").setText(r.name);
-                Element numPings = new Element("NumPings").setText("" + r.numPings);
+                Element numPings = new Element("Time").setText("" + r.getTime());
                 Action.addContent(AName);
                 Action.addContent(numPings);
                 movesElement.addContent(Action);});
