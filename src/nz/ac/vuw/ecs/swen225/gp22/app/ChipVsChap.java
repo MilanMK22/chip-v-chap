@@ -84,8 +84,22 @@ public class ChipVsChap extends JFrame{
             case KeyEvent.VK_RIGHT:
                 return '\u2192';
         }
-       return null;
+       return e.getKeyChar();
     }  
+    public int getCode(Character c){
+        switch(c){
+            case '\u2191':
+                return KeyEvent.VK_UP;
+            case '\u2193':
+                return KeyEvent.VK_DOWN;
+            case '\u2190':
+                return KeyEvent.VK_LEFT;
+            case '\u2192':
+                return KeyEvent.VK_RIGHT;
+        }
+       return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
+    }  
+
 
     /**
      * Starts the timer for the game level.
@@ -94,7 +108,6 @@ public class ChipVsChap extends JFrame{
      */
     public void startTimer(int timeDone, Model m){
         ActionListener action = (e) -> {
-            System.out.println(timePassed);
             if(timePassed % 1000 == 0){
                 if(count == 0){
                     timer.stop();
@@ -108,7 +121,6 @@ public class ChipVsChap extends JFrame{
             }
             timePassed += delay;
             m.tick();
-
         };
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
@@ -147,7 +159,6 @@ public class ChipVsChap extends JFrame{
                                 component.removeKeyListener(this);
                             }
                             else if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar())) && Arrays.stream(characters).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
-                                System.out.println("true 2");
                                 characterControls[code] = Character.toUpperCase(e.getKeyChar());
                                 component.setText(""+ characterControls[code]);
                                 component.removeKeyListener(this);   
@@ -403,18 +414,25 @@ public class ChipVsChap extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    action(r,model,chips,backgroundImage,"Left",()->model.chap().left());
-                }
-                if(e.getKeyCode() ==  KeyEvent.VK_RIGHT){
-                    action(r,model,chips,backgroundImage,"Right",()->model.chap().right());
-                }
-                if(e.getKeyCode() ==  KeyEvent.VK_UP){
-                    action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
-                }
-                if(e.getKeyCode() ==  KeyEvent.VK_DOWN){
-                    action(r,model,chips,backgroundImage,"Down",()->model.chap().down());
-                }
+
+                    if(e.getKeyCode() == getCode(characterControls[0])){
+                        action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
+                    }
+                    if(e.getKeyCode() == getCode(characterControls[1])){
+                        action(r,model,chips,backgroundImage,"Down",()->model.chap().down());
+                    }
+                    if(e.getKeyCode() == getCode(characterControls[2])){
+                        action(r,model,chips,backgroundImage,"Left",()->model.chap().left());
+                    }
+                    if(e.getKeyCode() == getCode(characterControls[3]) ){
+                        action(r,model,chips,backgroundImage,"Right",()->model.chap().right());
+                    }
+
+                
+               
+
+
+              
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     dispose();
                     r.saveReplay();
