@@ -28,6 +28,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import sounds.sounds;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Stack;
 import java.awt.event.*;
 import java.io.IOException;
@@ -376,7 +377,7 @@ public class ChipVsChap extends JFrame{
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
-        Replay r = new Replay(new Stack<GameAction>(),1, "");
+        Replay r = new Replay(new LinkedList<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());

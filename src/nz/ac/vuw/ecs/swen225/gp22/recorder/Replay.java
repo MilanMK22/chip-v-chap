@@ -12,7 +12,10 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import javax.swing.JFileChooser;
@@ -20,11 +23,11 @@ import javax.swing.JFileChooser;
 
 
 /**
- * This class stores a Replay with a stack, level number and name
+ * This class stores a Replay with a Queue, level number and name
  */
 public class Replay {
   
-	private Stack<GameAction> moves;
+	private Queue<GameAction> moves;
 	private int level;
     private String Name = "Replay--";
 	
@@ -34,7 +37,7 @@ public class Replay {
  * @param level The level number that this game was recordered on
  * @param Name The Name of the Replay
  */
-	public Replay(Stack<GameAction> moves, int level, String Name) {
+	public Replay(Queue<GameAction> moves, int level, String Name) {
 		this.moves = moves;
 		this.level = level;
         this.Name = this.Name + Name;
@@ -43,9 +46,9 @@ public class Replay {
 	
 	/**
      * 
-     * @return the moves stack 
+     * @return the moves Queue 
      */
-	public Stack<GameAction> getMoves() {
+	public Queue<GameAction> getMoves() {
 		return moves;
 	}
 
@@ -54,16 +57,16 @@ public class Replay {
      * @param moves set our moves list
      */
 
-	public void setMoves(Stack<GameAction> moves) {
+	public void setMoves(Queue<GameAction> moves) {
 		this.moves = moves;
 	}
 
     /**
      * 
-     * @param move add a move to the stack
+     * @param move add a move to Queue
      */
     public void addMove(GameAction move){
-        moves.push(move);
+        moves.add(move);
     }
 
     /**
@@ -160,7 +163,7 @@ public class Replay {
     
             String Name = "";
             int Level = 0;
-            Stack<GameAction> moves = new Stack<GameAction>();
+            Queue<GameAction> moves = new LinkedList<GameAction>();
             Replay ReadReplay = new Replay();
 
         try {
