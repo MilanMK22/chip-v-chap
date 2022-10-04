@@ -47,6 +47,7 @@ public class Persistency {
         int hei = 0;
         int tres;
         String board = null;
+        String moves;
         String id;
         String desc;
         String levelPath;
@@ -57,7 +58,9 @@ public class Persistency {
                 levelPath = "levels/" + level + ".xml";
             }
 
+            System.out.println(levelPath);
             File inputFile = new File(levelPath);
+
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
@@ -82,6 +85,9 @@ public class Persistency {
                         break;
                     case "tres":
                         tres = Integer.parseInt(curr.getText());
+                        break;
+                    case "moves":
+                        moves = curr.getText();
                         break;
                     case "item":
                         break;
@@ -164,6 +170,14 @@ public class Persistency {
     }
     public static Tile[][] level1(){
         return readXML("level1");
+    }
+
+    public static Tile[][] level2(){
+        return readXML("level2");
+    }
+
+    public static Tile[][] levelSave(){
+        return readXML("levelPers");
     }
 
     // public static Pickup.Key[] getInventory(String level){

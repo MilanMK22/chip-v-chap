@@ -29,7 +29,7 @@ public class PersistencyTest {
     }
     @Test
     public void test3() {
-        assertThrows(NegativeArraySizeException.class,()->{Tile[][] tiles = Persistency.readXML("levelTest2");});
+        assertThrows(Exception.class,()->{Tile[][] tiles = Persistency.readXML("levelTest2");});
     }
     @Test
     public void test4() {
