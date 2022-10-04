@@ -60,7 +60,9 @@ public class ChipVsChap extends JFrame{
 
 
     private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
+        if(r != null){
         r.addMove(new GameAction(move, totalticks));
+        }
         System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
         direction.run();
         chips.setText("" + (5 - model.chap().heldTreasure()));
@@ -102,7 +104,7 @@ public class ChipVsChap extends JFrame{
        return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
     }  
 
-    
+
     /**
      * Starts the timer for the game level.
      * timeDone is set in the levels method and can be set to how many seconds needed.
@@ -569,25 +571,17 @@ public class ChipVsChap extends JFrame{
                 r = rep.getMoves().remove();
 
             try{
-            if(r.getName().equals("Up")){
-                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());             
-                model.chap().up();
-                Mapprint.printMap(model, background.getGraphics());
+            if(r.getName().equals("Up")){             
+                action(null,model,chips,backgroundImage,"Up",()->model.chap().up());
             }
             else if(r.getName().equals("Down")){
-                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                model.chap().down();
-                Mapprint.printMap(model, background.getGraphics());
+                action(null,model,chips,backgroundImage,"Down",()->model.chap().down());
             }
             else if(r.getName().equals("Left")){
-                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                model.chap().left();
-                Mapprint.printMap(model, background.getGraphics());
+                action(null,model,chips,backgroundImage,"Left",()->model.chap().left());
             }
             else if(r.getName().equals("Right")){
-                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
-                model.chap().right();
-                Mapprint.printMap(model, background.getGraphics());
+                action(null,model,chips,backgroundImage,"Right",()->model.chap().right());
             }
         }
 
