@@ -47,11 +47,7 @@ public class ChipVsChap extends JFrame{
     int count = 0;
     int delay = 100;
     int timePassed = 0;
-    long now = 0; // the time the move occured
-    long ct =0; // current time when game starts
-
-    Timer Rtimer;
-    int count2 = 0;
+    int totalticks=0;
 
     public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
@@ -64,7 +60,7 @@ public class ChipVsChap extends JFrame{
 
 
     private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
-        r.addMove(new GameAction(move, now-ct));
+        r.addMove(new GameAction(move, totalticks));
         System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
         direction.run();
         chips.setText("" + (5 - model.chap().heldTreasure()));
@@ -106,7 +102,7 @@ public class ChipVsChap extends JFrame{
        return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
     }  
 
-
+    
     /**
      * Starts the timer for the game level.
      * timeDone is set in the levels method and can be set to how many seconds needed.
@@ -127,6 +123,7 @@ public class ChipVsChap extends JFrame{
             }
             timePassed += delay;
             m.tick();
+            totalticks++;
         };
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
@@ -134,22 +131,6 @@ public class ChipVsChap extends JFrame{
         timer.start();
     }
 
-    public void ReplaystartTimer(long timeDone){
-        ActionListener Raction = (e) -> {
-            if(count2 == timeDone){
-                Rtimer.stop();
-            }else{
-                count2 ++;
-            }
-            //System.out.println(count2);
-        };
-        Rtimer = new Timer(0,Raction);
-        Rtimer.setInitialDelay(0);
-        count2 = 0;  
-        Rtimer.start();;
-        
-    }
-    
     /**
      * Updates the keys to be relative to the user input.
      * @param code
@@ -373,7 +354,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void testLevel(){
-        ct = System.currentTimeMillis();
+        totalticks=0;
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
@@ -442,8 +423,8 @@ public class ChipVsChap extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
-                    now = System.currentTimeMillis();
-
+                
+                
                     if(e.getKeyCode() == getCode(characterControls[0])){
                         action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
                     }
@@ -558,7 +539,8 @@ public class ChipVsChap extends JFrame{
         addKeyListener(gameKeyListener);
 
         
-    
+        Replay rep = Replay.readXML();
+        startTimer(120, model);
     
         panel.add(background);
         panel.add(backgroundImage);
@@ -573,14 +555,50 @@ public class ChipVsChap extends JFrame{
         pack();
         Mapprint.printMap(model, background.getGraphics());
 
-        Replay rep = Replay.readXML();
-        startTimer(120, model);
-        ReplaystartTimer(120000);
-
         //backgroundImage.repaint();
+        ActionListener newone = e -> {
 
-        
+            if(rep.getMoves().isEmpty()){
+                System.out.println("empty");
+                
+            }
+            GameAction r = rep.getMoves().peek();
 
+            if(r.getTime() == totalticks){
+
+                r = rep.getMoves().remove();
+
+            try{
+            if(r.getName().equals("Up")){
+                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());             
+                model.chap().up();
+                Mapprint.printMap(model, background.getGraphics());
+            }
+            else if(r.getName().equals("Down")){
+                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                model.chap().down();
+                Mapprint.printMap(model, background.getGraphics());
+            }
+            else if(r.getName().equals("Left")){
+                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                model.chap().left();
+                Mapprint.printMap(model, background.getGraphics());
+            }
+            else if(r.getName().equals("Right")){
+                System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+                model.chap().right();
+                Mapprint.printMap(model, background.getGraphics());
+            }
+        }
+
+        catch(Error b){
+
+        }
+        }
+            
+        };
+
+        timer.addActionListener(newone);
     }
     
    
