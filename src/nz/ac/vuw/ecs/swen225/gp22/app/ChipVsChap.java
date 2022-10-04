@@ -49,6 +49,9 @@ public class ChipVsChap extends JFrame{
     long now = 0; // the time the move occured
     long ct =0; // current time when game starts
 
+    Timer Rtimer;
+    int count2 = 0;
+
     public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
     
@@ -128,6 +131,22 @@ public class ChipVsChap extends JFrame{
         timer.setInitialDelay(0);
         count = timeDone;  
         timer.start();
+    }
+
+    public void ReplaystartTimer(long timeDone){
+        ActionListener Raction = (e) -> {
+            if(count2 == timeDone){
+                Rtimer.stop();
+            }else{
+                count2 ++;
+            }
+            //System.out.println(count2);
+        };
+        Rtimer = new Timer(0,Raction);
+        Rtimer.setInitialDelay(0);
+        count2 = 0;  
+        Rtimer.start();;
+        
     }
     
     /**
@@ -318,6 +337,11 @@ public class ChipVsChap extends JFrame{
           
             removeKeyListener(menuKeyListener);
         });
+        replay.addActionListener(s -> {
+            Replay1();
+          
+            removeKeyListener(menuKeyListener);
+        });
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
        
@@ -466,6 +490,97 @@ public class ChipVsChap extends JFrame{
 
         //backgroundImage.repaint();
     }   
+
+
+    public void Replay1(){
+        s.stop();
+        s.setFile("src/sounds/game.wav");
+        s.play();
+        closePhase.run();//close phase before adding any element of the new phase
+        closePhase=()->{};
+        setPreferredSize(getSize());
+        pack(); 
+        Phase p = Phase.level1(()->levelOne(), ()->{});
+        Model model = p.model();
+        repaint();
+        var level = new JLabel("LEVEL 1",SwingConstants.CENTER);
+
+        level.setBounds(615, 75, 60, 30);
+        timerLabel.setBounds(630, 140,60, 30);
+
+        var chips = new JLabel("5",SwingConstants.CENTER);
+        chips.setBounds(615, 203,60, 30);
+
+        background.setOpaque(true);
+        background.setBounds(67, 52, 380, 280);
+        background.setBackground(Color.black);
+
+        var backgroundImage = new JLabel();
+        backgroundImage.setBounds(0,0,800,375);
+        ImageIcon img = new ImageIcon(Img.fullmap.image);
+       
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        backgroundImage.setIcon(img);
+    
+
+
+        JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = pane .createDialog(null, "Paused");
+        dialog.setModal(false);
+        dialog.setVisible(false);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        //for renderer 
+        
+        var inventory = new JLabel();
+        inventory.setBounds(585,253,119,53);
+        //inventory.setBackground(Color.black);
+       
+        closePhase.run();
+        closePhase=()->{
+            remove(panel);
+        };
+        add(panel);
+        Keys gameKeyListener = new Keys(){
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
+                if((e.getKeyCode() == KeyEvent.VK_SPACE)){
+                    timer.stop();
+                    dialog.setVisible(true);
+                } 
+                if((e.getKeyCode() == KeyEvent.VK_ESCAPE)){
+                        timer.start();
+                }  
+            } 
+        };
+        addKeyListener(gameKeyListener);
+
+        
+    
+    
+        panel.add(background);
+        panel.add(backgroundImage);
+       
+        backgroundImage.add(level);
+        backgroundImage.add(timerLabel);
+        backgroundImage.add(chips);
+        backgroundImage.add(inventory);
+       
+
+        setPreferredSize(new Dimension(800,400));
+        pack();
+        Mapprint.printMap(model, background.getGraphics());
+
+        Replay rep = Replay.readXML();
+        startTimer(120, model);
+        ReplaystartTimer(120000);
+
+        //backgroundImage.repaint();
+
+        
+
+    }
     
    
 }
