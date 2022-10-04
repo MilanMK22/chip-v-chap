@@ -45,6 +45,8 @@ public class ChipVsChap extends JFrame{
     Timer timer;
     int count = 0;
     int delay = 100;
+    int timePassed = 0;
+
     public sounds s = new sounds();
     private JLabel timerLabel = new JLabel("test");
     
@@ -54,19 +56,6 @@ public class ChipVsChap extends JFrame{
      */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
-<<<<<<< HEAD
-    /**
-     * ilya did this
-     * @return
-     */
-    public Chap getChap() {
-        Maze m = new Maze(Persistency.readXML("level1"));
-        Model model = new Model(m);
-        Chap chap = model.chap();
-        return chap;
-    }
-    
-=======
 
     private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
         r.addMove(new GameAction(move, 0));
@@ -79,7 +68,6 @@ public class ChipVsChap extends JFrame{
 
 
 
->>>>>>> e061411 (implemented pings into timer)
     /**
      * Returns the character relative to the character.
      * @param e
@@ -106,20 +94,22 @@ public class ChipVsChap extends JFrame{
      */
     public void startTimer(int timeDone, Model m){
         ActionListener action = (e) -> {
-        if(timeDone % 1000 ==0){
-            if(count == 0){
-                timer.stop();
-                timerLabel.setText("No time");
-            }else{
-                int minutes = count /60;
-                int seconds = count% 60;
-                timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                count --;
+            System.out.println(timePassed);
+            if(timePassed % 1000 == 0){
+                if(count == 0){
+                    timer.stop();
+                    timerLabel.setText("No time");
+                }else{
+                    int minutes = count /60;
+                    int seconds = count% 60;
+                    timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
+                    count --;
+                }
             }
-        }
-        m.tick();
-        };
+            timePassed += delay;
+            m.tick();
 
+        };
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
         count = timeDone;  
