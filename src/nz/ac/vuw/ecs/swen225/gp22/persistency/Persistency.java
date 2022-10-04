@@ -49,9 +49,15 @@ public class Persistency {
         String board = null;
         String id;
         String desc;
+        String levelPath;
         try {
+            if(level.contains(".")){
+                levelPath = level;
+            } else {
+                levelPath = "levels/" + level + ".xml";
+            }
 
-            File inputFile = new File("levels/" + level + ".xml");
+            File inputFile = new File(levelPath);
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
