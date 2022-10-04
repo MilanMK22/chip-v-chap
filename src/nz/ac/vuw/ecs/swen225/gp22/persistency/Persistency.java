@@ -50,6 +50,7 @@ public class Persistency {
         String id;
         String desc;
         try {
+
             File inputFile = new File("levels/" + level + ".xml");
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
@@ -155,5 +156,36 @@ public class Persistency {
             }
             return String.valueOf(boardChars);
     }
+    public static Tile[][] level1(){
+        return readXML("level1");
+    }
+
+    // public static Pickup.Key[] getInventory(String level){
+    //     Pickup.Key[] keys = new Pickup.Key[8];
+    //     try {
+    //         File inputFile = new File("levels/" + level + ".xml");
+    //         SAXBuilder saxBuilder = new SAXBuilder();
+    //         Document document = saxBuilder.build(inputFile);
+    //         Element rootElement = document.getRootElement();
+    //         List<Element> elements = rootElement.getChildren();
+    //         for (int i = 0; i < elements.size(); i++) {
+    //             Element curr = elements.get(i);
+    //             if(curr.getName().equals("item")){
+    //                 String key = curr.getText();
+    //                 String[] keySplit = key.split(" ");
+    //                 int x = Integer.parseInt(keySplit[0]);
+    //                 int y = Integer.parseInt(keySplit[1]);
+    //                 Color c = Color.decode(keySplit[2]);
+    //                 keys[i] = new Pickup.Key(x, y, c);
+    //             }
+    //         }
+    //     } catch (JDOMException e) {
+    //         e.printStackTrace();
+    //     } catch (IOException ioe) {
+    //         ioe.printStackTrace();
+    //     }
+    //     return keys;
+        
+    // }
 }
 
