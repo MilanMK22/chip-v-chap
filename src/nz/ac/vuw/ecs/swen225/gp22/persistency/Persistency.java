@@ -47,10 +47,20 @@ public class Persistency {
         int hei = 0;
         int tres;
         String board = null;
+        String moves;
         String id;
         String desc;
+        String levelPath;
         try {
-            File inputFile = new File("levels/" + level + ".xml");
+            if(level.contains(".")){
+                levelPath = level;
+            } else {
+                levelPath = "levels/" + level + ".xml";
+            }
+
+            System.out.println(levelPath);
+            File inputFile = new File(levelPath);
+
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
@@ -76,10 +86,13 @@ public class Persistency {
                     case "tres":
                         tres = Integer.parseInt(curr.getText());
                         break;
+                    case "moves":
+                        moves = curr.getText();
+                        break;
                     case "item":
                         break;
                     default:
-                        throw new ArithmeticException("malformed xml, unexpected element: " + curr.getText());
+                        throw new IllegalArgumentException("malformed xml, unexpected element: " + curr.getText());
                 }
             }
 
@@ -154,6 +167,45 @@ public class Persistency {
                 }  
             }
             return String.valueOf(boardChars);
+    }
+    public static Tile[][] level1(){
+        return readXML("level1");
+    }
+
+    public static Tile[][] level2(){
+        return readXML("level2");
+    }
+
+    public static Tile[][] levelSave(){
+        return readXML("levelPers");
+    }
+
+    public static Pickup.Key[] getInventory(String level){
+        Pickup.Key[] keys = new Pickup.Key[8];
+        try {
+            File inputFile = new File("levels/" + level + ".xml");
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(inputFile);
+            Element rootElement = document.getRootElement();
+            List<Element> elements = rootElement.getChildren();
+            for (int i = 0; i < elements.size(); i++) {
+                Element curr = elements.get(i);
+                if(curr.getName().equals("item")){
+                    String key = curr.getText();
+                    String[] keySplit = key.split(" ");
+                    int x = Integer.parseInt(keySplit[0]);
+                    int y = Integer.parseInt(keySplit[1]);
+                    Color c = Color.decode(keySplit[2]);
+                    //keys[i] = new Pickup.Key(x, y, c);
+                }
+            }
+        } catch (JDOMException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return keys;
+        
     }
 }
 

@@ -10,9 +10,10 @@ import javax.swing.SwingUtilities;
 import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.event.KeyEvent;
-// import java.awt.Robot;
-// import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.AWTException;
 import java.awt.Canvas;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 //! to make it smart do weighted prob. with ints assinged to each move eg. <25 = up, <50 = down etc.
@@ -88,25 +89,17 @@ public class Fuzz{
                     //! get tiles, make maze using tile
                     //! get the chap from maze
 
-                    //SwingUtilities.invokeLater(ChipVsChap::new);
-                    Maze m = new Maze(Persistency.readXML("level1"));
-                    Model model = new Model(m);
-                    Chap chap = model.chap();
-                    // Phase phase = Phase.level1(() -> {}, () -> {});
-                    // Model model = phase.model();
-                    // Chap chap = model.chap();
-
+                    ChipVsChap chipVchap = new ChipVsChap();
+                    Chap chap = chipVchap.getChap();
                     List<String> possibleInput = List.of("up", "down", "left", "right");
 
                     // setting the start time
                     long startTime = System.currentTimeMillis();
 
                     while (true) {
-                        System.out.println("working...");
                         // getting random possible input
-                        switch(possibleInput.get(ThreadLocalRandom.current().nextInt(1, 4 + 1))){
+                        switch(possibleInput.get(ThreadLocalRandom.current().nextInt(1, 3 + 1))){
                             case "up":
-                                //if(tileArray[x][y] instanceof WallTile){}
                                 chap.up();
                                 break;
                             case "down":
@@ -123,7 +116,54 @@ public class Fuzz{
                     }
                 });
             }
-            catch (Exception e) { e.printStackTrace(); }
+            catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e);}
+        }
+
+        @Test
+        public void robotTest(){
+            try{
+                Robot robot = null;
+                try{robot = new Robot();}
+                catch(Exception e){e.printStackTrace(); throw new IllegalArgumentException("Robot not created", e);}
+
+                List<String> possibleInput = List.of("up", "down", "left", "right");
+
+                // setting the start time
+                long startTime = System.currentTimeMillis();
+                Runtime runtime = Runtime.getRuntime();
+                String command = "open /Desktop/Swen225/group proj/chip-vs-chap/src/nz/ac/vuw/ecs/swen225/gp22/app/Main.java";
+                runtime.exec(command);
+                // wait 20 seconds 
+                robot.delay(2000);
+
+
+                while (true) {
+                    // getting random possible input
+                    switch(possibleInput.get(ThreadLocalRandom.current().nextInt(1, 3 + 1))){
+                        case "up":
+                            robot.keyPress(KeyEvent.VK_UP);
+                            robot.keyRelease(KeyEvent.VK_UP);
+                            break;
+                        case "down":
+                            robot.keyPress(KeyEvent.VK_DOWN);
+                            robot.keyRelease(KeyEvent.VK_DOWN);
+                            break;
+                        case "left":
+                            robot.keyPress(KeyEvent.VK_LEFT);
+                            robot.keyRelease(KeyEvent.VK_LEFT);
+                            break;
+                        case "right":
+                            robot.keyPress(KeyEvent.VK_RIGHT);
+                            robot.keyRelease(KeyEvent.VK_RIGHT);
+                            break;
+                    }
+                    if(System.currentTimeMillis() >= startTime + 10000) return;
+                }
+
+            }
+            catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 fail", e);}
+
+
         }
         
         @Test
