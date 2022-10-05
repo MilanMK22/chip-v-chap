@@ -120,7 +120,7 @@ public class Chap implements Entity{
         }
         else{
             s.play();
-            throw new Error("Chap cannot move to this tile." );
+            //throw new Error("Chap cannot move to this tile." );
         }
     }
     

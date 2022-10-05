@@ -70,6 +70,17 @@ public class ChipVsChap extends JFrame{
         printInventory.printIn(model,backgroundImage.getGraphics());
     }
 
+    /**
+     * done by ilya
+     * @return
+     */
+    public static Chap getChap(){
+        Maze m = new Maze(Persistency.readXML("level1"));
+        Model model = new Model(m);
+        Chap chap = model.chap();
+        return chap;
+    }
+
 
 
     /**
