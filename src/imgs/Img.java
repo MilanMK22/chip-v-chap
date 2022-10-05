@@ -27,7 +27,7 @@ public enum Img{
     MarcoL,
     MarcoBack,
     white,
-    homeScreen;
+    HomeScreen;
     
 public final BufferedImage image;
 Img(){image=loadImage(this.name());}

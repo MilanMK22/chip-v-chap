@@ -284,7 +284,7 @@ public class ChipVsChap extends JFrame{
 
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
-        HomeScreen.setIcon(new ImageIcon(Img.homeScreen.image));
+        HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
         JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
@@ -296,6 +296,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(HomeScreen);
             remove(panel);
+            s.stop();
         };
        
         //add(BorderLayout.SOUTH,panel);
