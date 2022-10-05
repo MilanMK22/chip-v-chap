@@ -335,6 +335,7 @@ public class ChipVsChap extends JFrame{
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
+        s.loop();
         Replay r = new Replay(new Stack<GameAction>(),1, "");
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
