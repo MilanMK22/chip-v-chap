@@ -3,6 +3,7 @@
         "src"
     ],
     "java.test.config": {
-        "workingDirectory":"/Users/ilyamashkov/Desktop/Swen225/group proj/chip-vs-chap/"
+        //"workingDirectory":"/Users/ilyamashkov/Desktop/Swen225/group proj/chip-vs-chap/"
+        "workingDirectory":"${workspaceFolder}"
     }
 }
