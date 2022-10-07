@@ -123,7 +123,7 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
-    
+
     public static void createPXML(Tile[][] tiles){
         createPXML(tiles, new Pickup.Key[8]);
     }
@@ -183,24 +183,7 @@ public class Persistency {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 Tile t = tiles[i][j];
-                String s = t.getState().toString();
-                String ss = s.substring(34, 39);
-                if(ss.equals("KeyTi")){
-                    //Pickup.Key k = (Pickup.Key) t.getEntity();
-                    //k.getColor();
-                    boardChars[(i*tiles[0].length)+j] = 'o';
-                }else if(ss.equals("Locke")){
-                    boardChars[(i*tiles[0].length)+j] = 'o';
-                }else if(ss.equals("FreeT")){
-
-                    if(t.hasEntity()&&t.getEntity().isChap()){
-                         boardChars[(i*tiles[0].length)+j] = 'C';
-                    }else{
-                        boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
-                    }
-                } else {
-                    boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
-                }
+                boardChars[(i*tiles[0].length)+j] = t.getChar();
                 }  
             }
             return String.valueOf(boardChars);

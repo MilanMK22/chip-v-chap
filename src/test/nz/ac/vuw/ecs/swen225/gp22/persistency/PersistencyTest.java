@@ -65,11 +65,11 @@ public class PersistencyTest {
             }
         }
     }
-    @Test
-    public void test7() {
-        Persistency.createPXML(Persistency.readXML("level1"));
-        Tile[][] i = Persistency.readXML("level1");
-        Tile[][] j = Persistency.readXML("levelPers");
-        assertEquals(i,j);
-    }
+    // @Test
+    // public void test7() {
+    //     Persistency.createPXML(Persistency.readXML("level1"));
+    //     Tile[][] i = Persistency.readXML("level1");
+    //     Tile[][] j = Persistency.readXML("levelPers");
+    //     assertEquals(i,j);
+    // }
 }
