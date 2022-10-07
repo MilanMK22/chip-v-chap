@@ -120,7 +120,7 @@ public class Chap implements Entity{
         }
         else{
             s.play();
-            throw new Error("Chap cannot move to this tile." );
+            //throw new Error("Chap cannot move to this tile." );
         }
     }
     
@@ -203,6 +203,14 @@ public class Chap implements Entity{
         }
    
     
+
+    }
+    @Override
+    public String toString(){
+        return "Chap at: " + this.location.toString() + "\n" +
+        "Chap Collected: \n Keys \t Treasure \n" + 
+        (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + 
+        (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n";
 
     }
 }
