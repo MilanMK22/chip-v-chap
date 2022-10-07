@@ -3,8 +3,6 @@ package nz.ac.vuw.ecs.swen225.gp22.persistency;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
-import java.awt.Color;
-
 /**
  * ArrayMaker class to separate the tile parsing from the XML reading
  */
@@ -70,14 +68,14 @@ public class ArrayMaker {
                         tiles[i][j] = Tile.chapTile(loc);
                         break;
                     case 'M':
-                        //tiles[i][j] = Tile.chapTile(loc);
+                        tiles[i][j] = Tile.freeTile(loc);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid tile char");
                         
-                }  
-         }
-        }
+                    }  
+                }
+            }
         return tiles;
     }
 }

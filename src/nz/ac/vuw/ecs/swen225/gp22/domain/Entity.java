@@ -20,4 +20,5 @@ public interface Entity{
     default boolean isPickup(){ return false; }
     default void tick(Maze m){ return; }
     default BufferedImage getImage(){return Img.coin.image; }
+    default char toChar(){ return 'C'; }
 }

@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +34,18 @@ public class Persistency {
     );
 
 
+    public static Tile[][] level1(){
+        return readXML("level1");
+    }
+
+    public static Tile[][] level2(){
+        return readXML("level2");
+    }
+
+    public static Tile[][] levelSave(){
+        return readXML("levelPers");
+    }
+
     /** 
      * Reads an XML path and returns a 2D array of tiles for level creation
      * Uses an array maker object to convert the board string from XML to tiles
@@ -42,7 +54,7 @@ public class Persistency {
      * @return Array of tiles
      * @throws ArithmeticException
      */
-    public static Tile[][] readXML(String level) throws ArithmeticException {
+    public static Tile[][] readXML(String level) {
         int wid = 0;
         int hei = 0;
         int tres;
@@ -89,7 +101,7 @@ public class Persistency {
                     case "moves":
                         moves = curr.getText();
                         break;
-                    case "item":
+                    case "items":
                         break;
                     default:
                         throw new IllegalArgumentException("malformed xml, unexpected element: " + curr.getText());
@@ -111,14 +123,18 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
+
+    public static void createPXML(Tile[][] tiles){
+        createPXML(tiles, new Pickup.Key[8]);
+    }
+
     /**
      * Creates an XML file of current state of game, acts as saving feature
      * 
      * @param tiles current tiles of game
      */
-    public static void createPXML(Tile[][] tiles) {
+    public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
         String board = strFromArray(tiles);
-
         try {
             // root element
             Element levelElement = new Element("level");
@@ -133,12 +149,21 @@ public class Persistency {
             Element descElement = new Element("desc").setText("saved progress");
             // id element
             Element idElement = new Element("id").setText("levelSave");
+            // inventory element
+            String invString = "";
+            for(Pickup.Key k : inv){
+                if(k != null){
+                  invString += k.toChar();
+                }
+            }
+            Element invElement = new Element("items").setText(invString);
             // add elems
             doc.getRootElement().addContent(widthElement);
             doc.getRootElement().addContent(heightElement);
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
             doc.getRootElement().addContent(idElement);
+            doc.getRootElement().addContent(invElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             // setup printstream
             PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/levelPers.xml", false));
@@ -149,37 +174,26 @@ public class Persistency {
             e.printStackTrace();
         }
     }
-
-    private static String strFromArray(Tile[][] tiles) {
+    /**
+     * Converts a 2D array of tiles to a string for use in creating XML
+     * @param tiles 2D array of tiles
+     */
+    public static String strFromArray(Tile[][] tiles) {
         char[] boardChars = new char[tiles.length*tiles[0].length];
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 Tile t = tiles[i][j];
-                String s = t.getState().toString();
-                String ss = s.substring(34, 39);
-                if(ss.equals("KeyTi")){
-                    boardChars[(i*tiles[0].length)+j] = '=';
-                }else if(ss.equals("Locke")){
-                    boardChars[(i*tiles[0].length)+j] = '+';
-                } else {
-                    boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
-                }
+                boardChars[(i*tiles[0].length)+j] = t.getChar();
                 }  
             }
             return String.valueOf(boardChars);
     }
-    public static Tile[][] level1(){
-        return readXML("level1");
-    }
 
-    public static Tile[][] level2(){
-        return readXML("level2");
-    }
 
-    public static Tile[][] levelSave(){
-        return readXML("levelPers");
-    }
-
+    /**
+     * gets inventory of chap from a given level
+     * @param level level to get inventory from
+     */
     public static Pickup.Key[] getInventory(String level){
         Pickup.Key[] keys = new Pickup.Key[8];
         try {
@@ -205,7 +219,6 @@ public class Persistency {
             ioe.printStackTrace();
         }
         return keys;
-        
     }
 }
 

@@ -141,8 +141,8 @@ public class Chap implements Entity{
     public void pickUpKey(Pickup.Key key){
         s.setFile("src/sounds/collectcoin.wav");
         s.play();
-        heldItems += 1;
         addToInventory(key);
+        heldItems += 1;
     }
 
     /**
@@ -203,6 +203,14 @@ public class Chap implements Entity{
         }
    
     
+
+    }
+    @Override
+    public String toString(){
+        return "Chap at: " + this.location.toString() + "\n" +
+        "Chap Collected: \n Keys \t Treasure \n" + 
+        (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + 
+        (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n";
 
     }
 }
