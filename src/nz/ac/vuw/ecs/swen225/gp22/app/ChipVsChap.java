@@ -15,12 +15,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import imgs.Img;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
+
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
@@ -32,7 +30,6 @@ import java.util.LinkedList;
 import java.util.Stack;
 import java.awt.event.*;
 import java.io.IOException;
-import java.lang.System.Logger.Level; 
 /*
  * Game components will run from this class.
  */
@@ -42,6 +39,8 @@ public class ChipVsChap extends JFrame{
     public int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
+    public JLabel backgroundImage = Board.getBackgroundImage();
+    
    
     Timer timer;
     int count = 0;
@@ -50,7 +49,7 @@ public class ChipVsChap extends JFrame{
     int totalticks=0;
 
     public sounds s = new sounds();
-    private JLabel timerLabel = new JLabel("test");
+    public static JLabel timerLabel = new JLabel("test");
     
 
     /**
@@ -58,28 +57,31 @@ public class ChipVsChap extends JFrame{
      */
     private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
+    public void setBackGround(){
+        background.setOpaque(true);
+        background.setBounds(67, 52, 380, 280);
+        background.setBackground(Color.black);
+    }
 
-    private void action(Replay r, Model model, JLabel chips, JLabel backgroundImage, String move, Runnable direction ){
+    private void action(Replay r, Model model, JLabel chips, String move, Runnable direction ){
         if(r != null){
         r.addMove(new GameAction(move, totalticks));
         }
         System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
         direction.run();
         chips.setText("" + (5 - model.chap().heldTreasure()));
-        Mapprint.printMap(model, background.getGraphics());
-        printInventory.printIn(model,backgroundImage.getGraphics());
     }
 
     /**
      * done by ilya
      * @return
-     */
-    public static Chap getChap(){
-        Maze m = new Maze(Persistency.readXML("level1"));
-        Model model = new Model(m);
-        Chap chap = model.chap();
-        return chap;
-    }
+    //  */
+    // public static Chap getChap(){
+    //     Maze m = new Maze(Persistency.readXML("level1"));
+    //     Model model = new Model(m);
+    //     Chap chap = model.chap();
+    //     return chap;
+    // }
 
 
 
@@ -137,6 +139,9 @@ public class ChipVsChap extends JFrame{
             timePassed += delay;
             m.tick();
             totalticks++;
+            Mapprint.printMap(m, background.getGraphics());
+            printInventory.printIn(m,backgroundImage.getGraphics());
+
         };
         timer = new Timer(delay, action);
         timer.setInitialDelay(0);
@@ -369,39 +374,34 @@ public class ChipVsChap extends JFrame{
 
     private void testLevel(){
         totalticks=0;
+
+        //Replay
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
         Replay r = new Replay(new LinkedList<GameAction>(),1, "");
-        closePhase.run();//close phase before adding any element of the new phase
+
+        //close phase before adding any element of the new phase
+        closePhase.run();
         closePhase=()->{};
+
         setPreferredSize(getSize());
         pack(); 
-        Phase p = Phase.level1(()->levelOne(), ()->{});
-        Model model = p.model();
-        repaint();
-        var level = new JLabel("LEVEL 1",SwingConstants.CENTER);
 
-        level.setBounds(615, 75, 60, 30);
+        Model model = Phase.level1(()->levelOne(), ()->{}).model();
+
+        //Initalize Timer.
         timerLabel.setBounds(630, 140,60, 30);
-
-        var chips = new JLabel("5",SwingConstants.CENTER);
-        chips.setBounds(615, 203,60, 30);
-
-        background.setOpaque(true);
-        background.setBounds(67, 52, 380, 280);
-        background.setBackground(Color.black);
-
-        var backgroundImage = new JLabel();
-        backgroundImage.setBounds(0,0,800,375);
-        ImageIcon img = new ImageIcon(Img.fullmap.image);
-       
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        backgroundImage.setIcon(img);
         startTimer(120,model);
 
+        //Graphical Interface Initialization.
+        var level = Board.getLevelLabel(1);
+        var chips = Board.getChipLabel();
+        var inventory = Board.getInventory();
+        JPanel panel = new JPanel(null);
+        setBackGround();
 
+        //Pause Dialog Box.
         JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
         JDialog dialog = pane .createDialog(null, "Paused");
         dialog.setModal(false);
@@ -409,8 +409,6 @@ public class ChipVsChap extends JFrame{
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
         
-        var inventory = new JLabel();
-        inventory.setBounds(585,253,119,53);
         //inventory.setBackground(Color.black);
        
         closePhase.run();
@@ -437,26 +435,18 @@ public class ChipVsChap extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
-                
-                
-                    if(e.getKeyCode() == getCode(characterControls[0])){
-                        action(r,model,chips,backgroundImage,"Up",()->model.chap().up());
-                    }
-                    if(e.getKeyCode() == getCode(characterControls[1])){
-                        action(r,model,chips,backgroundImage,"Down",()->model.chap().down());
-                    }
-                    if(e.getKeyCode() == getCode(characterControls[2])){
-                        action(r,model,chips,backgroundImage,"Left",()->model.chap().left());
-                    }
-                    if(e.getKeyCode() == getCode(characterControls[3]) ){
-                        action(r,model,chips,backgroundImage,"Right",()->model.chap().right());
-                    }
-
-                
-               
-
-
-              
+                if(e.getKeyCode() == getCode(characterControls[0])){
+                    action(r,model,chips,"Up",()->model.chap().up());
+                }
+                if(e.getKeyCode() == getCode(characterControls[1])){
+                    action(r,model,chips,"Down",()->model.chap().down());
+                }
+                if(e.getKeyCode() == getCode(characterControls[2])){
+                    action(r,model,chips,"Left",()->model.chap().left());
+                }
+                if(e.getKeyCode() == getCode(characterControls[3]) ){
+                    action(r,model,chips,"Right",()->model.chap().right());
+                }
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     dispose();
                     r.saveReplay();
@@ -466,7 +456,6 @@ public class ChipVsChap extends JFrame{
                 }   
             }
         };
-
 
         addKeyListener(movement);
     
@@ -482,8 +471,6 @@ public class ChipVsChap extends JFrame{
 
         setPreferredSize(new Dimension(800,400));
         pack();
-        Mapprint.printMap(model, background.getGraphics());
-
         //backgroundImage.repaint();
     }   
 
@@ -499,25 +486,18 @@ public class ChipVsChap extends JFrame{
         Phase p = Phase.level1(()->levelOne(), ()->{});
         Model model = p.model();
         repaint();
-        var level = new JLabel("LEVEL 1",SwingConstants.CENTER);
 
-        level.setBounds(615, 75, 60, 30);
         timerLabel.setBounds(630, 140,60, 30);
+        var level = Board.getLevelLabel(1);
+        var chips = Board.getChipLabel();
+        var backgroundImage = Board.getBackgroundImage();
+        var inventory = Board.getInventory();
 
-        var chips = new JLabel("5",SwingConstants.CENTER);
-        chips.setBounds(615, 203,60, 30);
+        
+        setBackGround();
 
-        background.setOpaque(true);
-        background.setBounds(67, 52, 380, 280);
-        background.setBackground(Color.black);
 
-        var backgroundImage = new JLabel();
-        backgroundImage.setBounds(0,0,800,375);
-        ImageIcon img = new ImageIcon(Img.fullmap.image);
-       
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        backgroundImage.setIcon(img);
+        JPanel panel = new JPanel(null);
     
 
 
@@ -528,8 +508,6 @@ public class ChipVsChap extends JFrame{
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         //for renderer 
         
-        var inventory = new JLabel();
-        inventory.setBounds(585,253,119,53);
         //inventory.setBackground(Color.black);
        
         closePhase.run();
@@ -585,16 +563,16 @@ public class ChipVsChap extends JFrame{
 
             try{
             if(r.getName().equals("Up")){             
-                action(null,model,chips,backgroundImage,"Up",()->model.chap().up());
+                action(null,model,chips,"Up",()->model.chap().up());
             }
             else if(r.getName().equals("Down")){
-                action(null,model,chips,backgroundImage,"Down",()->model.chap().down());
+                action(null,model,chips,"Down",()->model.chap().down());
             }
             else if(r.getName().equals("Left")){
-                action(null,model,chips,backgroundImage,"Left",()->model.chap().left());
+                action(null,model,chips,"Left",()->model.chap().left());
             }
             else if(r.getName().equals("Right")){
-                action(null,model,chips,backgroundImage,"Right",()->model.chap().right());
+                action(null,model,chips,"Right",()->model.chap().right());
             }
         }
 
