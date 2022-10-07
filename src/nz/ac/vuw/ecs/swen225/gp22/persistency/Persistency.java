@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -153,7 +153,7 @@ public class Persistency {
             String invString = "";
             for(Pickup.Key k : inv){
                 if(k != null){
-                  //  invString += k.g;
+                  //invString += k.g;
                 }
             }
             Element invElement = new Element("items").setText(invString);
@@ -183,9 +183,18 @@ public class Persistency {
                 String s = t.getState().toString();
                 String ss = s.substring(34, 39);
                 if(ss.equals("KeyTi")){
-                    boardChars[(i*tiles[0].length)+j] = '=';
+                    //Pickup.Key k = (Pickup.Key) t.getEntity();
+                    //k.getColor();
+                    boardChars[(i*tiles[0].length)+j] = 'o';
                 }else if(ss.equals("Locke")){
-                    boardChars[(i*tiles[0].length)+j] = '+';
+                    boardChars[(i*tiles[0].length)+j] = 'o';
+                }else if(ss.equals("FreeT")){
+
+                    if(t.hasEntity()&&t.getEntity().isChap()){
+                         boardChars[(i*tiles[0].length)+j] = 'C';
+                    }else{
+                        boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
+                    }
                 } else {
                     boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
                 }
@@ -193,6 +202,7 @@ public class Persistency {
             }
             return String.valueOf(boardChars);
     }
+
 
 
     public static Pickup.Key[] getInventory(String level){

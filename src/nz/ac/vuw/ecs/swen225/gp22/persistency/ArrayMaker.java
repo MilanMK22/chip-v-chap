@@ -70,7 +70,7 @@ public class ArrayMaker {
                         tiles[i][j] = Tile.chapTile(loc);
                         break;
                     case 'M':
-                        //tiles[i][j] = Tile.chapTile(loc);
+                        tiles[i][j] = Tile.freeTile(loc);
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid tile char");
