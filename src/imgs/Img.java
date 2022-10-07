@@ -23,7 +23,11 @@ public enum Img{
     exitlock,
     coin,
     Marco, 
-    homeScreen;
+    MarcoR,
+    MarcoL,
+    MarcoBack,
+    white,
+    HomeScreen;
     
 public final BufferedImage image;
 Img(){image=loadImage(this.name());}

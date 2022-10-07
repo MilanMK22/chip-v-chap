@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level>
-  <width>24</width>
-  <height>20</height>
-  <board>WWWWWWWWWWWWWWWWWWWWWWWWWWWooWWWWooWWWooWWWoWWWWWWoooWWWooooWooooWoooWWWWo=ooWWoooooWooooootoWWWWooooWWo=oooWooooooooWWWWooooWoooooWWWoooooooWWWWo=ooWooooool+oooWooooWWWoooo+oooooWWWooWWWoooWWWWoooWooioooWoooWWWooooWWWWWWWooooooWooooWoooooWWooWWoooooooWooooooooooWWoooWooooooWWooooooooooWWotoWooooooWWooooooooooWWoooWooooooWWooooooooooWWooo+ooooooWWWooooWoWoWWWoooWoooooWWWWoooWW+WWWWWo=oWooooWWWWWoooWWoooWWWoooWoooWWWWWWooWWoooooWWooWWWoWWWWWWWoWWWolXooWWWWWWWWWWWWWWWWWWWWWWWWW</board>
+  <width>11</width>
+  <height>11</height>
+  <board>WWWWWWWWWWWWotoWXWotoWWWW+WlW+WWWWo+ooooo+oWWtW=oio=WtWWWWoooooWWWWoW=ooo=WoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
   <desc>saved progress</desc>
   <id>levelSave</id>
+  <items />
 </level>

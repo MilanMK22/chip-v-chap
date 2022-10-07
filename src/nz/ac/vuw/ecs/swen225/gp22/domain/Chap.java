@@ -147,7 +147,7 @@ public class Chap implements Entity{
 
     /**
      * Remove the indicated {@code Pickup.Key} from Chap's inventory.
-     * @param color
+     * @param colorsrc/sounds/sounds.java
      */
     private void removeFromInventory(KEYCOLOR color){
         OptionalInt keyPos = IntStream
@@ -196,9 +196,9 @@ public class Chap implements Entity{
     public BufferedImage getImage(){
         switch(this.direction){
             case DOWN: return Img.Marco.image;
-            case UP: return Img.Marco.image;
-            case LEFT: return Img.Marco.image;
-            case RIGHT: return Img.Marco.image;
+            case UP: return Img.MarcoBack.image;
+            case LEFT: return Img.MarcoL.image;
+            case RIGHT: return Img.MarcoR.image;
             default: return Img.Marco.image;
         }
    

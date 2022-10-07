@@ -34,6 +34,18 @@ public class Persistency {
     );
 
 
+    public static Tile[][] level1(){
+        return readXML("level1");
+    }
+
+    public static Tile[][] level2(){
+        return readXML("level2");
+    }
+
+    public static Tile[][] levelSave(){
+        return readXML("levelPers");
+    }
+
     /** 
      * Reads an XML path and returns a 2D array of tiles for level creation
      * Uses an array maker object to convert the board string from XML to tiles
@@ -42,15 +54,25 @@ public class Persistency {
      * @return Array of tiles
      * @throws ArithmeticException
      */
-    public static Tile[][] readXML(String level) throws ArithmeticException {
+    public static Tile[][] readXML(String level) {
         int wid = 0;
         int hei = 0;
         int tres;
         String board = null;
+        String moves;
         String id;
         String desc;
+        String levelPath;
         try {
-            File inputFile = new File("levels/" + level + ".xml");
+            if(level.contains(".")){
+                levelPath = level;
+            } else {
+                levelPath = "levels/" + level + ".xml";
+            }
+
+            System.out.println(levelPath);
+            File inputFile = new File(levelPath);
+
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
@@ -76,10 +98,13 @@ public class Persistency {
                     case "tres":
                         tres = Integer.parseInt(curr.getText());
                         break;
+                    case "moves":
+                        moves = curr.getText();
+                        break;
                     case "item":
                         break;
                     default:
-                        throw new ArithmeticException("malformed xml, unexpected element: " + curr.getText());
+                        throw new IllegalArgumentException("malformed xml, unexpected element: " + curr.getText());
                 }
             }
 
@@ -98,14 +123,18 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
+
+    public static void createPXML(Tile[][] tiles){
+        createPXML(tiles, new Pickup.Key[8]);
+    }
+
     /**
      * Creates an XML file of current state of game, acts as saving feature
      * 
      * @param tiles current tiles of game
      */
-    public static void createPXML(Tile[][] tiles) {
+    public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
         String board = strFromArray(tiles);
-
         try {
             // root element
             Element levelElement = new Element("level");
@@ -120,12 +149,21 @@ public class Persistency {
             Element descElement = new Element("desc").setText("saved progress");
             // id element
             Element idElement = new Element("id").setText("levelSave");
+            // inventory element
+            String invString = "";
+            for(Pickup.Key k : inv){
+                if(k != null){
+                  //  invString += k.g;
+                }
+            }
+            Element invElement = new Element("items").setText(invString);
             // add elems
             doc.getRootElement().addContent(widthElement);
             doc.getRootElement().addContent(heightElement);
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
             doc.getRootElement().addContent(idElement);
+            doc.getRootElement().addContent(invElement);
             XMLOutputter xmlOutput = new XMLOutputter();
             // setup printstream
             PrintStream writeLevel = new PrintStream(new FileOutputStream("levels/levelPers.xml", false));
@@ -154,6 +192,34 @@ public class Persistency {
                 }  
             }
             return String.valueOf(boardChars);
+    }
+
+
+    public static Pickup.Key[] getInventory(String level){
+        Pickup.Key[] keys = new Pickup.Key[8];
+        try {
+            File inputFile = new File("levels/" + level + ".xml");
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(inputFile);
+            Element rootElement = document.getRootElement();
+            List<Element> elements = rootElement.getChildren();
+            for (int i = 0; i < elements.size(); i++) {
+                Element curr = elements.get(i);
+                if(curr.getName().equals("item")){
+                    String key = curr.getText();
+                    String[] keySplit = key.split(" ");
+                    int x = Integer.parseInt(keySplit[0]);
+                    int y = Integer.parseInt(keySplit[1]);
+                    Color c = Color.decode(keySplit[2]);
+                    //keys[i] = new Pickup.Key(x, y, c);
+                }
+            }
+        } catch (JDOMException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return keys;
     }
 }
 
