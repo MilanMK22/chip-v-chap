@@ -6,7 +6,9 @@ import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 public class PersistencyTest {
     @Test
@@ -65,11 +67,24 @@ public class PersistencyTest {
             }
         }
     }
-    // @Test
-    // public void test7() {
-    //     Persistency.createPXML(Persistency.readXML("level1"));
-    //     Tile[][] i = Persistency.readXML("level1");
-    //     Tile[][] j = Persistency.readXML("levelPers");
-    //     assertEquals(i,j);
-    // }
+    @Test
+    public void test9() {
+        Persistency.createPXML(Persistency.readXML("level1"));
+        Tile[][] i = Persistency.readXML("level1");
+        Tile[][] j = Persistency.readXML("levelPers");
+        assertEquals(Persistency.strFromArray(i), Persistency.strFromArray(j));
+    }
+    @Test
+    public void test10() {
+        Persistency.createPXML(Persistency.readXML("level2"));
+        Tile[][] i = Persistency.readXML("level2");
+        Tile[][] j = Persistency.readXML("levelPers");
+        assertEquals(Persistency.strFromArray(i), Persistency.strFromArray(j));
+    }
+    @Test
+    public void test11() {
+        Point l = new Point(0,0);
+        //Persistency.createPXML(Persistency.readXML("level2"), new Pickup.Key[]{, Pickup.Key.BLUE, Pickup.Key.GREEN});]);
+        
+    }
 }
