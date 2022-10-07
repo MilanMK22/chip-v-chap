@@ -123,7 +123,7 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
-
+    
     public static void createPXML(Tile[][] tiles){
         createPXML(tiles, new Pickup.Key[8]);
     }
@@ -174,7 +174,10 @@ public class Persistency {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Converts a 2D array of tiles to a string for use in creating XML
+     * @param tiles 2D array of tiles
+     */
     private static String strFromArray(Tile[][] tiles) {
         char[] boardChars = new char[tiles.length*tiles[0].length];
         for (int i = 0; i < tiles.length; i++) {
@@ -204,7 +207,10 @@ public class Persistency {
     }
 
 
-
+    /**
+     * gets inventory of chap from a given level
+     * @param level level to get inventory from
+     */
     public static Pickup.Key[] getInventory(String level){
         Pickup.Key[] keys = new Pickup.Key[8];
         try {
