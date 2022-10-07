@@ -70,6 +70,17 @@ public class ChipVsChap extends JFrame{
         printInventory.printIn(model,backgroundImage.getGraphics());
     }
 
+    /**
+     * done by ilya
+     * @return
+     */
+    public static Chap getChap(){
+        Maze m = new Maze(Persistency.readXML("level1"));
+        Model model = new Model(m);
+        Chap chap = model.chap();
+        return chap;
+    }
+
 
 
     /**
@@ -273,7 +284,7 @@ public class ChipVsChap extends JFrame{
 
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
-        HomeScreen.setIcon(new ImageIcon(Img.homeScreen.image));
+        HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
         JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
@@ -285,6 +296,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(HomeScreen);
             remove(panel);
+            s.stop();
         };
        
         //add(BorderLayout.SOUTH,panel);

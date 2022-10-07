@@ -120,7 +120,7 @@ public class Chap implements Entity{
         }
         else{
             s.play();
-            throw new Error("Chap cannot move to this tile." );
+            //throw new Error("Chap cannot move to this tile." );
         }
     }
     
@@ -147,7 +147,7 @@ public class Chap implements Entity{
 
     /**
      * Remove the indicated {@code Pickup.Key} from Chap's inventory.
-     * @param color
+     * @param colorsrc/sounds/sounds.java
      */
     private void removeFromInventory(KEYCOLOR color){
         OptionalInt keyPos = IntStream

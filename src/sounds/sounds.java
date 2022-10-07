@@ -30,4 +30,8 @@ public class sounds {
         clip.close();
         clip.stop();
     }
+
+    public void loop(){
+       // clip.loop(Clip.LOOP_CONTINUSESLY);
+    }
 }
