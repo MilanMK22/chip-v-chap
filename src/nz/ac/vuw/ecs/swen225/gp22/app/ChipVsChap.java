@@ -265,6 +265,7 @@ public class ChipVsChap extends JFrame{
      * @throws IOException
      */
     private void menu() {
+        System.out.println("Menu Loaded...");
         var start = new JButton("");
         start.setOpaque(false);
         start.setContentAreaFilled(false);
