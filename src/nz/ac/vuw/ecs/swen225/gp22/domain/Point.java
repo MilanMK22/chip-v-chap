@@ -32,4 +32,7 @@ public class Point {
     public Point right(){
         return new Point(this.x+1, this.y);
     }
+    public String toString(){
+        return "("+x+", "+y+")";
+    }
 }
