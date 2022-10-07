@@ -334,8 +334,7 @@ public class ChipVsChap extends JFrame{
         };
         addKeyListener(menuKeyListener);
         start.addActionListener(s -> {
-            testLevel();
-          
+            levelOne();
             removeKeyListener(menuKeyListener);
         });
         replay.addActionListener(s -> {
@@ -353,7 +352,8 @@ public class ChipVsChap extends JFrame{
     /**
      * Setting to level one.
      */
-    private void levelOne(){setLevel(Phase.level1(()->levelOne(), ()->menu())); }
+
+    private void levelOne(){setLevel(Phase.level1(()->menu(), ()->menu())); }
 
 
     /**
@@ -364,6 +364,7 @@ public class ChipVsChap extends JFrame{
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
+        testLevel(p);
         pack();                   
       }
     
@@ -372,23 +373,18 @@ public class ChipVsChap extends JFrame{
      * Testing level that is being used to display the game and test the game is functioning as it should.
      */
 
-    private void testLevel(){
+    private void testLevel(Phase lvl){
         totalticks=0;
-
         //Replay
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
         Replay r = new Replay(new LinkedList<GameAction>(),1, "");
 
-        //close phase before adding any element of the new phase
-        closePhase.run();
-        closePhase=()->{};
-
         setPreferredSize(getSize());
         pack(); 
 
-        Model model = Phase.level1(()->levelOne(), ()->{}).model();
+        Model model = lvl.model();
 
         //Initalize Timer.
         timerLabel.setBounds(630, 140,60, 30);
@@ -483,7 +479,7 @@ public class ChipVsChap extends JFrame{
         closePhase=()->{};
         setPreferredSize(getSize());
         pack(); 
-        Phase p = Phase.level1(()->levelOne(), ()->{});
+        Phase p = Phase.level1(()->menu(), ()->menu());
         Model model = p.model();
         repaint();
 
