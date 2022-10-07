@@ -62,4 +62,10 @@ public class Tile{
     public boolean hasEntity(){ return entity != null; }
     public Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }
     public BufferedImage getImage(){ return state.getImage(); }
+    public char getChar(){ 
+        if(hasEntity()){
+            return entity.toChar();
+        }
+        return state.toChar();
+    }
 }
