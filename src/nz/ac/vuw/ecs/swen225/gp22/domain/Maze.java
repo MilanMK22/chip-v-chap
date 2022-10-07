@@ -60,6 +60,9 @@ public class Maze {
 
     //Utility Methods
 
+    public int getXLen(){ return this.xlen; }
+    public int getYLen(){ return this.ylen; }
+
     public int totalKeys(){ return totalKeys; }
     public int totalTreasure(){ return totalTreasure; }
 
