@@ -12,6 +12,7 @@ public interface TileState{
     default boolean isDoor() { return false; }
     boolean interact(Tile t, Chap c, Maze m);
     public BufferedImage getImage();
+    default public char toChar(){ return 'o';}
 }
 
 class FreeTile implements TileState {
@@ -44,6 +45,9 @@ class WallTile implements TileState {
     @Override
     public BufferedImage getImage() {
         return Img.walls.image;
+    }
+    public char toChar(){
+        return 'W';
     }
 }
 
@@ -93,6 +97,9 @@ class LockedDoorTile implements TileState {
     public BufferedImage getImage() {
         return color.lock();
     }
+    public char toChar(){
+        return color.lockChar();
+    }
 
 }
 
@@ -105,6 +112,9 @@ class InfoTile implements TileState{
     }
     public BufferedImage getImage() {
         return Img.info.image;
+    }
+    public char toChar(){
+        return 'i';
     }
 
 }
@@ -126,6 +136,9 @@ class TreasureTile implements TileState{
     public BufferedImage getImage() {
         return Img.floor_tiles.image;
     }
+    public char toChar(){
+        return 't';
+    }
 }
 
 class ExitLockTile implements TileState{
@@ -139,6 +152,9 @@ class ExitLockTile implements TileState{
     }
     public BufferedImage getImage() {
         return Img.exitlock.image;
+    }
+    public char toChar(){
+        return 'l';
     }
 }
 
@@ -157,5 +173,7 @@ class ExitTile implements TileState{
     public BufferedImage getImage() {
         return Img.exit.image;
     }
-    
+    public char toChar(){
+        return 'X';
+    }
 }
