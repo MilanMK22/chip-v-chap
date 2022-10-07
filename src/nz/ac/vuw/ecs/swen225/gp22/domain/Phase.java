@@ -19,7 +19,7 @@ public record Phase(Model model) {
         
     }
 
-    static Phase level2(Runnable win, Runnable loss){
+    public static Phase level2(Runnable win, Runnable loss){
         try{
             Model model = new Model(new Maze(Persistency.readXML("level2"))){
                 public void win(){ win.run(); }
