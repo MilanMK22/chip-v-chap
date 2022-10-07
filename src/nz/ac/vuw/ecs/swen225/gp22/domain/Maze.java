@@ -84,10 +84,5 @@ public class Maze {
         .mapToObj(c -> tiles[r][c]))
         .flatMap(x->x); 
     }
-
-
-    public Tile[][] getTiles(){
-        return tiles;
-    }
     
 }
