@@ -141,8 +141,8 @@ public class Chap implements Entity{
     public void pickUpKey(Pickup.Key key){
         s.setFile("src/sounds/collectcoin.wav");
         s.play();
-        heldItems += 1;
         addToInventory(key);
+        heldItems += 1;
     }
 
     /**
