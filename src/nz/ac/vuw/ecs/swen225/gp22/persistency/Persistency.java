@@ -101,7 +101,7 @@ public class Persistency {
                     case "moves":
                         moves = curr.getText();
                         break;
-                    case "item":
+                    case "items":
                         break;
                     default:
                         throw new IllegalArgumentException("malformed xml, unexpected element: " + curr.getText());
@@ -123,7 +123,7 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
-    
+
     public static void createPXML(Tile[][] tiles){
         createPXML(tiles, new Pickup.Key[8]);
     }
@@ -153,7 +153,7 @@ public class Persistency {
             String invString = "";
             for(Pickup.Key k : inv){
                 if(k != null){
-                  //invString += k.g;
+                  invString += k.toChar();
                 }
             }
             Element invElement = new Element("items").setText(invString);
@@ -178,29 +178,12 @@ public class Persistency {
      * Converts a 2D array of tiles to a string for use in creating XML
      * @param tiles 2D array of tiles
      */
-    private static String strFromArray(Tile[][] tiles) {
+    public static String strFromArray(Tile[][] tiles) {
         char[] boardChars = new char[tiles.length*tiles[0].length];
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 Tile t = tiles[i][j];
-                String s = t.getState().toString();
-                String ss = s.substring(34, 39);
-                if(ss.equals("KeyTi")){
-                    //Pickup.Key k = (Pickup.Key) t.getEntity();
-                    //k.getColor();
-                    boardChars[(i*tiles[0].length)+j] = 'o';
-                }else if(ss.equals("Locke")){
-                    boardChars[(i*tiles[0].length)+j] = 'o';
-                }else if(ss.equals("FreeT")){
-
-                    if(t.hasEntity()&&t.getEntity().isChap()){
-                         boardChars[(i*tiles[0].length)+j] = 'C';
-                    }else{
-                        boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
-                    }
-                } else {
-                    boardChars[(i*tiles[0].length)+j] = stateMap.get(ss);
-                }
+                boardChars[(i*tiles[0].length)+j] = t.getChar();
                 }  
             }
             return String.valueOf(boardChars);
