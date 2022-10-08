@@ -16,6 +16,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 /**
  * Main class for the persistency package
@@ -154,6 +155,7 @@ public class Persistency {
             for(Pickup.Key k : inv){
                 if(k != null){
                   invString += k.toChar();
+                  System.out.println(k.toChar());
                 }
             }
             Element invElement = new Element("items").setText(invString);
@@ -191,13 +193,13 @@ public class Persistency {
 
 
     /**
-     * gets inventory of chap from a given level
+     * gets inventory of chap from the current saved level
      * @param level level to get inventory from
      */
-    public static Pickup.Key[] getInventory(String level){
+    public static Pickup.Key[] getInventory(){
         Pickup.Key[] keys = new Pickup.Key[8];
         try {
-            File inputFile = new File("levels/" + level + ".xml");
+            File inputFile = new File("levels/levelPers.xml");
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
@@ -205,11 +207,24 @@ public class Persistency {
             for (int i = 0; i < elements.size(); i++) {
                 Element curr = elements.get(i);
                 if(curr.getName().equals("item")){
+                    //on to right XML element
                     String key = curr.getText();
-                    String[] keySplit = key.split(" ");
-                    int x = Integer.parseInt(keySplit[0]);
-                    int y = Integer.parseInt(keySplit[1]);
-                    Color c = Color.decode(keySplit[2]);
+                    for(int j = 0; j < key.toCharArray().length; j++){
+                        char c = key.charAt(j);
+                        switch(c) {
+                            case 'b':
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.BLUE).getEntity();
+                                break;
+                            case 'r':
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.RED).getEntity();
+                                break;
+                            case 'g':
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.GREEN).getEntity();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     //keys[i] = new Pickup.Key(x, y, c);
                 }
             }

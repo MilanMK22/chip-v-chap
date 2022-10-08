@@ -8,6 +8,7 @@ import org.junit.Test;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 public class PersistencyTest {
@@ -84,7 +85,7 @@ public class PersistencyTest {
     @Test
     public void test11() {
         Point l = new Point(0,0);
-        //Persistency.createPXML(Persistency.readXML("level2"), new Pickup.Key[]{, Pickup.Key.BLUE, Pickup.Key.GREEN});]);
-        
+        Persistency.createPXML(Persistency.readXML("level1"), new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
+        assert(Persistency.getInventory("levelPers")[0] != null);
     }
 }
