@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import imgs.Img;
-
+import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
 
@@ -40,7 +40,7 @@ public class ChipVsChap extends JFrame{
     public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
-    public static Model model;
+    public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
     
    
     static Timer timer;
@@ -73,17 +73,10 @@ public class ChipVsChap extends JFrame{
         chips.setText("" + (5 - model.chap().heldTreasure()));
     }
 
-    /**
-     * done by ilya
-     * @return
-    //  */
-    // public static Chap getChap(){
-    //     Maze m = new Maze(Persistency.readXML("level1"));
-    //     Model model = new Model(m);
-    //     Chap chap = model.chap();
-    //     return chap;
-    // }
 
+    public Chap getChap(){
+        return model.chap();
+    }
 
 
     /**
@@ -408,10 +401,6 @@ public class ChipVsChap extends JFrame{
         //test
         var pause = new JLabel("PAUSED");
         pause.setBounds(630, 140,60, 30);
-        
-
-
-
         
         //Close Phase
         closePhase=()->{
