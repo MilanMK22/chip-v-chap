@@ -47,7 +47,7 @@ public class ChipVsChap extends JFrame{
    
     static Timer timer;
     int count = 0;
-    int delay = 100;
+    int delay = 50;
     int timePassed = 0;
     int totalticks=0;
 
