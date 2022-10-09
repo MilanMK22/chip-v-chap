@@ -196,7 +196,7 @@ public class Persistency {
      * gets inventory of chap from the current saved level
      * @param level level to get inventory from
      */
-    public static Pickup.Key[] getInventory(){
+    public static Pickup.Key[] getSavedInventory(){
         Pickup.Key[] keys = new Pickup.Key[8];
         try {
             File inputFile = new File("levels/levelPers.xml");
@@ -205,8 +205,9 @@ public class Persistency {
             Element rootElement = document.getRootElement();
             List<Element> elements = rootElement.getChildren();
             for (int i = 0; i < elements.size(); i++) {
-                Element curr = elements.get(i);
-                if(curr.getName().equals("item")){
+               Element curr = elements.get(i);
+                //System.out.println(curr.getName()); //debug
+                if(curr.getName().equals("items")){
                     //on to right XML element
                     String key = curr.getText();
                     for(int j = 0; j < key.toCharArray().length; j++){
