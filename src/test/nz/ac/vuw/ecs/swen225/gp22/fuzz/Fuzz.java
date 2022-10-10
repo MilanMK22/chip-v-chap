@@ -1,6 +1,5 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import javax.swing.SwingUtilities;
 import org.junit.Test;
@@ -29,7 +28,8 @@ public class Fuzz{
                 int x = 0;
                 
                 // getting the chap
-                Chap chap = new ChipVsChap().getChap();
+                //Chap chap = new ChipVsChap().getChap();
+                ChipVsChap chipvchap = new ChipVsChap();
                 long time = 0;
                 
                 // setting the start time
@@ -41,10 +41,10 @@ public class Fuzz{
                     x++;
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime)/1000;
-                    if(randomNum < up) { chap.up(); up -= 0.03; down += 0.01; left += 0.01; }
-                    else if(randomNum < down + up) { chap.down(); down -= 0.03; up += 0.01; left += 0.01; }
-                    else if(randomNum < left + down + up) { chap.left(); left -= 0.03; down += 0.01; up += 0.01; }
-                    else { chap.right(); down += 0.01; left += 0.01; up += 0.01; }
+                    if(randomNum < up) { chipvchap.up(); up -= 0.03; down += 0.01; left += 0.01; }
+                    else if(randomNum < down + up) { chipvchap.down(); down -= 0.03; up += 0.01; left += 0.01; }
+                    else if(randomNum < left + down + up) { chipvchap.left(); left -= 0.03; down += 0.01; up += 0.01; }
+                    else { chipvchap.right(); down += 0.01; left += 0.01; up += 0.01; }
                     
                     System.out.println("Number of moves done: " + x);
                     System.out.println("Test Runtime: " + time + "s");
@@ -67,7 +67,7 @@ public class Fuzz{
                 int x = 0;
                 
                 // getting the chap
-                Chap chap = new ChipVsChap().getChapForLevel2();
+                ChipVsChap chipvchap = new ChipVsChap();
                 long time = 0;
                 
                 // setting the start time
@@ -79,10 +79,10 @@ public class Fuzz{
                     x++;
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime)/1000;
-                    if(randomNum < up) { chap.up(); up -= 0.03; down += 0.01; left += 0.01; }
-                    else if(randomNum < down + up) { chap.down(); down -= 0.03; up += 0.01; left += 0.01; }
-                    else if(randomNum < left + down + up) { chap.left(); left -= 0.03; down += 0.01; up += 0.01; }
-                    else { chap.right(); down += 0.01; left += 0.01; up += 0.01; }
+                    if(randomNum < up) { chipvchap.upL2(); up -= 0.03; down += 0.01; left += 0.01; }
+                    else if(randomNum < down + up) { chipvchap.downL2(); down -= 0.03; up += 0.01; left += 0.01; }
+                    else if(randomNum < left + down + up) { chipvchap.leftL2(); left -= 0.03; down += 0.01; up += 0.01; }
+                    else { chipvchap.rightL2(); down += 0.01; left += 0.01; up += 0.01; }
                     
                     System.out.println("Number of moves done: " + x);
                     System.out.println("Test Runtime: " + time + "s");

@@ -57,13 +57,15 @@ public class ChipVsChap extends JFrame{
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
     
-
+    
     public Chap getChap1(){
         return  Phase.level1(()->levelTwo(), ()->levelOne()).model().chap();
     }
     public Chap getChap2(){
         return  Phase.level2(()->levelTwo(), ()->levelOne()).model().chap();
     }
+
+    
 
 
     /**
@@ -93,6 +95,17 @@ public class ChipVsChap extends JFrame{
         return model2.chap();
     }
 
+    // for level 1 chap moves
+    public void up(){ getChap().up(); }
+    public void down(){ getChap().down(); }
+    public void left(){ getChap().left(); }
+    public void right(){ getChap().right(); }
+
+    //for level 2 chap moves
+    public void upL2(){ getChapForLevel2().up(); }
+    public void downL2(){ getChapForLevel2().down(); }
+    public void leftL2(){ getChapForLevel2().left(); }
+    public void rightL2(){ getChapForLevel2().right(); }
 
     /**
      * Returns the character relative to the character.
