@@ -57,6 +57,14 @@ public class ChipVsChap extends JFrame{
     public static JLabel timerLabel = new JLabel("test");
     
 
+    public Chap getChap1(){
+        return  Phase.level1(()->levelTwo(), ()->levelOne()).model().chap();
+    }
+    public Chap getChap2(){
+        return  Phase.level2(()->levelTwo(), ()->levelOne()).model().chap();
+    }
+
+
     /**
      * Updates the keybindings.
      */
