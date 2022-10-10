@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch ReadXMLFile",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.recorder.ReadXMLFile",
+            "projectName": "chip-vs-chap_b1883c5e"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "nz.ac.vuw.ecs.swen225.gp22.app.Main",

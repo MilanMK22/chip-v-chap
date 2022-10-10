@@ -16,9 +16,8 @@ public class Fuzz{
             try{
                 SwingUtilities.invokeAndWait(() -> {
                     double up = 0.25, down = 0.25, left = 0.25;
-                    int upCount = 0, downCount = 0, leftCount = 0, rightCount = 0;
                    
-                    // counting the number of moves done
+                    // for counting the number of moves done
                     int x = 0;
 
                     // getting the chap
@@ -31,21 +30,16 @@ public class Fuzz{
                     while (true) {
                         double randomNum = Math.random();
                         x++;
-                        if(randomNum < up) { chap.up(); up -= 0.03; down += 0.01; left += 0.01; upCount++;}
-                        else if(randomNum < down + up) { chap.down(); down -= 0.03; up += 0.01; left += 0.01; downCount++; }
-                        else if(randomNum < left + down + up) { chap.left(); left -= 0.03; down += 0.01; up += 0.01; leftCount++; }
-                        else { chap.right(); down += 0.01; left += 0.01; up += 0.01; rightCount++; }
+                        
+                        if(randomNum < up) { chap.up(); up -= 0.03; down += 0.01; left += 0.01; }
+                        else if(randomNum < down + up) { chap.down(); down -= 0.03; up += 0.01; left += 0.01; }
+                        else if(randomNum < left + down + up) { chap.left(); left -= 0.03; down += 0.01; up += 0.01; }
+                        else { chap.right(); down += 0.01; left += 0.01; up += 0.01; }
 
                         System.out.println(x);
-                        if(System.currentTimeMillis() >= startTime + 60000) {
-                            System.out.println("held treasure: " + chap.heldTreasure());
-                            //System.out.println("held items: " + chap.getHeldItems());
-                            System.out.println("up: " + upCount + " down: " + downCount + " right: " + rightCount + " left: " + leftCount);
-                            break;
-                        }
+                        if(System.currentTimeMillis() >= startTime + 60000) { return; }
                     }
                 });
-                
             } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e);}
         }
     }

@@ -8,6 +8,7 @@ import org.junit.Test;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
 public class PersistencyTest {
@@ -84,7 +85,18 @@ public class PersistencyTest {
     @Test
     public void test11() {
         Point l = new Point(0,0);
-        //Persistency.createPXML(Persistency.readXML("level2"), new Pickup.Key[]{, Pickup.Key.BLUE, Pickup.Key.GREEN});]);
-        
+        Persistency.createPXML(Persistency.readXML("level1"), new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
+        //Pickup.Key[] lol = Persistency.getInventory();
+        assert(Persistency.getSavedInventory()[0] != null);
+        assert(Persistency.getSavedInventory()[1] == null);
+    }
+    @Test
+    public void test12() {
+        Point l = new Point(0,0);
+        Persistency.createPXML(Persistency.readXML("level1"), new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity(),(Pickup.Key) Tile.keyTile(l,KEYCOLOR.RED).getEntity()});
+        //Pickup.Key[] lol = Persistency.getInventory();
+        assert(Persistency.getSavedInventory()[0] != null);
+        assert(Persistency.getSavedInventory()[1] != null);
+        assert(Persistency.getSavedInventory()[2] == null);
     }
 }
