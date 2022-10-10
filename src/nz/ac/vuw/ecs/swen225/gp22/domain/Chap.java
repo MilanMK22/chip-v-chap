@@ -207,10 +207,19 @@ public class Chap implements Entity{
     }
     @Override
     public String toString(){
-        return "Chap at: " + this.location.toString() + "\n" +
+        String ret = "Chap at: " + this.location.toString() + "\n" +
         "Chap Collected: \n Keys \t Treasure \n" + 
         (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + 
-        (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n";
+        (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n" + "Inventory:\n";
+
+        //inventory to string
+        for(Pickup.Key k: inventory){
+            if(k!= null){
+                ret += k.toString() + "\n";
+            }
+        }
+
+        return ret;
 
     }
 }
