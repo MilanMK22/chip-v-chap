@@ -323,11 +323,14 @@ public class ChipVsChap extends JFrame{
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
-                    System.out.println("level 1");
+                    levelOne();
+                    removeKeyListener(this);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_2) && e.isControlDown()){
                     // opens new game at level 2
-                    System.out.println("level 2");
+                    levelTwo();
+                    removeKeyListener(this);
+
                 }        
             }
         };
