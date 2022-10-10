@@ -57,6 +57,7 @@ public class Pickup{
         public Point getLocation() { return this.location;}
         public BufferedImage getImage(){ return color.key(); }
         public char toChar(){ return color.keyChar(); }
+        public String toString(){ return color.name();}
     }
 }
 
