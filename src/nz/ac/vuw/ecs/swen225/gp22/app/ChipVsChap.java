@@ -42,6 +42,7 @@ public class ChipVsChap extends JFrame{
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
+    public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
    
@@ -78,6 +79,10 @@ public class ChipVsChap extends JFrame{
 
     public Chap getChap(){
         return model.chap();
+    }
+
+    public Chap getChapForLevel2(){
+        return model2.chap();
     }
 
 
