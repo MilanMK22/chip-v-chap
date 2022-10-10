@@ -47,9 +47,11 @@ public class ChipVsChap extends JFrame{
    
     static Timer timer;
     int count = 0;
-    int delay = 100;
+    int delay = 50;
     int timePassed = 0;
     int totalticks=0;
+    Model RepModel; //so we can make changes to model for a replay
+    KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
@@ -335,7 +337,7 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(menuKeyListener);
         });
         replay.addActionListener(s -> {
-            Replay1();
+            Rep2();
           
             removeKeyListener(menuKeyListener);
         });
@@ -383,6 +385,8 @@ public class ChipVsChap extends JFrame{
 
         //Set model to correct model.
         Model model = lvl.model();
+
+        RepModel = model;
 
         //Graphical Interface Initialization.
         var level = Board.getLevelLabel(levelNum);
@@ -438,6 +442,7 @@ public class ChipVsChap extends JFrame{
             }
         };
         addKeyListener(controls);
+        Replistner = controls;
 
         //Pause box closed
         WindowListener listener = new WindowAdapter() {
@@ -460,112 +465,41 @@ public class ChipVsChap extends JFrame{
     }   
 
 
-    public void Replay1(){
-        s.stop();
-        s.setFile("src/sounds/game.wav");
-        s.play();
-        closePhase.run();//close phase before adding any element of the new phase
-        closePhase=()->{};
-        setPreferredSize(getSize());
-        pack(); 
-        Phase p = Phase.level1(()->menu(), ()->menu());
-        Model model = p.model();
-        repaint();
-
-        timerLabel.setBounds(630, 140,60, 30);
-        var level = Board.getLevelLabel(1);
-        var chips = Board.getChipLabel(5);
-        var backgroundImage = Board.getBackgroundImage();
-        var inventory = Board.getInventory();
-
-        
-        setBackGround();
-
-
-        JPanel panel = new JPanel(null);
-    
-
-
-        JOptionPane pane = new JOptionPane("Paused", JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = pane .createDialog(null, "Paused");
-        dialog.setModal(false);
-        dialog.setVisible(false);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        //for renderer 
-        
-        //inventory.setBackground(Color.black);
-       
-        closePhase.run();
-        closePhase=()->{
-            remove(panel);
-        };
-        add(panel);
-        Keys gameKeyListener = new Keys(){
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // TODO Auto-generated method stub
-                if((e.getKeyCode() == KeyEvent.VK_SPACE)){
-                    timer.stop();
-                    dialog.setVisible(true);
-                } 
-                if((e.getKeyCode() == KeyEvent.VK_ESCAPE)){
-                        timer.start();
-                }  
-            } 
-        };
-        addKeyListener(gameKeyListener);
-
-        
-        Replay rep = Replay.readXML();
-        startTimer(120, model,chips);
-    
-        panel.add(background);
-        panel.add(backgroundImage);
-       
-        backgroundImage.add(level);
-        backgroundImage.add(timerLabel);
-        backgroundImage.add(chips);
-        backgroundImage.add(inventory);
-       
-
-        setPreferredSize(new Dimension(800,400));
-        pack();
-        Mapprint.printMap(model, background.getGraphics());
-
-        //backgroundImage.repaint();
-        ActionListener newone = e -> {
-            if(rep.getMoves().isEmpty()){
-                System.out.println("empty");
-                dispose();
-                System.exit(ABORT);
-            }
-            GameAction r = rep.getMoves().peek();
-
-            if(r.getTime() == totalticks){
-                r = rep.getMoves().remove();
-            try{
-            if(r.getName().equals("Up")){             
-                action(null,model,"Up",()->model.chap().up());
-            }
-            else if(r.getName().equals("Down")){
-                action(null,model,"Down",()->model.chap().down());
-            }
-            else if(r.getName().equals("Left")){
-                action(null,model,"Left",()->model.chap().left());
-            }
-            else if(r.getName().equals("Right")){
-                action(null,model,"Right",()->model.chap().right());
-            }
+    public void Rep2(){
+    Replay rep = Replay.readXML();
+    if(rep.getLevel() == 1){
+        levelOne(); 
+    }else{
+        levelTwo();
+    }
+    removeKeyListener(Replistner);
+     ActionListener newone = e -> {
+        if(rep.getMoves().isEmpty()){
+            System.out.println("empty");
+            dispose();
+            System.exit(ABORT);
         }
+        GameAction r = rep.getMoves().peek();
 
-        catch(Error b){
-
+        if(r.getTime() == totalticks){
+            r = rep.getMoves().remove();
+        try{
+        if(r.getName().equals("Up")){             
+            action(null,RepModel,"Up",()->RepModel.chap().up());
+        }else if(r.getName().equals("Down")){
+            action(null,RepModel,"Down",()->RepModel.chap().down());
+        }else if(r.getName().equals("Left")){
+            action(null,RepModel,"Left",()->RepModel.chap().left());
+        }else if(r.getName().equals("Right")){
+            action(null,RepModel,"Right",()->RepModel.chap().right());
         }
-        }
-            
-        };
+    }
+    catch(Error b){
+    }
+    }  
+    };
+    timer.addActionListener(newone);
 
-        timer.addActionListener(newone);
     }
     
    

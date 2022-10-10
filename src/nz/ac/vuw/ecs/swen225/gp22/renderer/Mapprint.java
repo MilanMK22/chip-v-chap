@@ -36,19 +36,22 @@ public class Mapprint {
         Point chaploc = m.chap().getLocation();
         int chapx = chaploc.getX();
         int chapy = chaploc.getY();
-
+        System.out.println("chap loc= " + chapx + " ," + chapy);
         // for loop for pritnig map
 
-        for (int i = chapy - 4; i < chapy + 4; i++) {
-            for (int j = chapx - 5; j <= chapx + 5; j++) {
+        for(int i = chapy - 4; i < chapy + 4; i++) {
+           for(int j = chapx - 5; j <= chapx + 5; j++) {
+           
 
                 // getting tile image from domain and pritning it
                 if (i < 0 || j < 0 || i >= m.getMaze().xlen || j >= m.getMaze().ylen) {
                     g.drawImage(Img.walls.image, x, y, size, size, null);
                 } else {
                     java.awt.image.BufferedImage cur = m.getMaze().getTile(j,i).getImage();
+
                     g.drawImage(Img.floor_tiles.image, x, y, size, size, null);
                     g.drawImage(cur, x, y, size, size, null);
+
                     if (m.getMaze().getTile(j,i).hasEntity()) {
                         if ((m.getMaze().getTile(j,i).getEntity() != m.chap())) {
                             g.drawImage(m.getMaze().getTile(j,i).getEntity().getImage(), x, y, size, size, null);
@@ -56,10 +59,10 @@ public class Mapprint {
                     }
                 }
                 x += size;
-                if (x >= MapDim * size) {
+                if (x >= 11 * size) {
                     x = 0;
                     y += size;
-                    if (y > MapDim * size) {
+                    if (y >= 9 * size) {
                         break;
                     }
                 }
