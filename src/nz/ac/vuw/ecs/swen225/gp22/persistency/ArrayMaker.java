@@ -16,17 +16,17 @@ public class ArrayMaker {
      * Given a string and dimensions, makes an array of tiles
      * 
      * @param board Board string from XML
-     * @param w Level width from XML
-     * @param h Level height from XML
+     * @param w     Level width from XML
+     * @param h     Level height from XML
      * @return
      */
-    public static Tile[][] makeArray(String board, int w, int h){
+    public static Tile[][] makeArray(String board, int w, int h) {
         Tile[][] tiles = new Tile[w][h];
         char[] chars = board.toCharArray();
-            for (int j = 0; j < h; j++) {
-                for (int i = 0; i < w; i++) {
-                char c = chars[(i*h)+j];
-                Point loc = new Point(j,i);
+        for (int j = 0; j < h; j++) {
+            for (int i = 0; i < w; i++) {
+                char c = chars[(i * h) + j];
+                Point loc = new Point(j, i);
                 switch (c) {
                     case 'W':
                         tiles[i][j] = Tile.wallTile(loc);
@@ -72,10 +72,9 @@ public class ArrayMaker {
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid tile char");
-                        
-                    }  
                 }
             }
+        }
         return tiles;
     }
 }

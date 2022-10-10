@@ -24,30 +24,29 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 public class Persistency {
 
     static Map<String, Character> stateMap = Map.ofEntries(
-        Map.entry("WallT", 'W'),
-        Map.entry("FreeT", 'o'),
-        Map.entry("InfoT", 'i'),
-        Map.entry("ExitL", 'l'),
-        Map.entry("Treas", 't'),
-        Map.entry("ExitT", 'X'),
-        Map.entry("Locke", 'o'), ///nah
-        Map.entry("KeyTi", 'o') ///nah
+            Map.entry("WallT", 'W'),
+            Map.entry("FreeT", 'o'),
+            Map.entry("InfoT", 'i'),
+            Map.entry("ExitL", 'l'),
+            Map.entry("Treas", 't'),
+            Map.entry("ExitT", 'X'),
+            Map.entry("Locke", 'o'), /// nah
+            Map.entry("KeyTi", 'o') /// nah
     );
 
-
-    public static Tile[][] level1(){
+    public static Tile[][] level1() {
         return readXML("level1");
     }
 
-    public static Tile[][] level2(){
+    public static Tile[][] level2() {
         return readXML("level2");
     }
 
-    public static Tile[][] levelSave(){
+    public static Tile[][] levelSave() {
         return readXML("levelPers");
     }
 
-    /** 
+    /**
      * Reads an XML path and returns a 2D array of tiles for level creation
      * Uses an array maker object to convert the board string from XML to tiles
      * 
@@ -65,7 +64,7 @@ public class Persistency {
         String desc;
         String levelPath;
         try {
-            if(level.contains(".")){
+            if (level.contains(".")) {
                 levelPath = level;
             } else {
                 levelPath = "levels/" + level + ".xml";
@@ -73,7 +72,6 @@ public class Persistency {
 
             System.out.println(levelPath);
             File inputFile = new File(levelPath);
-
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element rootElement = document.getRootElement();
@@ -124,8 +122,7 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei);
     }
 
-
-    public static void createPXML(Tile[][] tiles){
+    public static void createPXML(Tile[][] tiles) {
         createPXML(tiles, new Pickup.Key[8]);
     }
 
@@ -152,10 +149,10 @@ public class Persistency {
             Element idElement = new Element("id").setText("levelSave");
             // inventory element
             String invString = "";
-            for(Pickup.Key k : inv){
-                if(k != null){
-                  invString += k.toChar();
-                  System.out.println(k.toChar());
+            for (Pickup.Key k : inv) {
+                if (k != null) {
+                    invString += k.toChar();
+                    System.out.println(k.toChar());
                 }
             }
             Element invElement = new Element("items").setText(invString);
@@ -176,27 +173,29 @@ public class Persistency {
             e.printStackTrace();
         }
     }
+
     /**
      * Converts a 2D array of tiles to a string for use in creating XML
+     * 
      * @param tiles 2D array of tiles
      */
     public static String strFromArray(Tile[][] tiles) {
-        char[] boardChars = new char[tiles.length*tiles[0].length];
+        char[] boardChars = new char[tiles.length * tiles[0].length];
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 Tile t = tiles[i][j];
-                boardChars[(i*tiles[0].length)+j] = t.getChar();
-                }  
+                boardChars[(i * tiles[0].length) + j] = t.getChar();
             }
-            return String.valueOf(boardChars);
+        }
+        return String.valueOf(boardChars);
     }
-
 
     /**
      * gets inventory of chap from the current saved level
+     * 
      * @param level level to get inventory from
      */
-    public static Pickup.Key[] getInventory(){
+    public static Pickup.Key[] getInventory() {
         Pickup.Key[] keys = new Pickup.Key[8];
         try {
             File inputFile = new File("levels/levelPers.xml");
@@ -206,26 +205,26 @@ public class Persistency {
             List<Element> elements = rootElement.getChildren();
             for (int i = 0; i < elements.size(); i++) {
                 Element curr = elements.get(i);
-                if(curr.getName().equals("item")){
-                    //on to right XML element
+                if (curr.getName().equals("item")) {
+                    // on to right XML element
                     String key = curr.getText();
-                    for(int j = 0; j < key.toCharArray().length; j++){
+                    for (int j = 0; j < key.toCharArray().length; j++) {
                         char c = key.charAt(j);
-                        switch(c) {
+                        switch (c) {
                             case 'b':
-                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.BLUE).getEntity();
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0, 0), KEYCOLOR.BLUE).getEntity();
                                 break;
                             case 'r':
-                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.RED).getEntity();
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0, 0), KEYCOLOR.RED).getEntity();
                                 break;
                             case 'g':
-                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0,0),KEYCOLOR.GREEN).getEntity();
+                                keys[j] = (Pickup.Key) Tile.keyTile(new Point(0, 0), KEYCOLOR.GREEN).getEntity();
                                 break;
                             default:
                                 break;
                         }
                     }
-                    //keys[i] = new Pickup.Key(x, y, c);
+                    // keys[i] = new Pickup.Key(x, y, c);
                 }
             }
         } catch (JDOMException e) {
@@ -236,4 +235,3 @@ public class Persistency {
         return keys;
     }
 }
-
