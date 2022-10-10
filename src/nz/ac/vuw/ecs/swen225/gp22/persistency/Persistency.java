@@ -23,17 +23,6 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
  */
 public class Persistency {
 
-    static Map<String, Character> stateMap = Map.ofEntries(
-            Map.entry("WallT", 'W'),
-            Map.entry("FreeT", 'o'),
-            Map.entry("InfoT", 'i'),
-            Map.entry("ExitL", 'l'),
-            Map.entry("Treas", 't'),
-            Map.entry("ExitT", 'X'),
-            Map.entry("Locke", 'o'), /// nah
-            Map.entry("KeyTi", 'o') /// nah
-    );
-
     public static Tile[][] level1() {
         return readXML("level1");
     }
