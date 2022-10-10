@@ -8,8 +8,13 @@ public class TestFunct {
         try {
             //Tile[][] readTile1s = Persistency.readXML("level1");
             Tile[][] readTiles = Persistency.readXML("level1");
+            Tile[][] read2Tiles = Persistency.readXML("level2");
+
             System.out.println(readTiles.length);
             System.out.println(readTiles[0].length);
+            System.out.println();
+            System.out.println(read2Tiles.length);
+            System.out.println(read2Tiles[0].length);
             System.out.println();
             // Tile t = readTiles[0][0];
             // String s = t.getState().toString();
