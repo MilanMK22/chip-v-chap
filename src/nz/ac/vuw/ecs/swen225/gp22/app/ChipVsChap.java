@@ -467,7 +467,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->levelOne()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->{timer.stop(); winner();}),2,1,3); }
+    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->{timer.stop(); winner();}),2,180,3); }
 
 
 
