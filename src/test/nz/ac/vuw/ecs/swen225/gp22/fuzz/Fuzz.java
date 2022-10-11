@@ -53,7 +53,7 @@ public class Fuzz{
                     System.out.println("unvisited tiles: " + chipvchap.unvisitedTilesList.size());
                     System.out.println("Test Runtime: " + time + "s");
                     System.out.println("--------------------------------------");
-                    if(System.currentTimeMillis() >= startTime + 60000) { return; }
+                    if(System.currentTimeMillis() >= startTime + 60000) { System.out.println("====== TEST COMPLETE! ======"); System.out.println(chipvchap.chapToString(1)); return; }
                 }
             });
         } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e); }
@@ -89,7 +89,7 @@ public class Fuzz{
                     System.out.println("unvisited tiles: " + chipvchap.unvisitedTilesList.size());
                     System.out.println("Test Runtime: " + time + "s");
                     System.out.println("--------------------------------------");
-                    if(System.currentTimeMillis() >= startTime + 60000) { return; }
+                    if(System.currentTimeMillis() >= startTime + 60000) { System.out.println("===== TEST COMPLETE! ====="); System.out.println(chipvchap.chapToString(2));return; }
                 }
             });
         } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 2 failed", e); }
