@@ -215,7 +215,7 @@ public class Chap implements Entity{
     @Override
     public String toString(){
         String ret = "Chap at: " + this.location.toString() + "\n" +
-        "Chap Collected: \n   Keys \tTreasure \n" + "   " +
+        "Chap Collected: \n   Keys \tTreasure \n" + "    " +
         (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + "          " + 
         (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n" + "Inventory:\n";
 
