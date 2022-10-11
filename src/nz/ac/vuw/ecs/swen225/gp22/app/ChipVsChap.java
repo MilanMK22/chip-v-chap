@@ -50,6 +50,9 @@ public class ChipVsChap extends JFrame{
     public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
+    public static JLabel chips;
+    public static JLabel level;
+
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
@@ -436,7 +439,6 @@ public class ChipVsChap extends JFrame{
         });
         replay.addActionListener(s -> {
             Rep2();
-          
             removeKeyListener(menuKeyListener);
         });
         controls.addActionListener(s->controls());
@@ -451,7 +453,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,10); }
+    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,3); }
 
 
     /**
@@ -485,8 +487,8 @@ public class ChipVsChap extends JFrame{
         model = lvl.model();
 
         //Graphical Interface Initialization.
-        var level = Board.getLevelLabel(levelNum);
-        var chips = Board.getChipLabel(numOfChips);
+        level = Board.getLevelLabel(levelNum);
+        chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
         setBackGround();
@@ -537,6 +539,17 @@ public class ChipVsChap extends JFrame{
             }
         };
         dialog.addWindowListener(listener);
+
+        //Close Phase
+        closePhase=()->{
+            timer.stop();
+            remove(panel);
+            remove(level);
+            removeKeyListener(controls);
+            backgroundImage.remove(level);
+            backgroundImage.remove(chips);
+
+        };
 
         //Add components to respective panels and labels.
         add(panel);

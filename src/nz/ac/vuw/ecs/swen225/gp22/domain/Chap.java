@@ -35,9 +35,9 @@ public class Chap implements Entity{
 
     private Maze maze;
     private Point location;
-    private static Pickup.Key[] inventory = new Pickup.Key[8];
-    private static int heldItems = 0;
-    private static int heldTreasure = 0;
+    private Pickup.Key[] inventory = new Pickup.Key[8];
+    private int heldItems = 0;
+    private int heldTreasure = 0;
     private DIRECTION direction = DIRECTION.DOWN;
     
     //Entity Methods
@@ -67,6 +67,10 @@ public class Chap implements Entity{
      */
     public int heldTreasure(){
         return heldTreasure;
+    }
+
+    public void resetChap(){
+        heldTreasure = 0;
     }
 
     public  Point getLocation(){ return location; }
