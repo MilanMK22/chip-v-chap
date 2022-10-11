@@ -12,8 +12,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class sounds {
-    enum SOUND{
-        COLLECTION,
+    public static enum SOUND{
+        COLLECTCOIN,
         GAME,
         UNLOCK,
         NOPE,
