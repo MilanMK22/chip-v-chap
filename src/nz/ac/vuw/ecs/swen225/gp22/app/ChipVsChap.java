@@ -51,7 +51,8 @@ public class ChipVsChap extends JFrame{
     public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
-    public JLabel chips;
+    public static JLabel chips;
+    public static JLabel level;
 
 
     // by ilya 
@@ -479,7 +480,7 @@ public class ChipVsChap extends JFrame{
         model = lvl.model();
 
         //Graphical Interface Initialization.
-        var level = Board.getLevelLabel(levelNum);
+        level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
@@ -532,6 +533,9 @@ public class ChipVsChap extends JFrame{
             remove(panel);
             remove(level);
             removeKeyListener(controls);
+            backgroundImage.remove(level);
+            backgroundImage.remove(chips);
+
         };
 
         //Add components to respective panels and labels.
