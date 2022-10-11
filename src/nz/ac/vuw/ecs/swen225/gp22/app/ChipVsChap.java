@@ -379,13 +379,8 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
-<<<<<<< HEAD
-        JFileChooser open = new JFileChooser();
-        
-=======
         s.setFile("src/sounds/menu.wav");
 
->>>>>>> 0b698fecba54fb1ad948ff3bd75b4d9ddf3cd4bf
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
