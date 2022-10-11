@@ -502,24 +502,14 @@ public class ChipVsChap extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
-                if(e.getKeyCode() == getCode(characterControls[0])){
-                    action(r,model,"Up",()->model.chap().up());
-                }
-                if(e.getKeyCode() == getCode(characterControls[1])){
-                    action(r,model,"Down",()->model.chap().down());
-                }
-                if(e.getKeyCode() == getCode(characterControls[2])){
-                    action(r,model,"Left",()->model.chap().left());
-                }
-                if(e.getKeyCode() == getCode(characterControls[3]) ){
-                    action(r,model,"Right",()->model.chap().right());
-                }
+                if(e.getKeyCode() == getCode(characterControls[0])){action(r,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == getCode(characterControls[1])){action(r,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == getCode(characterControls[2])){action(r,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == getCode(characterControls[3]) ){action(r,model,"Right",()->model.chap().right());}
+                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     dispose();
                     r.saveReplay();
-                }   
-                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){
-                    dispose();
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
