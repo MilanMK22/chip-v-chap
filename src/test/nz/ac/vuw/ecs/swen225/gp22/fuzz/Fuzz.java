@@ -9,16 +9,6 @@ import org.junit.Test;
 * @author Ilya Mashkov
 */
 public class Fuzz{
-
-    public void probability(String move){
-        double up = 0.25, down = 0.25, left = 0.25, right = 0.25; // initial move option probabilities
-        if(move.equals("up")){ up -= 0.03; down += 0.01; left += 0.01; right += 0.01; }
-        else if(move.equals("down")){ down -= 0.03; up += 0.01; left += 0.01; right += 0.01; }
-        else if(move.equals("left")){ left -= 0.03; down += 0.01; up += 0.01; right += 0.01; }
-        else if(move.equals("right")){right -= 0.03; left += 0.01; right += 0.01; up +=0.01; }
-        else {throw new IllegalArgumentException("Invalid move: " + move);}
-    }
-    
     /**
     * Test1 tests the first level of the game by generating random inputs with a weighted probability.
     * Each possible move initially starts with a probability of 0.25. When a move is excecuted, the probability 
@@ -33,7 +23,7 @@ public class Fuzz{
             SwingUtilities.invokeAndWait(() -> {
 
                 ChipVsChap chipvchap = new ChipVsChap();
-                double up = 0.25, down = 0.25, left = 0.25, right = 0.25;
+                double up = 0.25, down = 0.25, left = 0.25;
                 int x = 0;  // for counting the number of moves done
                 long time = 0;
                 long startTime = System.currentTimeMillis(); // setting the start time
@@ -88,10 +78,10 @@ public class Fuzz{
                     double randomNum = Math.random();
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime)/1000;
-                    if(randomNum < up) { chipvchap.up(2); up -= 0.03; down += 0.01; left += 0.01; }
-                    else if(randomNum < down + up) { chipvchap.down(2); down -= 0.03; up += 0.01; left += 0.01; }
-                    else if(randomNum < left + down + up) { chipvchap.left(2); left -= 0.03; down += 0.01; up += 0.01; }
-                    else { chipvchap.right(2); down += 0.01; left += 0.01; up += 0.01; }
+                    if(randomNum < up) { chipvchap.up(2); probability("up"); }
+                    else if(randomNum < down + up) { chipvchap.down(2); probability("down"); }
+                    else if(randomNum < left + down + up) { chipvchap.left(2); probability("left"); }
+                    else { chipvchap.right(2); probability("up"); }
                     chipvchap.setVisitedTiles(2);
                     
                     System.out.println("Number of moves done: " + x);
@@ -103,6 +93,19 @@ public class Fuzz{
                 }
             });
         } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 2 failed", e); }
+    }
+
+    /**
+     * method to calculate probabilities of a random move
+     * @param move the move being done 
+     */
+    public void probability(String move){
+        double up = 0.25, down = 0.25, left = 0.25, right = 0.25; // initial move option probabilities
+        if(move.equals("up")){ up -= 0.03; down += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("down")){ down -= 0.03; up += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("left")){ left -= 0.03; down += 0.01; up += 0.01; right += 0.01; }
+        else if(move.equals("right")){right -= 0.03; left += 0.01; right += 0.01; up +=0.01; }
+        else {throw new IllegalArgumentException("Invalid move: " + move);}
     }
 }
 
