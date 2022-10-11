@@ -377,8 +377,8 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
-        JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
+
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -404,10 +404,7 @@ public class ChipVsChap extends JFrame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 System.out.println(e.getKeyCode());
-
-                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
-                    open.showOpenDialog(panel); // needs variable
-                }   
+                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){Rep2();}   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
                     levelOne();
@@ -431,6 +428,11 @@ public class ChipVsChap extends JFrame{
           
             removeKeyListener(menuKeyListener);
         });
+        playByPlay.addActionListener(s -> {
+            Rep3();
+            removeKeyListener(menuKeyListener);
+        });
+
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
        
@@ -491,12 +493,6 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         JDialog dialog = Board.getPause();
 
-        //Close Phase
-        closePhase=()->{
-            timer.stop();
-            remove(panel);
-            remove(level);
-        };
         //KeyListener for the chap movement and game functions.
        KeyListener controls = new Keys(){
             @Override
@@ -529,6 +525,14 @@ public class ChipVsChap extends JFrame{
             }
         };
         dialog.addWindowListener(listener);
+
+        //Close Phase
+        closePhase=()->{
+            timer.stop();
+            remove(panel);
+            remove(level);
+            removeKeyListener(controls);
+        };
 
         //Add components to respective panels and labels.
         add(panel);
@@ -590,6 +594,74 @@ public class ChipVsChap extends JFrame{
     timer.addActionListener(newone);
 
     }
+
+    public void Rep3() {
+        Replay rep = Replay.readXML();
+        if(rep.getLevel() == 1){
+            levelOne(); 
+        }else{
+            levelTwo();
+        }
+        removeKeyListener(Replistner);
+        timer.stop();
+        Mapprint.printMap(model, background.getGraphics());
+    
+        KeyListener forward = new Keys(){
+    
+            public void keyPressed(KeyEvent e) {
+    
+                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+    
+                    if(timePassed % 1000 == 0){
+                        if(count == 0){
+                            timer.stop();
+                            timerLabel.setText("No time");
+                        }else{
+                            int minutes = count /60;
+                            int seconds = count% 60;
+                            timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
+                            count --;
+                        }
+                    }
+                    timePassed += delay;
+                    model.tick();
+                    totalticks++;
+                    Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
+                    System.out.println("pressed");
+    
+    
+                    if(rep.getMoves().isEmpty()){
+                        System.out.println("empty");
+                        dispose();
+                        System.exit(ABORT);
+                    }
+                    GameAction r = rep.getMoves().peek();
+            
+                    if(r.getTime() == totalticks){
+                        r = rep.getMoves().remove();
+                    try{
+                    if(r.getName().equals("Up")){             
+                        action(null,model,"Up",()->model.chap().up());
+                    }else if(r.getName().equals("Down")){
+                        action(null,model,"Down",()->model.chap().down());
+                    }else if(r.getName().equals("Left")){
+                        action(null,model,"Left",()->model.chap().left());
+                    }else if(r.getName().equals("Right")){
+                        action(null,model,"Right",()->model.chap().right());
+                    }
+                }
+                catch(Error b){
+                }
+                }  
+                }
+            }
+    
+        };
+        addKeyListener(forward);
+    
+        }
+
     
    
 }
