@@ -428,7 +428,6 @@ public class ChipVsChap extends JFrame{
         });
         replay.addActionListener(s -> {
             Rep2();
-          
             removeKeyListener(menuKeyListener);
         });
         playByPlay.addActionListener(s -> {
@@ -448,7 +447,7 @@ public class ChipVsChap extends JFrame{
      */
 
     private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,10); }
+    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,3); }
 
 
     /**
