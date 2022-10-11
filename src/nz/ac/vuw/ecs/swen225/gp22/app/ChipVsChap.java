@@ -60,6 +60,7 @@ public class ChipVsChap extends JFrame{
     int delay = 50;
     int timePassed = 0;
     int totalticks=0;
+    Model RepModel; //so we can make changes to model for a replay
     KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
@@ -474,7 +475,9 @@ public class ChipVsChap extends JFrame{
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.
-        model = lvl.model();
+        Model model = lvl.model();
+
+        RepModel = model;
 
         //Graphical Interface Initialization.
         var level = Board.getLevelLabel(levelNum);
@@ -501,7 +504,6 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                // TODO Auto-generated method stub
                 if(e.getKeyCode() == getCode(characterControls[0])){action(r,model,"Up",()->model.chap().up());}
                 if(e.getKeyCode() == getCode(characterControls[1])){action(r,model,"Down",()->model.chap().down());}
                 if(e.getKeyCode() == getCode(characterControls[2])){action(r,model,"Left",()->model.chap().left());}
@@ -516,7 +518,6 @@ public class ChipVsChap extends JFrame{
                     dialog.setVisible(true);
                     timer.stop();
                 } 
-               
             }
         };
         addKeyListener(controls);
@@ -576,13 +577,13 @@ public class ChipVsChap extends JFrame{
             r = rep.getMoves().remove();
         try{
         if(r.getName().equals("Up")){             
-            action(null,model,"Up",()->model.chap().up());
+            action(null,RepModel,"Up",()->RepModel.chap().up());
         }else if(r.getName().equals("Down")){
-            action(null,model,"Down",()->model.chap().down());
+            action(null,RepModel,"Down",()->RepModel.chap().down());
         }else if(r.getName().equals("Left")){
-            action(null,model,"Left",()->model.chap().left());
+            action(null,RepModel,"Left",()->RepModel.chap().left());
         }else if(r.getName().equals("Right")){
-            action(null,model,"Right",()->model.chap().right());
+            action(null,RepModel,"Right",()->RepModel.chap().right());
         }
     }
     catch(Error b){
