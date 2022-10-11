@@ -120,6 +120,7 @@ public class Chap implements Entity{
         }
         else{
             s.play();
+            assert !(maze.getTile(location).getState() instanceof WallTile);
             //throw new Error("Chap cannot move to this tile." );
         }
     }
