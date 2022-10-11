@@ -317,7 +317,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
         JFileChooser open = new JFileChooser();
-        s.setFile("src/sounds/menu.wav");
+        
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -326,7 +326,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(HomeScreen);
             remove(panel);
-            s.stop();
+           
         };
        
         //add(BorderLayout.SOUTH,panel);
@@ -334,7 +334,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.add(start);
         HomeScreen.add(load);
         HomeScreen.add(replay);
-        s.play();
+   
         add(HomeScreen);
        
        
@@ -407,9 +407,7 @@ public class ChipVsChap extends JFrame{
     private void run(Phase lvl, int levelNum,int time){
         //Replay
         totalticks=0;
-        s.stop();
-        s.setFile("src/sounds/game.wav");
-        s.play();
+       
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.

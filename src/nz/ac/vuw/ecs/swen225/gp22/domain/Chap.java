@@ -99,7 +99,7 @@ public class Chap implements Entity{
     public boolean useKey(KEYCOLOR color){
         if(hasKey(color)){
             s.setFile("src/sounds/unlock.wav");
-            s.play();
+           
             removeFromInventory(color);
             return true;
         }
@@ -119,7 +119,7 @@ public class Chap implements Entity{
 
         }
         else{
-            s.play();
+            
             //throw new Error("Chap cannot move to this tile." );
         }
     }
@@ -130,7 +130,7 @@ public class Chap implements Entity{
      */
     public void pickUpTreasure(){
         s.setFile("src/sounds/collectcoin.wav");
-        s.play();
+     
         heldTreasure += 1;
     }
     
@@ -140,7 +140,7 @@ public class Chap implements Entity{
      */
     public void pickUpKey(Pickup.Key key){
         s.setFile("src/sounds/collectcoin.wav");
-        s.play();
+       
         addToInventory(key);
         heldItems += 1;
     }
