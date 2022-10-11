@@ -17,18 +17,23 @@ import javax.swing.Timer;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
-
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import sounds.sounds;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.stream.Stream;
 import java.awt.event.*;
 import java.io.IOException;
 /*
@@ -45,6 +50,10 @@ public class ChipVsChap extends JFrame{
     public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
+
+    // by ilya 
+    public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
+    public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
    
     static Timer timer;
     int count = 0;
@@ -57,17 +66,6 @@ public class ChipVsChap extends JFrame{
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
     
-    
-    public Chap getChap1(){
-        return  Phase.level1(()->levelTwo(), ()->levelOne()).model().chap();
-    }
-    public Chap getChap2(){
-        return  Phase.level2(()->levelTwo(), ()->levelOne()).model().chap();
-    }
-
-    
-
-
     /**
      * Updates the keybindings.
      */
@@ -87,25 +85,83 @@ public class ChipVsChap extends JFrame{
         direction.run();
     }
 
-    public Chap getChap(){
-        return model.chap();
+    /**
+     * a method to get the chap form the game 
+     * @param level the level of the game
+     * @return a chap 
+     */
+    public Chap getChap(int level){
+        if(level == 1){ return model.chap(); }
+        else if (level == 2){ return model2.chap(); }
+        else{ throw new IllegalArgumentException("Invalid level"); }
     }
 
-    public Chap getChapForLevel2(){
-        return model2.chap();
+    /**
+     * move methods for Fuzz to use on the chap deending on the level
+     * @param level the level of the game which is being tested
+     */
+    public void up(int level){ getChap(level).up(); }
+    public void down(int level){ getChap(level).down(); }
+    public void left(int level){ getChap(level).left(); }
+    public void right(int level){ getChap(level).right(); }
+
+    public Tile[][] getTiles(int level){ 
+        if(level == 1){ return model.getMaze().getTiles();}
+        else if (level == 2){ return model2.getMaze().getTiles(); }
+        else{ throw new IllegalArgumentException("Invalid level"); }
+    }
+     // ilya
+    // public boolean isVisited() { return true; }
+    // ilya
+    // public Point location(int level) {
+    //     if(level == 1){ return getChap(level).getLocation(); }
+    //     else if (level == 2){ return model2.chap().getLocation(); }
+    //     else{ throw new IllegalArgumentException("Invalid level"); }
+    // }
+    // ilya
+    public Tile getTileAtLocation(Point location, int level) {
+        Tile[][] tiles;
+        if(level == 1){ 
+            tiles = getTiles(level);
+            return tiles[location.getX()][location.getY()];
+        }
+        else if (level == 2){
+            tiles = getTiles(level);
+            return tiles[location.getX()][location.getY()];
+        }
+        else{ throw new IllegalArgumentException("Invalid level"); }
     }
 
-    // for level 1 chap moves
-    public void up(){ getChap().up(); }
-    public void down(){ getChap().down(); }
-    public void left(){ getChap().left(); }
-    public void right(){ getChap().right(); }
+    //ilya
+    public void setVisitedTiles(int level){
+        Tile tile;
+        if (level == 1){ 
+            tile = getTileAtLocation(model.chap().getLocation(), level); 
+            unvisitedTilesList.remove(tile);
+            listOfVisitedTiles.add(tile);
+            tile.visited(true);
+        }
+        else if (level == 2){ 
+            tile = getTileAtLocation(model2.chap().getLocation(), level); 
+            unvisitedTilesList.remove(tile);
+            listOfVisitedTiles.add(tile);
+            tile.visited(true);
+        }
+        else{ throw new IllegalArgumentException("Invalid level"); }
+    }
+//ilya
+    public void unvisitedTiles(int level){
+        Tile[][] tiles = getTiles(level);
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
+                if(tiles[i][j].isFree()){
+                    unvisitedTilesList.add(tiles[i][j]);
+                }
+            }
+        }
+    }
 
-    //for level 2 chap moves
-    public void upL2(){ getChapForLevel2().up(); }
-    public void downL2(){ getChapForLevel2().down(); }
-    public void leftL2(){ getChapForLevel2().left(); }
-    public void rightL2(){ getChapForLevel2().right(); }
+
 
     /**
      * Returns the character relative to the character.

@@ -9,6 +9,9 @@ public class Tile{
     TileState state;
     public Entity entity;
 
+    //ilya
+    public boolean visited;
+
     Tile(TileState tileState, Point location){
         this.state = tileState;
         this.location = location;
@@ -55,7 +58,7 @@ public class Tile{
 
     //Util methods
     public Point getLocation(){ return this.location;}
-    boolean isFree(){ return state.isFree(); }
+    public boolean isFree(){ return state.isFree(); }
     boolean isExit(){ return state.isExit(); }
     boolean hasPickup(){ return state.hasPickup(); }
     boolean isDoor() { return state.isDoor(); }
@@ -67,5 +70,10 @@ public class Tile{
             return entity.toChar();
         }
         return state.toChar();
+    }
+
+    //ilya
+    public void visited(boolean status){
+        this.visited = status;
     }
 }
