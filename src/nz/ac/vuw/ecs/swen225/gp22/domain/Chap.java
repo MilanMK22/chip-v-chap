@@ -162,7 +162,10 @@ public class Chap implements Entity{
         .filter(x -> inventory[x] != null && inventory[x].color.equals(color)).findFirst();
         if(keyPos.isPresent()){
             inventory[keyPos.getAsInt()] = null;
-            inventory = (Pickup.Key[])Arrays.copyOf(Stream.of(inventory).filter(e->e!=null).toArray(), 8, Pickup.Key[].class);
+            inventory = (Pickup.Key[])Arrays.copyOf(
+                Stream.of(inventory)
+                .filter(e->e!=null)
+                .toArray(), 8, Pickup.Key[].class);
             heldItems -= 1;
         }
         else{
