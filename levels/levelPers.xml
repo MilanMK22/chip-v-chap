@@ -2,8 +2,8 @@
 <level>
   <width>11</width>
   <height>11</height>
-  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWobiooWtWWWWooCooWWWWoWoooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
+  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWooiooWtWWWWooCooWWWWoWoooooWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
   <desc>saved progress</desc>
   <id>levelSave</id>
-  <items>gr</items>
+  <items>ggrb</items>
 </level>
