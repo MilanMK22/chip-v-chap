@@ -379,6 +379,7 @@ public class ChipVsChap extends JFrame{
 
         JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
+
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -406,7 +407,8 @@ public class ChipVsChap extends JFrame{
                 System.out.println(e.getKeyCode());
 
                 if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
-                    open.showOpenDialog(panel); // needs variable
+                   Rep2();
+
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
@@ -535,7 +537,7 @@ public class ChipVsChap extends JFrame{
             remove(level);
             removeKeyListener(controls);
         };
-        
+
         //Add components to respective panels and labels.
         add(panel);
         panel.add(background);
