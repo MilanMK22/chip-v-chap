@@ -161,7 +161,9 @@ public class ChipVsChap extends JFrame{
             timePassed += delay;
             m.tick();
             totalticks++;
+            if(totalticks%2==0){
             Mapprint.printMap(m, background.getGraphics());
+            }
             printInventory.printIn(m,backgroundImage.getGraphics());
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
@@ -496,6 +498,19 @@ public class ChipVsChap extends JFrame{
 
     public void Rep2(){
     Replay rep = Replay.readXML();
+    var replay = new Checkbox("2x Replay Speed");
+    replay.setBounds(215, 5, 180, 20);
+    replay.addItemListener(new ItemListener() {    
+        public void itemStateChanged(ItemEvent e) {                 
+            if(e.getStateChange()==1){
+                timer.setDelay(25);   
+        }    
+        else{
+            timer.setDelay(50);
+        }
+         }
+     });    
+    this.add(replay);
     if(rep.getLevel() == 1){
         levelOne(); 
     }else{
