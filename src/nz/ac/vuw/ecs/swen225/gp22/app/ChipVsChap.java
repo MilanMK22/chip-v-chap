@@ -27,6 +27,7 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import sounds.sounds;
+import sounds.sounds.SOUND;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -379,7 +380,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
-        s.setFile("src/sounds/menu.wav");
+        SOUND.MENU.play();
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -389,7 +390,6 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(HomeScreen);
             remove(panel);
-           
         };
        
         //add(BorderLayout.SOUTH,panel);

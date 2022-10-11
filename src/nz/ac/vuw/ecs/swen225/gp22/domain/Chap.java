@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import sounds.sounds;
+import sounds.sounds.SOUND;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +99,7 @@ public class Chap implements Entity{
      */
     public boolean useKey(KEYCOLOR color){
         if(hasKey(color)){
-            s.setFile("src/sounds/unlock.wav");
+            SOUND.UNLOCK.play();
            
             removeFromInventory(color);
             return true;
@@ -115,16 +116,10 @@ public class Chap implements Entity{
             maze.getTile(this.location).removeEntity();
             maze.getTile(p).setEntity(this);
             location = p;
-            s.setFile("src/sounds/nope.wav");
-
         }
         else{
-<<<<<<< HEAD
-            
-=======
-            s.play();
+            SOUND.NOPE.play();
             assert !(maze.getTile(location).getState() instanceof WallTile);
->>>>>>> 0b698fecba54fb1ad948ff3bd75b4d9ddf3cd4bf
             //throw new Error("Chap cannot move to this tile." );
         }
     }
@@ -134,9 +129,8 @@ public class Chap implements Entity{
      * Increment {@link #heldTreasure} by one.
      */
     public void pickUpTreasure(){
-        s.setFile("src/sounds/collectcoin.wav");
-     
         heldTreasure += 1;
+        SOUND.COLLECTCOIN.play();
     }
     
     /**
@@ -144,10 +138,9 @@ public class Chap implements Entity{
      * @param key The {@code Pickup.Key} to add.
      */
     public void pickUpKey(Pickup.Key key){
-        s.setFile("src/sounds/collectcoin.wav");
-       
         addToInventory(key);
         heldItems += 1;
+        SOUND.COLLECTCOIN.play();
     }
 
     /**

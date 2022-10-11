@@ -16,6 +16,22 @@ public class Tests {
         };
         return testMaze;
     }
+
+    public Tile[][] buildTestMaze2(){
+        Tile[][] testMaze = new Tile[][]{
+            new Tile[]{
+                Tile.chapTile(new Point(0,0)),
+                Tile.freeTile(new Point(1,0)),
+                Tile.freeTile(new Point(2,0)),
+                Tile.freeTile(new Point(3,0)),
+                Tile.freeTile(new Point(4,0)),
+                Tile.freeTile(new Point(5,0)),
+                Tile.freeTile(new Point(6,0)),
+                Tile.monsterTile(new Point(7,0), "lllllll")
+            }
+        };
+        return testMaze;
+    }
     
 
     @Test
