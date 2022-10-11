@@ -224,4 +224,29 @@ public class Persistency {
         }
         return keys;
     }
+
+    public static int getNumChips(String level){
+        try {
+            File inputFile = new File("levels/" + level + ".xml");
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(inputFile);
+            Element rootElement = document.getRootElement();
+            List<Element> elements = rootElement.getChildren();
+            for (int i = 0; i < elements.size(); i++) {
+               Element curr = elements.get(i);
+                //System.out.println(curr.getName()); //debug
+                if(curr.getName().equals("board")){
+                    //on to right XML element
+                    String bs = curr.getText();
+                    return (int) bs.chars().mapToObj(c -> (char) c).filter(t -> t == 't').count();
+                }
+            }
+        } catch (JDOMException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        return 1;
+    }
 }

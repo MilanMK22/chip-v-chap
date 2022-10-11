@@ -24,6 +24,7 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
 
 import java.util.Arrays;
@@ -336,6 +337,10 @@ public class ChipVsChap extends JFrame{
             levelOne();
             removeKeyListener(menuKeyListener);
         });
+        load.addActionListener(s -> {
+            levelPersistency();
+            removeKeyListener(menuKeyListener);
+        });
         replay.addActionListener(s -> {
             Rep2();
           
@@ -353,7 +358,8 @@ public class ChipVsChap extends JFrame{
      */
 
     private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,10); }
+    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,3); }
+    private void levelPersistency(){setLevel(Phase.levelSave(()->menu(), ()->menu()),1,120,Persistency.getNumChips("levelPers")); }
 
 
     /**

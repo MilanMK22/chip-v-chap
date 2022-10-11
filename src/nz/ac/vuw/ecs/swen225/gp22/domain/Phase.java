@@ -31,4 +31,23 @@ public record Phase(Model model) {
             throw new IllegalArgumentException("Unnable to Load Level 2 from XML", e);
         }
     }
+
+    public static Phase levelSave(Runnable win, Runnable loss){
+        try{
+        Model model = new Model(new Maze(Persistency.readXML("levelPers"))){
+           
+            
+            @Override
+            public void win(){ win.run(); }
+            @Override
+            public void loss(){ loss.run(); }
+        };
+        model.chap().setInventory(Persistency.getSavedInventory());
+        return new Phase(model);
+    }
+    catch(Exception e){
+        throw new IllegalArgumentException("Unnable to Load saved Level from XML", e);
+    }
+        
+    }
 }

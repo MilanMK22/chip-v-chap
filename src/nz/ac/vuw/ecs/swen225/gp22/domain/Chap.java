@@ -188,6 +188,18 @@ public class Chap implements Entity{
         return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
     }
 
+    /**
+     * Ovewrite chaps inventory
+     * 
+     * @param inventory
+     */
+    public void setInventory(Pickup.Key[] inventory){
+        for(Pickup.Key k : inventory){
+            pickUpKey(k);
+        }
+        
+    }
+
 
     /**
      * Get the corresponding Image to Chap's current Direction.
