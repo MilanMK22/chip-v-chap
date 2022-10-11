@@ -152,12 +152,11 @@ public class Chap implements Entity{
      * @param colorsrc/sounds/sounds.java
      */
     private void removeFromInventory(KEYCOLOR color){
-        OptionalInt keyPos = IntStream
-        .range(0,inventory.length)
-        .filter(x -> inventory[x] != null && inventory[x].color.equals(color))
-        .findFirst();
-        if(keyPos.isPresent()){
-            inventory[keyPos.getAsInt()] = null;
+        int[] keyPos = IntStream
+        .range(0, inventory.length)
+        .filter(x -> inventory[x] != null && inventory[x].color.equals(color)).toArray();
+        if(keyPos.length >0){
+            inventory[keyPos[keyPos.length-1]] = null;
             heldItems -= 1;
         }
         else{
