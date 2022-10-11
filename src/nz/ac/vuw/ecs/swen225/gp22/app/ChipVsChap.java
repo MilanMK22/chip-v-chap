@@ -495,12 +495,6 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         JDialog dialog = Board.getPause();
 
-        //Close Phase
-        closePhase=()->{
-            timer.stop();
-            remove(panel);
-            remove(level);
-        };
         //KeyListener for the chap movement and game functions.
        KeyListener controls = new Keys(){
             @Override
@@ -534,6 +528,14 @@ public class ChipVsChap extends JFrame{
         };
         dialog.addWindowListener(listener);
 
+        //Close Phase
+        closePhase=()->{
+            timer.stop();
+            remove(panel);
+            remove(level);
+            removeKeyListener(controls);
+        };
+        
         //Add components to respective panels and labels.
         add(panel);
         panel.add(background);
