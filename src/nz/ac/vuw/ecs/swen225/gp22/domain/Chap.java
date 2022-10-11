@@ -4,6 +4,7 @@ import sounds.sounds;
 import sounds.sounds.SOUND;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
@@ -152,11 +153,16 @@ public class Chap implements Entity{
      * @param colorsrc/sounds/sounds.java
      */
     private void removeFromInventory(KEYCOLOR color){
-        int[] keyPos = IntStream
+
+
+
+
+        OptionalInt keyPos = IntStream
         .range(0, inventory.length)
-        .filter(x -> inventory[x] != null && inventory[x].color.equals(color)).toArray();
-        if(keyPos.length >0){
-            inventory[keyPos[keyPos.length-1]] = null;
+        .filter(x -> inventory[x] != null && inventory[x].color.equals(color)).findFirst();
+        if(keyPos.isPresent()){
+            inventory[keyPos.getAsInt()] = null;
+            inventory = (Pickup.Key[])Arrays.copyOf(Stream.of(inventory).filter(e->e!=null).toArray(), 8, Pickup.Key[].class);
             heldItems -= 1;
         }
         else{

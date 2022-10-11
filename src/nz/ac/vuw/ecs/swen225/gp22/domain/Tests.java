@@ -27,7 +27,7 @@ public class Tests {
                 Tile.freeTile(new Point(4,0)),
                 Tile.freeTile(new Point(5,0)),
                 Tile.freeTile(new Point(6,0)),
-                Tile.monsterTile(new Point(7,0), "lllllll")
+                Tile.monsterTile(new Point(7,0), "l")
             }
         };
         return testMaze;
@@ -56,9 +56,9 @@ public class Tests {
         Chap c = new Chap(new Point(0,0));
         c.setMaze(m);
         m.getTile(0, 0).setEntity(c);
-        c.move(c.getLocation().down());
-        c.move(c.getLocation().down());
-        c.move(c.getLocation().down());
+        c.move(c.getLocation().right());
+        c.move(c.getLocation().right());
+        c.move(c.getLocation().right());
     }
 
     @Test
@@ -75,6 +75,14 @@ public class Tests {
         m.chap().down();
         m.chap().down();
         assertThrows(Error.class, () -> m.chap().left());
+    }
+    @Test
+    public void modelMazeTestMonster(){
+        Model m = new Model(new Maze(buildTestMaze2()));
+        for (int i = 0; i<20; i++){
+            m.tick();
+        }
+        System.out.println(m.maze().getTile(m.chap().getLocation()).getEntity());
     }
 
 }
