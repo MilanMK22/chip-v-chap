@@ -60,7 +60,6 @@ public class ChipVsChap extends JFrame{
     int delay = 50;
     int timePassed = 0;
     int totalticks=0;
-    Model RepModel; //so we can make changes to model for a replay
     KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
@@ -217,7 +216,9 @@ public class ChipVsChap extends JFrame{
             timePassed += delay;
             m.tick();
             totalticks++;
+            if(totalticks%2==0){
             Mapprint.printMap(m, background.getGraphics());
+            }
             printInventory.printIn(m,backgroundImage.getGraphics());
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
@@ -368,6 +369,10 @@ public class ChipVsChap extends JFrame{
         replay.setOpaque(true);
         replay.setBounds(315, 320, 170, 35);
 
+        var playByPlay = new JButton("Play by Play");
+        playByPlay.setOpaque(true);
+        playByPlay.setBounds(515, 320, 170, 35);
+
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
@@ -387,12 +392,12 @@ public class ChipVsChap extends JFrame{
        
         //add(BorderLayout.SOUTH,panel);
         HomeScreen.add(controls);
+        HomeScreen.add(playByPlay);
         HomeScreen.add(start);
         HomeScreen.add(load);
         HomeScreen.add(replay);
         s.play();
         add(HomeScreen);
-       
        
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
@@ -469,9 +474,7 @@ public class ChipVsChap extends JFrame{
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.
-        Model model = lvl.model();
-
-        RepModel = model;
+        model = lvl.model();
 
         //Graphical Interface Initialization.
         var level = Board.getLevelLabel(levelNum);
@@ -552,6 +555,19 @@ public class ChipVsChap extends JFrame{
 
     public void Rep2(){
     Replay rep = Replay.readXML();
+    var replay = new Checkbox("2x Replay Speed");
+    replay.setBounds(215, 5, 180, 20);
+    replay.addItemListener(new ItemListener() {    
+        public void itemStateChanged(ItemEvent e) {                 
+            if(e.getStateChange()==1){
+                timer.setDelay(25);   
+        }    
+        else{
+            timer.setDelay(50);
+        }
+         }
+     });    
+    this.add(replay);
     if(rep.getLevel() == 1){
         levelOne(); 
     }else{
@@ -570,13 +586,13 @@ public class ChipVsChap extends JFrame{
             r = rep.getMoves().remove();
         try{
         if(r.getName().equals("Up")){             
-            action(null,RepModel,"Up",()->RepModel.chap().up());
+            action(null,model,"Up",()->model.chap().up());
         }else if(r.getName().equals("Down")){
-            action(null,RepModel,"Down",()->RepModel.chap().down());
+            action(null,model,"Down",()->model.chap().down());
         }else if(r.getName().equals("Left")){
-            action(null,RepModel,"Left",()->RepModel.chap().left());
+            action(null,model,"Left",()->model.chap().left());
         }else if(r.getName().equals("Right")){
-            action(null,RepModel,"Right",()->RepModel.chap().right());
+            action(null,model,"Right",()->model.chap().right());
         }
     }
     catch(Error b){
