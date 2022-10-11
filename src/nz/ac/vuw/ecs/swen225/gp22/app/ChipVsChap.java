@@ -216,7 +216,7 @@ public class ChipVsChap extends JFrame{
             if(timePassed % 1000 == 0){
                 if(count == 0){
                     timer.stop();
-                    timerLabel.setText("No time");
+                    m.loss();
                 }else{
                     int minutes = count /60;
                     int seconds = count% 60;
@@ -447,13 +447,29 @@ public class ChipVsChap extends JFrame{
         pack();
     }
 
+    private void winner(){
+        var start = new JLabel("WINNER");
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        closePhase.run();
+        closePhase=()->{
+          remove(panel);
+        };
+        panel.add(start);
+        add(panel);
+        setPreferredSize(new Dimension(800,400));    
+        pack();
+    }
+
 
     /**
      * Setting to level one.
      */
 
-    private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,3); }
+    private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->levelOne()), 1,120,5); }
+    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->{timer.stop(); winner();}),2,1,3); }
+
+
 
 
     /**
