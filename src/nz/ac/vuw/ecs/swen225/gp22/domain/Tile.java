@@ -10,7 +10,7 @@ public class Tile{
     public Entity entity;
 
     //ilya
-    public boolean visited;
+    public boolean visited = false;
 
     Tile(TileState tileState, Point location){
         this.state = tileState;
@@ -35,7 +35,7 @@ public class Tile{
     static public Tile exitLockTile(Point location){ return new Tile(new ExitLockTile(), location); }
     static public Tile exitTile(Point location){ return new Tile(new ExitTile(), location); }
     static public Tile chapTile(Point location){ return new Tile(new Chap(location), new FreeTile(), location); }
-    static public Tile monsterTile(Point location, String moves){ return new Tile(new Monster(location, moves), new FreeTile(), location); }
+
 
 
     public void setEntity(Entity e){
