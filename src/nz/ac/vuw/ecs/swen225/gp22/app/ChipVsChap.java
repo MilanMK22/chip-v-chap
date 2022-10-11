@@ -314,6 +314,10 @@ public class ChipVsChap extends JFrame{
         replay.setOpaque(true);
         replay.setBounds(315, 320, 170, 35);
 
+        var playByPlay = new JButton("Play by Play");
+        playByPlay.setOpaque(true);
+        playByPlay.setBounds(515, 320, 170, 35);
+
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
@@ -333,12 +337,12 @@ public class ChipVsChap extends JFrame{
        
         //add(BorderLayout.SOUTH,panel);
         HomeScreen.add(controls);
+        HomeScreen.add(playByPlay);
         HomeScreen.add(start);
         HomeScreen.add(load);
         HomeScreen.add(replay);
         s.play();
         add(HomeScreen);
-       
        
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
