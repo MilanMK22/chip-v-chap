@@ -153,7 +153,7 @@ public class Chap implements Entity{
      */
     private void removeFromInventory(KEYCOLOR color){
         OptionalInt keyPos = IntStream
-        .range(0,inventory.length)
+        .range(inventory.length,0)
         .filter(x -> inventory[x] != null && inventory[x].color.equals(color))
         .findFirst();
         if(keyPos.isPresent()){
