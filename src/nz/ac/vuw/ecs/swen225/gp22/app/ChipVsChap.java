@@ -60,7 +60,6 @@ public class ChipVsChap extends JFrame{
     int delay = 50;
     int timePassed = 0;
     int totalticks=0;
-    Model RepModel; //so we can make changes to model for a replay
     KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
@@ -475,9 +474,7 @@ public class ChipVsChap extends JFrame{
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.
-        Model model = lvl.model();
-
-        RepModel = model;
+        model = lvl.model();
 
         //Graphical Interface Initialization.
         var level = Board.getLevelLabel(levelNum);
@@ -577,13 +574,13 @@ public class ChipVsChap extends JFrame{
             r = rep.getMoves().remove();
         try{
         if(r.getName().equals("Up")){             
-            action(null,RepModel,"Up",()->RepModel.chap().up());
+            action(null,model,"Up",()->model.chap().up());
         }else if(r.getName().equals("Down")){
-            action(null,RepModel,"Down",()->RepModel.chap().down());
+            action(null,model,"Down",()->model.chap().down());
         }else if(r.getName().equals("Left")){
-            action(null,RepModel,"Left",()->RepModel.chap().left());
+            action(null,model,"Left",()->model.chap().left());
         }else if(r.getName().equals("Right")){
-            action(null,RepModel,"Right",()->RepModel.chap().right());
+            action(null,model,"Right",()->model.chap().right());
         }
     }
     catch(Error b){
