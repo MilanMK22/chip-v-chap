@@ -119,7 +119,12 @@ public class Chap implements Entity{
 
         }
         else{
+<<<<<<< HEAD
             
+=======
+            s.play();
+            assert !(maze.getTile(location).getState() instanceof WallTile);
+>>>>>>> 0b698fecba54fb1ad948ff3bd75b4d9ddf3cd4bf
             //throw new Error("Chap cannot move to this tile." );
         }
     }

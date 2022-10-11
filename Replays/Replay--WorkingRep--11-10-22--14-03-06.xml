@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Replay>
   <LevelNumber>1</LevelNumber>
-  <NameAndDate>Replay--milans--10-10-22--12-33-04</NameAndDate>
+  <NameAndDate>Replay--WorkingRep--11-10-22--14-03-06</NameAndDate>
   <Moves>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>22</Time>
+      <Time>27</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
-      <Time>31</Time>
+      <ActionName>Up</ActionName>
+      <Time>35</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
+      <ActionName>Right</ActionName>
+      <Time>44</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>51</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>57</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
       <Time>64</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
-      <Time>73</Time>
+      <Time>71</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
-      <Time>77</Time>
+      <Time>78</Time>
     </Action>
     <Action>
-      <ActionName>Down</ActionName>
-      <Time>82</Time>
+      <ActionName>Left</ActionName>
+      <Time>85</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>94</Time>
+      <ActionName>Left</ActionName>
+      <Time>92</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
+      <ActionName>Left</ActionName>
       <Time>98</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
+      <ActionName>Left</ActionName>
       <Time>105</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>114</Time>
+      <ActionName>Up</ActionName>
+      <Time>111</Time>
     </Action>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>118</Time>
+      <Time>117</Time>
     </Action>
     <Action>
       <ActionName>Up</ActionName>
@@ -53,151 +65,163 @@
     </Action>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>127</Time>
-    </Action>
-    <Action>
-      <ActionName>Up</ActionName>
-      <Time>130</Time>
-    </Action>
-    <Action>
-      <ActionName>Up</ActionName>
-      <Time>136</Time>
-    </Action>
-    <Action>
-      <ActionName>Up</ActionName>
-      <Time>145</Time>
+      <Time>132</Time>
     </Action>
     <Action>
       <ActionName>Right</ActionName>
-      <Time>149</Time>
+      <Time>137</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
-      <Time>156</Time>
+      <ActionName>Right</ActionName>
+      <Time>143</Time>
     </Action>
     <Action>
-      <ActionName>Down</ActionName>
+      <ActionName>Right</ActionName>
+      <Time>148</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>155</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
       <Time>162</Time>
     </Action>
     <Action>
-      <ActionName>Down</ActionName>
-      <Time>165</Time>
+      <ActionName>Right</ActionName>
+      <Time>170</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
-      <Time>168</Time>
+      <Time>178</Time>
     </Action>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>177</Time>
+      <Time>184</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>182</Time>
+      <ActionName>Left</ActionName>
+      <Time>190</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>187</Time>
-    </Action>
-    <Action>
-      <ActionName>Down</ActionName>
+      <ActionName>Left</ActionName>
       <Time>196</Time>
     </Action>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>205</Time>
+      <Time>202</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
-      <Time>212</Time>
+      <ActionName>Up</ActionName>
+      <Time>209</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
+      <ActionName>Right</ActionName>
       <Time>215</Time>
     </Action>
     <Action>
-      <ActionName>Left</ActionName>
-      <Time>218</Time>
-    </Action>
-    <Action>
-      <ActionName>Left</ActionName>
+      <ActionName>Right</ActionName>
       <Time>221</Time>
     </Action>
     <Action>
       <ActionName>Left</ActionName>
-      <Time>224</Time>
+      <Time>227</Time>
     </Action>
     <Action>
       <ActionName>Left</ActionName>
-      <Time>228</Time>
-    </Action>
-    <Action>
-      <ActionName>Up</ActionName>
-      <Time>232</Time>
-    </Action>
-    <Action>
-      <ActionName>Up</ActionName>
-      <Time>237</Time>
-    </Action>
-    <Action>
-      <ActionName>Left</ActionName>
-      <Time>241</Time>
-    </Action>
-    <Action>
-      <ActionName>Right</ActionName>
-      <Time>249</Time>
+      <Time>234</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
+      <Time>240</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>247</Time>
+    </Action>
+    <Action>
+      <ActionName>Left</ActionName>
       <Time>254</Time>
     </Action>
     <Action>
-      <ActionName>Down</ActionName>
-      <Time>258</Time>
+      <ActionName>Left</ActionName>
+      <Time>261</Time>
     </Action>
     <Action>
       <ActionName>Left</ActionName>
-      <Time>265</Time>
+      <Time>266</Time>
     </Action>
     <Action>
       <ActionName>Left</ActionName>
-      <Time>269</Time>
-    </Action>
-    <Action>
-      <ActionName>Down</ActionName>
       <Time>273</Time>
     </Action>
     <Action>
       <ActionName>Up</ActionName>
-      <Time>280</Time>
+      <Time>279</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>284</Time>
+      <ActionName>Up</ActionName>
+      <Time>286</Time>
     </Action>
     <Action>
-      <ActionName>Right</ActionName>
-      <Time>288</Time>
-    </Action>
-    <Action>
-      <ActionName>Right</ActionName>
+      <ActionName>Left</ActionName>
       <Time>292</Time>
     </Action>
     <Action>
       <ActionName>Right</ActionName>
-      <Time>296</Time>
+      <Time>299</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
-      <Time>304</Time>
-    </Action>
-    <Action>
-      <ActionName>Down</ActionName>
-      <Time>307</Time>
+      <Time>306</Time>
     </Action>
     <Action>
       <ActionName>Down</ActionName>
       <Time>313</Time>
+    </Action>
+    <Action>
+      <ActionName>Left</ActionName>
+      <Time>322</Time>
+    </Action>
+    <Action>
+      <ActionName>Left</ActionName>
+      <Time>329</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>335</Time>
+    </Action>
+    <Action>
+      <ActionName>Up</ActionName>
+      <Time>341</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>347</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>353</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>359</Time>
+    </Action>
+    <Action>
+      <ActionName>Right</ActionName>
+      <Time>367</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>374</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>381</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>390</Time>
     </Action>
   </Moves>
 </Replay>

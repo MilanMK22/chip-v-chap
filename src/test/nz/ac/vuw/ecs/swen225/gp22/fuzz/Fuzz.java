@@ -9,6 +9,15 @@ import org.junit.Test;
 * @author Ilya Mashkov
 */
 public class Fuzz{
+
+    public void probability(String move){
+        double up = 0.25, down = 0.25, left = 0.25, right = 0.25; // initial move option probabilities
+        if(move.equals("up")){ up -= 0.03; down += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("down")){ down -= 0.03; up += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("left")){ left -= 0.03; down += 0.01; up += 0.01; right += 0.01; }
+        else if(move.equals("right")){right -= 0.03; left += 0.01; right += 0.01; up +=0.01; }
+        else {throw new IllegalArgumentException("Invalid move: " + move);}
+    }
     
     /**
     * Test1 tests the first level of the game by generating random inputs with a weighted probability.
@@ -22,32 +31,38 @@ public class Fuzz{
     public void test1(){
         try{
             SwingUtilities.invokeAndWait(() -> {
-                double up = 0.25, down = 0.25, left = 0.25;
-                
-                // for counting the number of moves done
-                int x = 0;
-                
-                // getting the chap
-                //Chap chap = new ChipVsChap().getChap();
+
                 ChipVsChap chipvchap = new ChipVsChap();
+                double up = 0.25, down = 0.25, left = 0.25, right = 0.25;
+                int x = 0;  // for counting the number of moves done
                 long time = 0;
-                
-                // setting the start time
-                long startTime = System.currentTimeMillis();
+                long startTime = System.currentTimeMillis(); // setting the start time
+                chipvchap.unvisitedTiles(1);
                 
                 // doing the moves
                 while (true) {
-                    double randomNum = Math.random();
                     x++;
+                    double randomNum = Math.random();
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime)/1000;
-                    if(randomNum < up) { chipvchap.up(); up -= 0.03; down += 0.01; left += 0.01; }
-                    else if(randomNum < down + up) { chipvchap.down(); down -= 0.03; up += 0.01; left += 0.01; }
-                    else if(randomNum < left + down + up) { chipvchap.left(); left -= 0.03; down += 0.01; up += 0.01; }
-                    else { chipvchap.right(); down += 0.01; left += 0.01; up += 0.01; }
+                    if(randomNum < up) { chipvchap.up(1); probability("up"); }
+                    else if(randomNum < down + up) { chipvchap.down(1); probability("down"); }
+                    else if(randomNum < left + down + up) { chipvchap.left(1); probability("left"); }
+                    else { chipvchap.right(1); probability("right"); }
+                    chipvchap.setVisitedTiles(1);
+                    
+
+                    //! was trying to record visited tiles (SUCCESS) and make the chap prefer moving to unvisited tiles (unless all tiles around are visited)
+                    //! but no clue how to check the tiles around him and get their visited status??
+
+                    //! leo add a method to get the tile from above, bellow, left and right of the chap? - then check their visited status
+                    //! also need to implement a way to recognise a wall and walk away from it 
                     
                     System.out.println("Number of moves done: " + x);
+                    System.out.println("unique tiles visited: " + chipvchap.listOfVisitedTiles.stream().distinct().toList().size());
+                    System.out.println("unvisited tiles: " + chipvchap.unvisitedTilesList.size());
                     System.out.println("Test Runtime: " + time + "s");
+                    System.out.println("--------------------------------------");
                     if(System.currentTimeMillis() >= startTime + 60000) { return; }
                 }
             });
@@ -61,36 +76,33 @@ public class Fuzz{
     public void test2(){
         try{
             SwingUtilities.invokeAndWait(() -> {
-                double up = 0.25, down = 0.25, left = 0.25;
-                
-                // for counting the number of moves done
-                int x = 0;
-                
-                // getting the chap
                 ChipVsChap chipvchap = new ChipVsChap();
+                double up = 0.25, down = 0.25, left = 0.25; 
+                int x = 0;
                 long time = 0;
+                long startTime = System.currentTimeMillis(); // setting the start time
+                chipvchap.unvisitedTiles(2);
                 
-                // setting the start time
-                long startTime = System.currentTimeMillis();
-                
-                // doing the moves
                 while (true) {
-                    double randomNum = Math.random();
                     x++;
+                    double randomNum = Math.random();
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime)/1000;
-                    if(randomNum < up) { chipvchap.upL2(); up -= 0.03; down += 0.01; left += 0.01; }
-                    else if(randomNum < down + up) { chipvchap.downL2(); down -= 0.03; up += 0.01; left += 0.01; }
-                    else if(randomNum < left + down + up) { chipvchap.leftL2(); left -= 0.03; down += 0.01; up += 0.01; }
-                    else { chipvchap.rightL2(); down += 0.01; left += 0.01; up += 0.01; }
+                    if(randomNum < up) { chipvchap.up(2); up -= 0.03; down += 0.01; left += 0.01; }
+                    else if(randomNum < down + up) { chipvchap.down(2); down -= 0.03; up += 0.01; left += 0.01; }
+                    else if(randomNum < left + down + up) { chipvchap.left(2); left -= 0.03; down += 0.01; up += 0.01; }
+                    else { chipvchap.right(2); down += 0.01; left += 0.01; up += 0.01; }
+                    chipvchap.setVisitedTiles(2);
                     
                     System.out.println("Number of moves done: " + x);
+                    System.out.println("unique tiles visited: " + chipvchap.listOfVisitedTiles.stream().distinct().toList().size());
+                    System.out.println("unvisited tiles: " + chipvchap.unvisitedTilesList.size());
                     System.out.println("Test Runtime: " + time + "s");
+                    System.out.println("--------------------------------------");
                     if(System.currentTimeMillis() >= startTime + 60000) { return; }
                 }
-
             });
-        } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e); }
+        } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 2 failed", e); }
     }
 }
 

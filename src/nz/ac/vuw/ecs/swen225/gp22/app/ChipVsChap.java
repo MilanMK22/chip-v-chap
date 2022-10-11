@@ -17,18 +17,23 @@ import javax.swing.Timer;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
-
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import sounds.sounds;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.stream.Stream;
 import java.awt.event.*;
 import java.io.IOException;
 /*
@@ -45,29 +50,23 @@ public class ChipVsChap extends JFrame{
     public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
+    public JLabel chips;
+
+
+    // by ilya 
+    public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
+    public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
    
     static Timer timer;
     int count = 0;
     int delay = 50;
     int timePassed = 0;
     int totalticks=0;
-    Model RepModel; //so we can make changes to model for a replay
     KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
     
-    
-    public Chap getChap1(){
-        return  Phase.level1(()->levelTwo(), ()->levelOne()).model().chap();
-    }
-    public Chap getChap2(){
-        return  Phase.level2(()->levelTwo(), ()->levelOne()).model().chap();
-    }
-
-    
-
-
     /**
      * Updates the keybindings.
      */
@@ -87,25 +86,83 @@ public class ChipVsChap extends JFrame{
         direction.run();
     }
 
-    public Chap getChap(){
-        return model.chap();
+    /**
+     * a method to get the chap form the game 
+     * @param level the level of the game
+     * @return a chap 
+     */
+    public Chap getChap(int level){
+        if(level == 1){ return model.chap(); }
+        else if (level == 2){ return model2.chap(); }
+        else{ throw new IllegalArgumentException("Invalid level"); }
     }
 
-    public Chap getChapForLevel2(){
-        return model2.chap();
+    /**
+     * move methods for Fuzz to use on the chap deending on the level
+     * @param level the level of the game which is being tested
+     */
+    public void up(int level){ getChap(level).up(); }
+    public void down(int level){ getChap(level).down(); }
+    public void left(int level){ getChap(level).left(); }
+    public void right(int level){ getChap(level).right(); }
+
+    public Tile[][] getTiles(int level){ 
+        if(level == 1){ return model.getMaze().getTiles();}
+        else if (level == 2){ return model2.getMaze().getTiles(); }
+        else{ throw new IllegalArgumentException("Invalid level"); }
+    }
+     // ilya
+    // public boolean isVisited() { return true; }
+    // ilya
+    // public Point location(int level) {
+    //     if(level == 1){ return getChap(level).getLocation(); }
+    //     else if (level == 2){ return model2.chap().getLocation(); }
+    //     else{ throw new IllegalArgumentException("Invalid level"); }
+    // }
+    // ilya
+    public Tile getTileAtLocation(Point location, int level) {
+        Tile[][] tiles;
+        if(level == 1){ 
+            tiles = getTiles(level);
+            return tiles[location.getX()][location.getY()];
+        }
+        else if (level == 2){
+            tiles = getTiles(level);
+            return tiles[location.getX()][location.getY()];
+        }
+        else{ throw new IllegalArgumentException("Invalid level"); }
     }
 
-    // for level 1 chap moves
-    public void up(){ getChap().up(); }
-    public void down(){ getChap().down(); }
-    public void left(){ getChap().left(); }
-    public void right(){ getChap().right(); }
+    //ilya
+    public void setVisitedTiles(int level){
+        Tile tile;
+        if (level == 1){ 
+            tile = getTileAtLocation(model.chap().getLocation(), level); 
+            unvisitedTilesList.remove(tile);
+            listOfVisitedTiles.add(tile);
+            tile.visited(true);
+        }
+        else if (level == 2){ 
+            tile = getTileAtLocation(model2.chap().getLocation(), level); 
+            unvisitedTilesList.remove(tile);
+            listOfVisitedTiles.add(tile);
+            tile.visited(true);
+        }
+        else{ throw new IllegalArgumentException("Invalid level"); }
+    }
+//ilya
+    public void unvisitedTiles(int level){
+        Tile[][] tiles = getTiles(level);
+        for(int i = 0; i < tiles.length; i++) {
+            for(int j = 0; j < tiles[i].length; j++) {
+                if(tiles[i][j].isFree()){
+                    unvisitedTilesList.add(tiles[i][j]);
+                }
+            }
+        }
+    }
 
-    //for level 2 chap moves
-    public void upL2(){ getChapForLevel2().up(); }
-    public void downL2(){ getChapForLevel2().down(); }
-    public void leftL2(){ getChapForLevel2().left(); }
-    public void rightL2(){ getChapForLevel2().right(); }
+
 
     /**
      * Returns the character relative to the character.
@@ -161,7 +218,9 @@ public class ChipVsChap extends JFrame{
             timePassed += delay;
             m.tick();
             totalticks++;
+            if(totalticks%2==0){
             Mapprint.printMap(m, background.getGraphics());
+            }
             printInventory.printIn(m,backgroundImage.getGraphics());
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
@@ -312,12 +371,21 @@ public class ChipVsChap extends JFrame{
         replay.setOpaque(true);
         replay.setBounds(315, 320, 170, 35);
 
+        var playByPlay = new JButton("Play by Play");
+        playByPlay.setOpaque(true);
+        playByPlay.setBounds(515, 320, 170, 35);
+
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
+<<<<<<< HEAD
         JFileChooser open = new JFileChooser();
         
+=======
+        s.setFile("src/sounds/menu.wav");
+
+>>>>>>> 0b698fecba54fb1ad948ff3bd75b4d9ddf3cd4bf
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -331,22 +399,19 @@ public class ChipVsChap extends JFrame{
        
         //add(BorderLayout.SOUTH,panel);
         HomeScreen.add(controls);
+        HomeScreen.add(playByPlay);
         HomeScreen.add(start);
         HomeScreen.add(load);
         HomeScreen.add(replay);
    
         add(HomeScreen);
        
-       
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 System.out.println(e.getKeyCode());
-
-                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
-                    open.showOpenDialog(panel); // needs variable
-                }   
+                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){Rep2();}   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
                     levelOne();
@@ -370,6 +435,11 @@ public class ChipVsChap extends JFrame{
           
             removeKeyListener(menuKeyListener);
         });
+        playByPlay.addActionListener(s -> {
+            Rep3();
+            removeKeyListener(menuKeyListener);
+        });
+
         controls.addActionListener(s->controls());
         setPreferredSize(new Dimension(800,400));
        
@@ -411,13 +481,11 @@ public class ChipVsChap extends JFrame{
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.
-        Model model = lvl.model();
-
-        RepModel = model;
+        model = lvl.model();
 
         //Graphical Interface Initialization.
         var level = Board.getLevelLabel(levelNum);
-        var chips = Board.getChipLabel(numOfChips);
+        chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
         setBackGround();
@@ -430,42 +498,24 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         JDialog dialog = Board.getPause();
 
-        //Close Phase
-        closePhase=()->{
-            timer.stop();
-            remove(panel);
-            remove(level);
-        };
         //KeyListener for the chap movement and game functions.
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                // TODO Auto-generated method stub
-                if(e.getKeyCode() == getCode(characterControls[0])){
-                    action(r,model,"Up",()->model.chap().up());
-                }
-                if(e.getKeyCode() == getCode(characterControls[1])){
-                    action(r,model,"Down",()->model.chap().down());
-                }
-                if(e.getKeyCode() == getCode(characterControls[2])){
-                    action(r,model,"Left",()->model.chap().left());
-                }
-                if(e.getKeyCode() == getCode(characterControls[3]) ){
-                    action(r,model,"Right",()->model.chap().right());
-                }
+                if(e.getKeyCode() == getCode(characterControls[0])){action(r,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == getCode(characterControls[1])){action(r,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == getCode(characterControls[2])){action(r,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == getCode(characterControls[3]) ){action(r,model,"Right",()->model.chap().right());}
+                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     dispose();
                     r.saveReplay();
-                }   
-                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){
-                    dispose();
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
                     dialog.setVisible(true);
                     timer.stop();
                 } 
-               
             }
         };
         addKeyListener(controls);
@@ -481,6 +531,14 @@ public class ChipVsChap extends JFrame{
         };
         dialog.addWindowListener(listener);
 
+        //Close Phase
+        closePhase=()->{
+            timer.stop();
+            remove(panel);
+            remove(level);
+            removeKeyListener(controls);
+        };
+
         //Add components to respective panels and labels.
         add(panel);
         panel.add(background);
@@ -494,6 +552,19 @@ public class ChipVsChap extends JFrame{
 
     public void Rep2(){
     Replay rep = Replay.readXML();
+    var replay = new Checkbox("2x Replay Speed");
+    replay.setBounds(215, 5, 180, 20);
+    replay.addItemListener(new ItemListener() {    
+        public void itemStateChanged(ItemEvent e) {                 
+            if(e.getStateChange()==1){
+                timer.setDelay(25);   
+        }    
+        else{
+            timer.setDelay(50);
+        }
+         }
+     });    
+    this.add(replay);
     if(rep.getLevel() == 1){
         levelOne(); 
     }else{
@@ -512,13 +583,13 @@ public class ChipVsChap extends JFrame{
             r = rep.getMoves().remove();
         try{
         if(r.getName().equals("Up")){             
-            action(null,RepModel,"Up",()->RepModel.chap().up());
+            action(null,model,"Up",()->model.chap().up());
         }else if(r.getName().equals("Down")){
-            action(null,RepModel,"Down",()->RepModel.chap().down());
+            action(null,model,"Down",()->model.chap().down());
         }else if(r.getName().equals("Left")){
-            action(null,RepModel,"Left",()->RepModel.chap().left());
+            action(null,model,"Left",()->model.chap().left());
         }else if(r.getName().equals("Right")){
-            action(null,RepModel,"Right",()->RepModel.chap().right());
+            action(null,model,"Right",()->model.chap().right());
         }
     }
     catch(Error b){
@@ -528,6 +599,74 @@ public class ChipVsChap extends JFrame{
     timer.addActionListener(newone);
 
     }
+
+    public void Rep3() {
+        Replay rep = Replay.readXML();
+        if(rep.getLevel() == 1){
+            levelOne(); 
+        }else{
+            levelTwo();
+        }
+        removeKeyListener(Replistner);
+        timer.stop();
+        Mapprint.printMap(model, background.getGraphics());
+    
+        KeyListener forward = new Keys(){
+    
+            public void keyPressed(KeyEvent e) {
+    
+                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+    
+                    if(timePassed % 1000 == 0){
+                        if(count == 0){
+                            timer.stop();
+                            timerLabel.setText("No time");
+                        }else{
+                            int minutes = count /60;
+                            int seconds = count% 60;
+                            timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
+                            count --;
+                        }
+                    }
+                    timePassed += delay;
+                    model.tick();
+                    totalticks++;
+                    Mapprint.printMap(model, background.getGraphics());
+                    printInventory.printIn(model,backgroundImage.getGraphics());
+                    chips.setText("" + (numOfChips - model.chap().heldTreasure()));
+    
+    
+                    if(rep.getMoves().isEmpty()){
+                        System.out.println("empty");
+                        dispose();
+                        System.exit(ABORT);
+                    }
+                    GameAction r = rep.getMoves().peek();
+            
+                    if(r.getTime() == totalticks){
+                        r = rep.getMoves().remove();
+                    try{
+                    if(r.getName().equals("Up")){             
+                        action(null,model,"Up",()->model.chap().up());
+                    }else if(r.getName().equals("Down")){
+                        action(null,model,"Down",()->model.chap().down());
+                    }else if(r.getName().equals("Left")){
+                        action(null,model,"Left",()->model.chap().left());
+                    }else if(r.getName().equals("Right")){
+                        action(null,model,"Right",()->model.chap().right());
+                    }
+                }
+                catch(Error b){
+                }
+                }  
+                }
+            }
+    
+        };
+        addKeyListener(forward);
+    
+        }
+
     
    
 }

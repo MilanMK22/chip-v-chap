@@ -28,6 +28,8 @@ public class Maze {
         this.ylen = tiles[0].length;
     }
     
+    // by ilya - to test something 
+    public Tile[][] getTiles() { return tiles; }
 
 
 
