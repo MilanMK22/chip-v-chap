@@ -4,7 +4,7 @@
     ],
 
     "java.test.config": {
-        "workingDirectory": "${workspaceFolder}" //hi
+        "workingDirectory": "${workspaceFolder}" 
     }
 
-}//him
+}

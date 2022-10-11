@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.app.Main",
+            "projectName": "chip-vs-chap-1_1053057e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.app.Main",
+            "projectName": "chip-vs-chap_45f87f84"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "nz.ac.vuw.ecs.swen225.gp22.app.Main",
+            "projectName": "this one_f778a8ea"
+        },
+        {
+            "type": "java",
             "name": "Launch ReadXMLFile",
             "request": "launch",
             "mainClass": "nz.ac.vuw.ecs.swen225.gp22.recorder.ReadXMLFile",
