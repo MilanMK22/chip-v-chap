@@ -8,9 +8,14 @@ import java.awt.event.*;
 
 
 public class Recorder {
-
-
-
+    /**
+     * This function decides what action to do based on the 
+     * string that is given by GameAction.
+     *
+     * @Author Milan Kriletich
+     * @param cur this is the current game we are making changes to
+     * @param r this is the current action we want to use
+     * */
     public static void doAction(ChipVsChap cur, GameAction r){
         
         try{
@@ -28,6 +33,14 @@ public class Recorder {
         }
     }
 
+    /**
+     * This method runs when the replay is over and takes us back to 
+     * the main menu.
+     * 
+     * @Author Milan Kriletich
+     * @param cur this is the current game we are making changes to
+     * @param replaySpeed if this check box is present in the replay we want to remove it
+     * */
     public static void quitReplay(ChipVsChap cur, Checkbox replaySpeed){
         ChipVsChap.timerLabel.setText(String.format("%d:%02d", 2,0) );
         if(replaySpeed != null ){
@@ -42,6 +55,14 @@ public class Recorder {
 
     }
 
+    
+    
+    /**
+     * This is method does an auto replay and gives an option of a x2 replay speed.
+     * 
+     * @Author Milan Kriletich
+     * @param cur this is the current game we are doing our automatic replay changes to
+     */
     public static void Auto(ChipVsChap cur){
         
         Replay rep = Replay.readXML();
@@ -80,6 +101,21 @@ public class Recorder {
 
     }
 
+    
+
+
+
+
+    /**
+     * This method does a play by play replay. each press of the right arrow key
+     * will increment the game 1/20th of a second. If you hold down the arrow key
+     * the game should play at a normal speed.
+     * 
+     * 
+     * @Author Milan Kriletich
+     * @param cur this is the current game we are doing the play by play replay on
+     * 
+     */
     public static void PlaybPlay(ChipVsChap cur){
         Replay rep = Replay.readXML();
         if(rep.getLevel() == 1){

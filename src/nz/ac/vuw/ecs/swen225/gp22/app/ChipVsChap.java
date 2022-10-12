@@ -241,6 +241,7 @@ public class ChipVsChap extends JFrame{
             totalticks++;
             if(totalticks%2==0 && background.getGraphics()!= null){
             Mapprint.printMap(m, background.getGraphics());
+<<<<<<< HEAD
               printInventory.printIn(m,backgroundImage.getGraphics());
               if(m.onInfo()){
                 Textbox.printTextBox("testing",txtIndex , backgroundImage.getGraphics());
@@ -249,6 +250,12 @@ public class ChipVsChap extends JFrame{
                     backgroundImage.remove(Textbox.getTextBox());
                 }
         
+=======
+            printInventory.printIn(m,backgroundImage.getGraphics());
+            if(m.onInfo()){
+                System.out.println("TEST");
+            }
+>>>>>>> 7858daf9926108e63e4c7830dfb750fba577ccf3
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
@@ -371,7 +378,7 @@ public class ChipVsChap extends JFrame{
         right.addActionListener(reMap(3,right));
 
         menu.addActionListener(s->menu());
-        setPreferredSize(new Dimension(800,400));
+        setPreferredSize(new Dimension(800,450));
         pack();
 
     }
@@ -383,31 +390,37 @@ public class ChipVsChap extends JFrame{
      */
     public void menu() {
         System.out.println("Menu Loaded...");
-        var start = new JButton("");
+        var start = new JButton();
         start.setOpaque(false);
         start.setContentAreaFilled(false);
         start.setBorderPainted(false);
-        start.setBounds(315, 235, 170, 70);
+        start.setBounds(315, 210, 170, 70);
 
-        var controls = new JButton("");
+        var controls = new JButton();
         controls.setOpaque(false);
         controls.setContentAreaFilled(false);
         controls.setBorderPainted(false);
-        controls.setBounds(515, 235, 170, 70);
+        controls.setBounds(510, 205, 170, 70);
 
-        var load = new JButton("");
+        var load = new JButton();
         load.setOpaque(false);
         load.setContentAreaFilled(false);
         load.setBorderPainted(false);
-        load.setBounds(115, 235, 170, 70);
+        load.setBounds(115, 205, 170, 70);
 
-        var replay = new JButton("Replay");
+        var replay = new JButton();
         replay.setOpaque(true);
-        replay.setBounds(315, 320, 170, 35);
+        replay.setOpaque(false);
+        replay.setContentAreaFilled(false);
+        replay.setBorderPainted(false);
+        replay.setBounds(200, 310, 165, 70);
 
-        var playByPlay = new JButton("Play by Play");
+        var playByPlay = new JButton();
         playByPlay.setOpaque(true);
-        playByPlay.setBounds(515, 320, 170, 35);
+        playByPlay.setOpaque(false);
+        playByPlay.setContentAreaFilled(false);
+        playByPlay.setBorderPainted(false);
+        playByPlay.setBounds(395, 310, 165, 70);
 
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
