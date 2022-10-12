@@ -3,23 +3,41 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import imgs.Img;
 import java.awt.image.BufferedImage;
 
+
 public class Monster implements Entity{
 
     MonsterState state;
     Point location;
+    DIRECTION direction;
+    public enum DIRECTION{
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
 
     Monster(Point location, String moves){
         this.location = location;
         this.state = new MappedMonster(moves);
+        this.direction = DIRECTION.DOWN;
     }
 
     @Override
     public Point getLocation() { return location; }
     public void setState(MonsterState s){ this.state = s; }
     public void setLocation(Point p){ this.location = p; }
+    public void setDirection(String d){ this.direction = DIRECTION.valueOf(d); }
     public void tick(Maze m){ state.tick(m, this); }
-    public BufferedImage getImage(){ return Img.Marco.image; }
-}
+    public BufferedImage getImage(){ 
+        switch(this.direction){
+            case DOWN: return Img.craigfront.image;
+            case UP: return Img.craigback.image;
+            case LEFT: return Img.craigL.image;
+            case RIGHT: return Img.craigR.image;
+            default: return Img.craigfront.image;
+        }
+    }
+
 
 
 
@@ -56,11 +74,11 @@ class MappedMonster implements MonsterState{
     
     private Point moveFromChar(char move, Monster m){
         switch (move){
-            case 'u': return m.getLocation().up();
-            case 'd': return m.getLocation().down();
-            case 'l': return m.getLocation().left();
-            case 'r': return m.getLocation().right();
-            default: return m.getLocation();
+            case 'u': m.setDirection("UP"); return m.getLocation().up();
+            case 'd': m.setDirection("DOWN");return m.getLocation().down();
+            case 'l': m.setDirection("LEFT");return m.getLocation().left();
+            case 'r': m.setDirection("RIGHT");return m.getLocation().right();
+            default: m.setDirection("DOWN");return m.getLocation();
         }
     }
 
@@ -72,4 +90,6 @@ class MappedMonster implements MonsterState{
         }
         else throw new IllegalArgumentException("Monster "+ m+ " is trying to move to an illegal tile");
     }
+}
+
 }
