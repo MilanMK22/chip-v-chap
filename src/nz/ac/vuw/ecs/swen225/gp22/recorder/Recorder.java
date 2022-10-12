@@ -2,7 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 import java.awt.*;
 import nz.ac.vuw.ecs.swen225.gp22.app.ChipVsChap;
 import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
-import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import java.awt.event.*;
