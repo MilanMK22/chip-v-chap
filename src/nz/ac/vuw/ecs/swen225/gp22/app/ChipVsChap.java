@@ -68,6 +68,7 @@ public class ChipVsChap extends JFrame{
     public int totalticks=0;
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
     public ActionListener ReplayListner;
+    public KeyListener PlaybPlayListner;
     public Replay replay;
 
     public sounds s = new sounds();
@@ -90,6 +91,10 @@ public class ChipVsChap extends JFrame{
         }
         System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
         direction.run();
+    }
+
+    public void addRecorder(){
+        replay = new Replay(new LinkedList<GameAction>(),levelNum, "");
     }
 
     /**
@@ -239,13 +244,16 @@ public class ChipVsChap extends JFrame{
             
 
         };
+        
         timer = new Timer(delay, action);
         if(ReplayListner != null){
             timer.addActionListener(ReplayListner);
         }
         timer.setInitialDelay(0);
         count = timeDone;  
+        if(PlaybPlayListner == null){
         timer.start();
+        }
     }
 
     /**
@@ -515,8 +523,7 @@ public class ChipVsChap extends JFrame{
         s.play();
 
         if(replay == null){
-            replay = new Replay(new LinkedList<GameAction>(),levelNum, "");
-
+            this.addRecorder();
         }
         
 
@@ -565,8 +572,11 @@ public class ChipVsChap extends JFrame{
                 } 
             }
         };
+        if(ReplayListner == null && PlaybPlayListner == null){
+        System.out.println("null");
         addKeyListener(controls);
         Replistner = controls;
+        }
 
         //Pause box closed
         WindowListener listener = new WindowAdapter() {
