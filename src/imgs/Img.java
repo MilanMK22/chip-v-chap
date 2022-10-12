@@ -29,6 +29,7 @@ public enum Img{
     craigfront,
     craigL,
     craigR,
+    textbox,
     craigback,
     white,
     HomeScreen;
