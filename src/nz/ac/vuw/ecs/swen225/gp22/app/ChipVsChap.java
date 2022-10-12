@@ -239,6 +239,9 @@ public class ChipVsChap extends JFrame{
             if(totalticks%2==0 && background.getGraphics()!= null){
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
+            if(m.onInfo()){
+                System.out.println("TEST");
+            }
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
@@ -361,7 +364,7 @@ public class ChipVsChap extends JFrame{
         right.addActionListener(reMap(3,right));
 
         menu.addActionListener(s->menu());
-        setPreferredSize(new Dimension(800,400));
+        setPreferredSize(new Dimension(800,450));
         pack();
 
     }
