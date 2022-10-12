@@ -24,8 +24,8 @@ public class Maze {
         this.keyCount = getNumKey();
         this.totalKeys = keyCount +0;
         this.totalTreasure = treasureCount +0;
-        this.xlen = tiles.length;
-        this.ylen = tiles[0].length;
+        this.ylen = tiles.length;
+        this.xlen = tiles[0].length;
     }
     
     // by ilya - to test something 

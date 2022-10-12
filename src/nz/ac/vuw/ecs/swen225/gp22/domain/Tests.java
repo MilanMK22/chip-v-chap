@@ -64,22 +64,22 @@ public class Tests {
     @Test
     public void modelMazeTest1(){
         Model m = new Model(new Maze(buildTestMaze()));
-        m.chap().down();
-        m.chap().down();
-        m.chap().down();
+        m.chap().right();
+        m.chap().right();
+        m.chap().right();
     }    
     @Test
     public void modelMazeTest2(){
         Model m = new Model(new Maze(buildTestMaze()));
-        m.chap().down();
-        m.chap().down();
-        m.chap().down();
-        assertThrows(Error.class, () -> m.chap().left());
+        m.chap().right();
+        m.chap().right();
+        m.chap().right();
+        assertThrows(Error.class, () -> m.chap().down());
     }
     @Test
     public void modelMazeTestMonster(){
         Model m = new Model(new Maze(buildTestMaze2()));
-        for (int i = 0; i<20; i++){
+        for (int i = 0; i<140; i++){
             m.tick();
         }
         System.out.println(m.maze().getTile(m.chap().getLocation()).getEntity());
