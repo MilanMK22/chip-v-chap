@@ -35,4 +35,14 @@ public class Point {
     public String toString(){
         return "("+x+", "+y+")";
     }
+
+    public boolean equals(Object obj){
+        if(obj != null){
+            if(obj instanceof Point){
+                Point temp = (Point)obj;
+                return this.x == temp.getX() && this.y == temp.getY();
+            }
+        }
+        return false;
+    }
 }

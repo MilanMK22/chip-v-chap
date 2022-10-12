@@ -73,8 +73,8 @@ public class Tests {
         Model m = new Model(new Maze(buildTestMaze()));
         m.chap().right();
         m.chap().right();
-        m.chap().right();
-        assertThrows(Error.class, () -> m.chap().down());
+        m.chap().down();
+        assertEquals(m.chap().getLocation(), new Point(2,0));
     }
     @Test
     public void modelMazeTestMonster(){

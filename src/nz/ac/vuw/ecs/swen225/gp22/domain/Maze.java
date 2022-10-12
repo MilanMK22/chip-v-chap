@@ -78,7 +78,7 @@ public class Maze {
     }
 
     public boolean bound(Point p){ return bound(p.getX(), p.getY()); }
-    public boolean bound(int x, int y){ return x >= 0 && x <= xlen && y >= 0 && y <= ylen; }
+    public boolean bound(int x, int y){ return x >= 0 && x < xlen && y >= 0 && y < ylen; }
 
     public void setTile(int x, int y, Tile tile){ this.tiles[x][y] = tile; }
     public void setTile(Point loc, Tile tile){ this.tiles[loc.getX()][loc.getY()] = tile; }
