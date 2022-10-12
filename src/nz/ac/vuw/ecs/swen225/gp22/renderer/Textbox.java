@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
-import nz.ac.vuw.ecs.swen225.gp22.font.*;
+
 
 
 //print a textbox on the screen with a message printable 

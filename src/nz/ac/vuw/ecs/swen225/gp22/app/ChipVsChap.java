@@ -248,7 +248,8 @@ public class ChipVsChap extends JFrame{
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
             if(m.onInfo()){
-                
+                Textbox.printTextBox(getName(), txtIndex, backgroundImage.getGraphics());
+                txtIndex++;
             }
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
