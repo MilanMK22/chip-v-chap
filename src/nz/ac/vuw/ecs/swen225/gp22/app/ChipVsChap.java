@@ -457,13 +457,16 @@ public class ChipVsChap extends JFrame{
 
     private void winner(){
         var start = new JLabel("WINNER");
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(null);
+        JButton restart = new JButton("Back to Menu");
+        restart.setBounds(315, 235, 170, 70);
         panel.setLayout(new FlowLayout());
         closePhase.run();
         closePhase=()->{
           remove(panel);
         };
         panel.add(start);
+        panel.add(restart);
         add(panel);
         setPreferredSize(new Dimension(800,400));    
         pack();
