@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import org.apache.bcel.generic.LNEG;
+
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
@@ -26,6 +28,7 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Textbox;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
@@ -54,12 +57,17 @@ public class ChipVsChap extends JFrame{
     public static int levelNum = 1;
     public static JLabel chips;
     public static JLabel level;
+    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+
 
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
     public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
     
+    //jack
+    public int txtIndex = 0;
    
     public Timer timer;
     public int count = 0;
@@ -81,7 +89,7 @@ public class ChipVsChap extends JFrame{
 
     public void setBackGround(){
         background.setOpaque(true);
-        background.setBounds(67, 52, 380, 280);
+        background.setBounds(65, 27, 380, 280);
         background.setBackground(Color.black);
     }
 
@@ -240,7 +248,7 @@ public class ChipVsChap extends JFrame{
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
             if(m.onInfo()){
-                System.out.println("TEST");
+                
             }
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
@@ -364,7 +372,7 @@ public class ChipVsChap extends JFrame{
         right.addActionListener(reMap(3,right));
 
         menu.addActionListener(s->menu());
-        setPreferredSize(new Dimension(800,450));
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
 
     }
@@ -376,31 +384,37 @@ public class ChipVsChap extends JFrame{
      */
     public void menu() {
         System.out.println("Menu Loaded...");
-        var start = new JButton("");
+        var start = new JButton();
         start.setOpaque(false);
         start.setContentAreaFilled(false);
         start.setBorderPainted(false);
-        start.setBounds(315, 235, 170, 70);
+        start.setBounds(315, 210, 170, 70);
 
-        var controls = new JButton("");
+        var controls = new JButton();
         controls.setOpaque(false);
         controls.setContentAreaFilled(false);
         controls.setBorderPainted(false);
-        controls.setBounds(515, 235, 170, 70);
+        controls.setBounds(510, 205, 170, 70);
 
-        var load = new JButton("");
+        var load = new JButton();
         load.setOpaque(false);
         load.setContentAreaFilled(false);
         load.setBorderPainted(false);
-        load.setBounds(115, 235, 170, 70);
+        load.setBounds(115, 205, 170, 70);
 
-        var replay = new JButton("Replay");
+        var replay = new JButton();
         replay.setOpaque(true);
-        replay.setBounds(315, 320, 170, 35);
+        replay.setOpaque(false);
+        replay.setContentAreaFilled(false);
+        replay.setBorderPainted(false);
+        replay.setBounds(200, 310, 165, 70);
 
-        var playByPlay = new JButton("Play by Play");
+        var playByPlay = new JButton();
         playByPlay.setOpaque(true);
-        playByPlay.setBounds(515, 320, 170, 35);
+        playByPlay.setOpaque(false);
+        playByPlay.setContentAreaFilled(false);
+        playByPlay.setBorderPainted(false);
+        playByPlay.setBounds(395, 310, 165, 70);
 
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
@@ -466,7 +480,7 @@ public class ChipVsChap extends JFrame{
         });
 
         controls.addActionListener(s->controls());
-        setPreferredSize(new Dimension(800,400));
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
        
         pack();
     }
@@ -485,7 +499,7 @@ public class ChipVsChap extends JFrame{
         panel.add(restart);
 
         add(panel);
-        setPreferredSize(new Dimension(800,400));    
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
     }
 

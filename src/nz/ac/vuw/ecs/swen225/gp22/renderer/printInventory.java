@@ -15,14 +15,14 @@ public class printInventory {
     
     public static void printIn(Model m, Graphics g){
         int x = 585;
-        int y = 253;
+        int y = 228;
         
         for(int i = 0; i < 8; i++){
             java.awt.image.BufferedImage cur = Img.white.image;
             if(m.chap().inventory().size() > i){
                 cur = m.chap().inventory().get(i);
             }
-            g.drawImage(cur, x, y, 24, 24, null);
+            g.drawImage(cur, x, y, 23, 24, null);
             
             //System.out.println("inventory: " + m.chap().inventory().size());
 

@@ -23,6 +23,7 @@ import javax.swing.JFileChooser;
 
 
 /**
+ * @Author Milan Kriletich
  * This class stores a Replay with a Queue, level number and name
  */
 public class Replay {
@@ -32,7 +33,7 @@ public class Replay {
     private String Name = "Replay--";
 	
 /**
- * 
+ * @Author Milan Kriletich
  * @param moves The moves that occured in the game e.g "Up,Down..."
  * @param level The level number that this game was recordered on
  * @param Name The Name of the Replay
@@ -45,7 +46,7 @@ public class Replay {
 	
 	
 	/**
-     * 
+     * @Author Milan Kriletich
      * @return the moves Queue 
      */
 	public Queue<GameAction> getMoves() {
@@ -53,7 +54,7 @@ public class Replay {
 	}
 
     /**
-     * 
+     * @Author Milan Kriletich
      * @param moves set our moves list
      */
 
@@ -62,7 +63,7 @@ public class Replay {
 	}
 
     /**
-     * 
+     * @Author Milan Kriletich
      * @param move add a move to Queue
      */
     public void addMove(GameAction move){
@@ -70,7 +71,7 @@ public class Replay {
     }
 
     /**
-     * 
+     * @Author Milan Kriletich
      * @return the level our replay is on
      */
 
@@ -78,7 +79,7 @@ public class Replay {
 		return level;
 	}
     /**
-     * 
+     * @Author Milan Kriletich
      * @return the replay name
      */
 
@@ -87,7 +88,7 @@ public class Replay {
 	}
 
     /**
-     * 
+     * @Author Milan Kriletich
      * @param level set the level of the replay
      */
 	public void setLevel(int level) {
@@ -95,6 +96,7 @@ public class Replay {
 	}
 
     /**
+     * @Author Milan Kriletich
      * Empty Constructor
      */
 
@@ -104,6 +106,7 @@ public class Replay {
 
     
     /**
+     * @Author Milan Kriletich
      * Saves a replay to an XML file
      */
     public void saveReplay(){
@@ -149,7 +152,7 @@ public class Replay {
     }
 
     /**
-     * 
+     * @Author Milan Kriletich
      * @return return a Replay Object that was read from the XML file
      */
     public static Replay readXML(){

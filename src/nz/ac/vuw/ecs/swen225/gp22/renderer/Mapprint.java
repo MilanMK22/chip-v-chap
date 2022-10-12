@@ -36,7 +36,7 @@ public class Mapprint {
         Point chaploc = m.chap().getLocation();
         int chapx = chaploc.getX();
         int chapy = chaploc.getY();
-        System.out.println("chap loc= " + chapx + " ," + chapy);
+        //System.out.println("chap loc= " + chapx + " ," + chapy);
         // for loop for pritnig map
 
         for(int i = chapy - 4; i < chapy + 4; i++) {
