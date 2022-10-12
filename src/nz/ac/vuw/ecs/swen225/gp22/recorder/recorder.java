@@ -38,6 +38,7 @@ public class Recorder {
         cur.s.stop();
         cur.menu();
         cur.ReplayListner = null;
+        cur.PlaybPlayListner = null;
         return;
 
     }
@@ -132,6 +133,8 @@ public class Recorder {
     
         };
         cur.addKeyListener(forward);
+        cur.PlaybPlayListner = forward;
+
 
     }
     
