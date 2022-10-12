@@ -229,10 +229,10 @@ public class ChipVsChap extends JFrame{
             timePassed += delay;
             m.tick();
             totalticks++;
-            if(totalticks%2==0){
+            if(totalticks%2==0 && background.getGraphics()!= null){
             Mapprint.printMap(m, background.getGraphics());
-            }
             printInventory.printIn(m,backgroundImage.getGraphics());
+            }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
 
@@ -475,7 +475,7 @@ public class ChipVsChap extends JFrame{
      */
 
     public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    public void levelTwo(){setLevel(Phase.level2(()->menu(), ()->{timer.stop(); winner();}),2,180,3); }
+    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3); }
     public void levelPersistency(){setLevel(Phase.levelSave(()->menu(), ()->{timer.stop(); winner();}),2,180,Persistency.getNumChips("levelPers")); }
 
 
