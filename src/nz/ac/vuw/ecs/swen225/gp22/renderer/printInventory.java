@@ -15,7 +15,7 @@ public class printInventory {
     
     public static void printIn(Model m, Graphics g){
         int x = 585;
-        int y = 228;
+        int y = 253;
         
         for(int i = 0; i < 8; i++){
             java.awt.image.BufferedImage cur = Img.white.image;
