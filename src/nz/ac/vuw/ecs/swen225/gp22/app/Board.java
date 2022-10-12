@@ -32,7 +32,7 @@ public class Board extends JFrame {
     }
     public static JLabel getBackgroundImage(){
         var backgroundImage = new JLabel();
-        backgroundImage.setBounds(0,0,800,375);
+        backgroundImage.setBounds(0,0,800,425);
         ImageIcon img = new ImageIcon(Img.fullmap.image);
         backgroundImage.setIcon(img);
         return backgroundImage;

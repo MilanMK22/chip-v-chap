@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import org.apache.bcel.generic.LNEG;
+
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
@@ -54,6 +56,9 @@ public class ChipVsChap extends JFrame{
     public static int levelNum = 1;
     public static JLabel chips;
     public static JLabel level;
+    private static final int HEIGHT = 450;
+    private static final int WIDTH = 800;
+
 
 
     // by ilya 
@@ -364,7 +369,7 @@ public class ChipVsChap extends JFrame{
         right.addActionListener(reMap(3,right));
 
         menu.addActionListener(s->menu());
-        setPreferredSize(new Dimension(800,450));
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
 
     }
@@ -472,7 +477,7 @@ public class ChipVsChap extends JFrame{
         });
 
         controls.addActionListener(s->controls());
-        setPreferredSize(new Dimension(800,400));
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
        
         pack();
     }
@@ -491,7 +496,7 @@ public class ChipVsChap extends JFrame{
         panel.add(restart);
 
         add(panel);
-        setPreferredSize(new Dimension(800,400));    
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
     }
 
