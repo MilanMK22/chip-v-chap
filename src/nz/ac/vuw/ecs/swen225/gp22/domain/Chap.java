@@ -3,15 +3,11 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import sounds.sounds;
 import sounds.sounds.SOUND;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.Clip;
 
 import java.awt.image.BufferedImage;
 
@@ -21,6 +17,11 @@ import imgs.Img;
 /**
  * @author Leo Gaynor: 300437633
  * 
+ * The Chap class represents the internal state of Chap. 
+ * 
+ * The class provides methods for utility and moving the Chap object through the maze. 
+ * 
+ * It has extensive built in movement and interaction safety, preventing IllegalStateExceptions and IllegalArgumentExceptions.
  */
 public class Chap implements Entity{
 
@@ -150,7 +151,7 @@ public class Chap implements Entity{
 
     /**
      * Remove the indicated {@code Pickup.Key} from Chap's inventory.
-     * @param colorsrc/sounds/sounds.java
+     * @param color
      */
     private void removeFromInventory(KEYCOLOR color){
 
@@ -190,9 +191,9 @@ public class Chap implements Entity{
 
 
     /**
-     * Return a list of the items in Chap's inventory.
+     * Return a list of the item images in Chap's inventory.
      * 
-     * @return A {@code List<Pickup.Key>} representing Chap's inventory.
+     * @return A {@code List<BufferedImage>} representing Chap's inventory.
      */
     public List<BufferedImage> inventory(){
         return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
@@ -227,6 +228,9 @@ public class Chap implements Entity{
     
 
     }
+
+
+
     @Override
     public String toString(){
         String ret = "Chap at: " + this.location.toString() + "\n" +
