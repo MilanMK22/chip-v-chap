@@ -71,9 +71,6 @@ public class Chap implements Entity{
         return heldTreasure;
     }
 
-    public void resetChap(){
-        heldTreasure = 0;
-    }
 
     public  Point getLocation(){ return location; }
     public DIRECTION getDirection(){ return direction; }
