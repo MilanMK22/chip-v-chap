@@ -389,33 +389,33 @@ public class ChipVsChap extends JFrame{
         start.setOpaque(false);
         start.setContentAreaFilled(false);
         start.setBorderPainted(false);
-        start.setBounds(315, 210, 170, 70);
+        start.setBounds(315, 235, 170, 70);
 
         var controls = new JButton();
         controls.setOpaque(false);
         controls.setContentAreaFilled(false);
         controls.setBorderPainted(false);
-        controls.setBounds(510, 205, 170, 70);
+        controls.setBounds(510, 230, 170, 70);
 
         var load = new JButton();
         load.setOpaque(false);
         load.setContentAreaFilled(false);
         load.setBorderPainted(false);
-        load.setBounds(115, 205, 170, 70);
+        load.setBounds(115, 230, 170, 70);
 
         var replay = new JButton();
         replay.setOpaque(true);
         replay.setOpaque(false);
         replay.setContentAreaFilled(false);
         replay.setBorderPainted(false);
-        replay.setBounds(200, 310, 165, 70);
+        replay.setBounds(200, 330, 165, 70);
 
         var playByPlay = new JButton();
         playByPlay.setOpaque(true);
         playByPlay.setOpaque(false);
         playByPlay.setContentAreaFilled(false);
         playByPlay.setBorderPainted(false);
-        playByPlay.setBounds(395, 310, 165, 70);
+        playByPlay.setBounds(395, 330, 165, 70);
 
         var HomeScreen = new JLabel();
         HomeScreen.setBounds(0,0,800,375);
@@ -423,6 +423,7 @@ public class ChipVsChap extends JFrame{
 
         JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
+
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -446,9 +447,11 @@ public class ChipVsChap extends JFrame{
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
             public void keyPressed(KeyEvent e) {
-                // TODO Auto-generated method stub
                 System.out.println(e.getKeyCode());
-                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){Recorder.Auto(ChipVsChap.this);}   
+                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
+                    open.showSaveDialog(null);
+
+                }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
                     levelOne();
@@ -458,7 +461,6 @@ public class ChipVsChap extends JFrame{
                     // opens new game at level 2
                     levelTwo();
                     removeKeyListener(this);
-
                 }        
             }
         };
@@ -544,7 +546,6 @@ public class ChipVsChap extends JFrame{
             this.addRecorder();
         }
         
-
         //Set model to correct model.
         model = lvl.model();
 

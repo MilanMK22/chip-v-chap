@@ -45,5 +45,4 @@ public class Board extends JFrame {
         dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         return dialog;
     }
-
 }
