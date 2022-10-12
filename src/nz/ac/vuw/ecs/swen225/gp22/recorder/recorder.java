@@ -125,19 +125,7 @@ public class Recorder {
             
                     if(r.getTime() == cur.totalticks){
                         r = rep.getMoves().remove();
-                    try{
-                    if(r.getName().equals("Up")){             
-                        cur.action(null,cur.model,"Up",()->cur.model.chap().up());
-                    }else if(r.getName().equals("Down")){
-                        cur.action(null,cur.model,"Down",()->cur.model.chap().down());
-                    }else if(r.getName().equals("Left")){
-                        cur.action(null,cur.model,"Left",()->cur.model.chap().left());
-                    }else if(r.getName().equals("Right")){
-                        cur.action(null,cur.model,"Right",()->cur.model.chap().right());
-                    }
-                }
-                catch(Error b){
-                }
+                        doAction(cur,r);
                 }  
                 }
             }
