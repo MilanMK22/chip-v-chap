@@ -89,7 +89,7 @@ public class ChipVsChap extends JFrame{
 
     public void setBackGround(){
         background.setOpaque(true);
-        background.setBounds(65, 27, 380, 280);
+        background.setBounds(67, 52, 380, 280);
         background.setBackground(Color.black);
     }
 
@@ -592,7 +592,6 @@ public class ChipVsChap extends JFrame{
             }
         };
         if(ReplayListner == null && PlaybPlayListner == null){
-        System.out.println("null");
         addKeyListener(controls);
         Replistner = controls;
         }
@@ -615,7 +614,6 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(controls);
             backgroundImage.remove(level);
             backgroundImage.remove(chips);
-
         };
 
         //Add components to respective panels and labels.
