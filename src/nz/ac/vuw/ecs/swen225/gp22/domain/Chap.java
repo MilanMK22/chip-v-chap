@@ -205,7 +205,7 @@ public class Chap implements Entity{
      */
     public void setInventory(Pickup.Key[] inventory){
         for(Pickup.Key k : inventory){
-            pickUpKey(k);
+            if(k!=null) pickUpKey(k);
         }
         
     }
