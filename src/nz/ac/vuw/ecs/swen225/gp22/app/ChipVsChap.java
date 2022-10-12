@@ -67,6 +67,8 @@ public class ChipVsChap extends JFrame{
     public int timePassed = 0;
     public int totalticks=0;
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
+    public ActionListener ReplayListner;
+    public Replay replay;
 
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
@@ -238,6 +240,9 @@ public class ChipVsChap extends JFrame{
 
         };
         timer = new Timer(delay, action);
+        if(ReplayListner != null){
+            timer.addActionListener(ReplayListner);
+        }
         timer.setInitialDelay(0);
         count = timeDone;  
         timer.start();
@@ -289,7 +294,7 @@ public class ChipVsChap extends JFrame{
             };
         };
 
-    Runnable closePhase = () -> {};
+    public Runnable closePhase = () -> {};
 
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
@@ -358,7 +363,7 @@ public class ChipVsChap extends JFrame{
      * Start menu frame.
      * @throws IOException
      */
-    private void menu() {
+    public void menu() {
         System.out.println("Menu Loaded...");
         var start = new JButton("");
         start.setOpaque(false);
@@ -457,7 +462,7 @@ public class ChipVsChap extends JFrame{
 
     private void winner(){
         var start = new JLabel("WINNER");
-        JPanel panel = new JPanel(null);
+        JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
         restart.setBounds(315, 235, 170, 70);
         panel.setLayout(new FlowLayout());
@@ -467,6 +472,7 @@ public class ChipVsChap extends JFrame{
         };
         panel.add(start);
         panel.add(restart);
+
         add(panel);
         setPreferredSize(new Dimension(800,400));    
         pack();
@@ -507,7 +513,12 @@ public class ChipVsChap extends JFrame{
         s.stop();
         s.setFile("src/sounds/game.wav");
         s.play();
-        Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
+
+        if(replay == null){
+            replay = new Replay(new LinkedList<GameAction>(),levelNum, "");
+
+        }
+        
 
         //Set model to correct model.
         model = lvl.model();
@@ -537,14 +548,15 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == getCode(characterControls[0])){action(r,model,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == getCode(characterControls[1])){action(r,model,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == getCode(characterControls[2])){action(r,model,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == getCode(characterControls[3]) ){action(r,model,"Right",()->model.chap().right());}
+                if(e.getKeyCode() == getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     dispose();
-                    r.saveReplay();
+                    replay.saveReplay();
+                    replay = null;
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);

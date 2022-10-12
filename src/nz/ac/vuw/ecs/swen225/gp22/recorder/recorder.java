@@ -10,12 +10,44 @@ import java.awt.event.*;
 
 public class Recorder {
 
+
+
+    public static void doAction(ChipVsChap cur, GameAction r){
+        
+        try{
+            if(r.getName().equals("Up")){             
+                cur.action(null,cur.model,"Up",()->cur.model.chap().up());
+            }else if(r.getName().equals("Down")){
+                cur.action(null,cur.model,"Down",()->cur.model.chap().down());
+            }else if(r.getName().equals("Left")){
+                cur.action(null,cur.model,"Left",()->cur.model.chap().left());
+            }else if(r.getName().equals("Right")){
+                cur.action(null,cur.model,"Right",()->cur.model.chap().right());
+            }
+        }
+        catch(Error b){
+        }
+    }
+
+    public static void quitReplay(ChipVsChap cur, Checkbox replaySpeed){
+        ChipVsChap.timerLabel.setText(String.format("%d:%02d", 2,0) );
+        if(replaySpeed != null ){
+            cur.remove(replaySpeed);
+        }
+        cur.closePhase.run();
+        cur.s.stop();
+        cur.menu();
+        cur.ReplayListner = null;
+        return;
+
+    }
+
     public static void Auto(ChipVsChap cur){
         
         Replay rep = Replay.readXML();
-    var replay = new Checkbox("2x Replay Speed");
-    replay.setBounds(215, 5, 180, 20);
-    replay.addItemListener(new ItemListener() {    
+    var replaySpeed = new Checkbox("2x Replay Speed");
+    replaySpeed.setBounds(215, 5, 180, 20);
+    replaySpeed.addItemListener(new ItemListener() {    
         public void itemStateChanged(ItemEvent e) {                 
             if(e.getStateChange()==1){
                 cur.timer.setDelay(25);   
@@ -25,9 +57,8 @@ public class Recorder {
         }
          }
      });    
-    cur.add(replay);
-    if(rep.getLevel() == 1){
-        //one.run(); 
+    cur.add(replaySpeed);
+    if(rep.getLevel() == 1){ 
         cur.levelOne();
     }else{
         cur.levelTwo();
@@ -35,30 +66,17 @@ public class Recorder {
     cur.removeKeyListener(cur.Replistner);
      ActionListener newone = e -> {
         if(rep.getMoves().isEmpty()){
-            System.out.println("empty");
-            cur.dispose();
-            //System.exit(A
+            quitReplay(cur, replaySpeed);
+            return;
         }
         GameAction r = rep.getMoves().peek();
-
         if(r.getTime() == cur.totalticks){
             r = rep.getMoves().remove();
-        try{
-        if(r.getName().equals("Up")){             
-            cur.action(null,cur.model,"Up",()->cur.model.chap().up());
-        }else if(r.getName().equals("Down")){
-            cur.action(null,cur.model,"Down",()->cur.model.chap().down());
-        }else if(r.getName().equals("Left")){
-            cur.action(null,cur.model,"Left",()->cur.model.chap().left());
-        }else if(r.getName().equals("Right")){
-            cur.action(null,cur.model,"Right",()->cur.model.chap().right());
-        }
-    }
-    catch(Error b){
-    }
+            doAction(cur,r);
     }  
     };
     cur.timer.addActionListener(newone);
+    cur.ReplayListner = newone;
 
     }
 
@@ -99,27 +117,15 @@ public class Recorder {
     
     
                     if(rep.getMoves().isEmpty()){
-                        System.out.println("empty");
-                        cur.dispose();
-                        System.exit(ChipVsChap.ABORT);
+                        quitReplay(cur, null);
+                        cur.removeKeyListener(this);
+                        return;
                     }
                     GameAction r = rep.getMoves().peek();
             
                     if(r.getTime() == cur.totalticks){
                         r = rep.getMoves().remove();
-                    try{
-                    if(r.getName().equals("Up")){             
-                        cur.action(null,cur.model,"Up",()->cur.model.chap().up());
-                    }else if(r.getName().equals("Down")){
-                        cur.action(null,cur.model,"Down",()->cur.model.chap().down());
-                    }else if(r.getName().equals("Left")){
-                        cur.action(null,cur.model,"Left",()->cur.model.chap().left());
-                    }else if(r.getName().equals("Right")){
-                        cur.action(null,cur.model,"Right",()->cur.model.chap().right());
-                    }
-                }
-                catch(Error b){
-                }
+                        doAction(cur,r);
                 }  
                 }
             }
