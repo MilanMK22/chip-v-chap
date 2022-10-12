@@ -25,6 +25,9 @@ class FreeTile implements TileState {
     public boolean isFree(){ return true; }
 
     public boolean interact(Tile t, Chap c, Maze m){
+        if(t.hasEntity()){
+            return !(t.getEntity() instanceof Monster);
+        }
         return true;
     }
     @Override

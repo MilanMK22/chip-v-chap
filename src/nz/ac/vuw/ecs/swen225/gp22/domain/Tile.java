@@ -58,7 +58,7 @@ public class Tile{
     }
 
     //Util methods
-    public Point getLocation(){ return this.location;}
+    public Point getLocation(){ return this.location; }
     public boolean isFree(){ return state.isFree(); }
     boolean isExit(){ return state.isExit(); }
     boolean hasPickup(){ return state.hasPickup(); }
