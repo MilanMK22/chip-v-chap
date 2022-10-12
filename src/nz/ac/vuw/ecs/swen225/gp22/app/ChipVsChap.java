@@ -26,6 +26,7 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Textbox;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
@@ -60,6 +61,8 @@ public class ChipVsChap extends JFrame{
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
     public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
     
+    //jack
+    public int txtIndex = 0;
    
     public Timer timer;
     public int count = 0;
@@ -81,7 +84,7 @@ public class ChipVsChap extends JFrame{
 
     public void setBackGround(){
         background.setOpaque(true);
-        background.setBounds(67, 52, 380, 280);
+        background.setBounds(65, 27, 380, 280);
         background.setBackground(Color.black);
     }
 
@@ -238,7 +241,14 @@ public class ChipVsChap extends JFrame{
             totalticks++;
             if(totalticks%2==0 && background.getGraphics()!= null){
             Mapprint.printMap(m, background.getGraphics());
-            printInventory.printIn(m,backgroundImage.getGraphics());
+              printInventory.printIn(m,backgroundImage.getGraphics());
+              if(m.onInfo()){
+                Textbox.printTextBox("testing",txtIndex , backgroundImage.getGraphics());
+                txtIndex++;
+                }else{
+                    backgroundImage.remove(Textbox.getTextBox());
+                }
+        
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
             
