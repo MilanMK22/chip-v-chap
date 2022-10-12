@@ -1,8 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import sounds.sounds;
+import sounds.sounds.SOUND;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
@@ -34,9 +36,9 @@ public class Chap implements Entity{
 
     private Maze maze;
     private Point location;
-    private static Pickup.Key[] inventory = new Pickup.Key[8];
-    private static int heldItems = 0;
-    private static int heldTreasure = 0;
+    private Pickup.Key[] inventory = new Pickup.Key[8];
+    private int heldItems = 0;
+    private int heldTreasure = 0;
     private DIRECTION direction = DIRECTION.DOWN;
     
     //Entity Methods
@@ -66,6 +68,10 @@ public class Chap implements Entity{
      */
     public int heldTreasure(){
         return heldTreasure;
+    }
+
+    public void resetChap(){
+        heldTreasure = 0;
     }
 
     public  Point getLocation(){ return location; }
@@ -98,7 +104,7 @@ public class Chap implements Entity{
      */
     public boolean useKey(KEYCOLOR color){
         if(hasKey(color)){
-            s.setFile("src/sounds/unlock.wav");
+            SOUND.UNLOCK.play();
            
             removeFromInventory(color);
             return true;
@@ -115,16 +121,10 @@ public class Chap implements Entity{
             maze.getTile(this.location).removeEntity();
             maze.getTile(p).setEntity(this);
             location = p;
-            s.setFile("src/sounds/nope.wav");
-
         }
         else{
-<<<<<<< HEAD
-            
-=======
-            s.play();
+            SOUND.NOPE.play();
             assert !(maze.getTile(location).getState() instanceof WallTile);
->>>>>>> 0b698fecba54fb1ad948ff3bd75b4d9ddf3cd4bf
             //throw new Error("Chap cannot move to this tile." );
         }
     }
@@ -134,9 +134,8 @@ public class Chap implements Entity{
      * Increment {@link #heldTreasure} by one.
      */
     public void pickUpTreasure(){
-        s.setFile("src/sounds/collectcoin.wav");
-     
         heldTreasure += 1;
+        SOUND.COLLECTCOIN.play();
     }
     
     /**
@@ -144,10 +143,9 @@ public class Chap implements Entity{
      * @param key The {@code Pickup.Key} to add.
      */
     public void pickUpKey(Pickup.Key key){
-        s.setFile("src/sounds/collectcoin.wav");
-       
         addToInventory(key);
         heldItems += 1;
+        SOUND.COLLECTCOIN.play();
     }
 
     /**
@@ -155,12 +153,19 @@ public class Chap implements Entity{
      * @param colorsrc/sounds/sounds.java
      */
     private void removeFromInventory(KEYCOLOR color){
+
+
+
+
         OptionalInt keyPos = IntStream
-        .range(0,inventory.length)
-        .filter(x -> inventory[x] != null && inventory[x].color.equals(color))
-        .findFirst();
+        .range(0, inventory.length)
+        .filter(x -> inventory[x] != null && inventory[x].color.equals(color)).findFirst();
         if(keyPos.isPresent()){
             inventory[keyPos.getAsInt()] = null;
+            inventory = (Pickup.Key[])Arrays.copyOf(
+                Stream.of(inventory)
+                .filter(e->e!=null)
+                .toArray(), 8, Pickup.Key[].class);
             heldItems -= 1;
         }
         else{
@@ -193,6 +198,18 @@ public class Chap implements Entity{
         return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
     }
 
+    /**
+     * Ovewrite chaps inventory
+     * 
+     * @param inventory
+     */
+    public void setInventory(Pickup.Key[] inventory){
+        for(Pickup.Key k : inventory){
+            pickUpKey(k);
+        }
+        
+    }
+
 
     /**
      * Get the corresponding Image to Chap's current Direction.
@@ -213,8 +230,8 @@ public class Chap implements Entity{
     @Override
     public String toString(){
         String ret = "Chap at: " + this.location.toString() + "\n" +
-        "Chap Collected: \n Keys \t Treasure \n" + 
-        (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + 
+        "Chap Collected: \n   Keys \tTreasure \n" + "    " +
+        (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + "          " + 
         (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n" + "Inventory:\n";
 
         //inventory to string

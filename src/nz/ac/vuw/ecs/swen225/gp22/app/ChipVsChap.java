@@ -24,8 +24,10 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
 
 import java.util.List;
@@ -50,19 +52,21 @@ public class ChipVsChap extends JFrame{
     public Model model2 = Phase.level2(null, null).model();
     public static int numOfChips = 5;
     public static int levelNum = 1;
-    public JLabel chips;
+    public static JLabel chips;
+    public static JLabel level;
 
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
     public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
+    
    
-    static Timer timer;
-    int count = 0;
-    int delay = 50;
-    int timePassed = 0;
-    int totalticks=0;
-    KeyListener Replistner; //so we can remove the key listner when doing a replay
+    public Timer timer;
+    public int count = 0;
+    public int delay = 50;
+    public int timePassed = 0;
+    public int totalticks=0;
+    public KeyListener Replistner; //so we can remove the key listner when doing a replay
 
     public sounds s = new sounds();
     public static JLabel timerLabel = new JLabel("test");
@@ -78,7 +82,7 @@ public class ChipVsChap extends JFrame{
         background.setBackground(Color.black);
     }
 
-    private void action(Replay r, Model model, String move, Runnable direction){
+    public void action(Replay r, Model model, String move, Runnable direction){
         if(r != null){
         r.addMove(new GameAction(move, totalticks));
         }
@@ -162,6 +166,13 @@ public class ChipVsChap extends JFrame{
         }
     }
 
+    //ilya
+    public String chapToString(int level){
+        if(level == 1){ return model.chap().toString(); }
+        else if(level == 2){ return model2.chap().toString(); }
+        else{ throw new IllegalArgumentException("invalid level");}
+    }
+
 
 
     /**
@@ -207,7 +218,7 @@ public class ChipVsChap extends JFrame{
             if(timePassed % 1000 == 0){
                 if(count == 0){
                     timer.stop();
-                    timerLabel.setText("No time");
+                    m.loss();
                 }else{
                     int minutes = count /60;
                     int seconds = count% 60;
@@ -379,8 +390,8 @@ public class ChipVsChap extends JFrame{
         HomeScreen.setBounds(0,0,800,375);
         HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
+        JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
-
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -389,7 +400,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(HomeScreen);
             remove(panel);
-           
+            s.stop();
         };
        
         //add(BorderLayout.SOUTH,panel);
@@ -398,7 +409,7 @@ public class ChipVsChap extends JFrame{
         HomeScreen.add(start);
         HomeScreen.add(load);
         HomeScreen.add(replay);
-   
+        s.play();
         add(HomeScreen);
        
         this.setFocusable(true);
@@ -406,7 +417,7 @@ public class ChipVsChap extends JFrame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 System.out.println(e.getKeyCode());
-                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){Rep2();}   
+                if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){Recorder.Auto(ChipVsChap.this);}   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
                     levelOne();
@@ -425,13 +436,16 @@ public class ChipVsChap extends JFrame{
             levelOne();
             removeKeyListener(menuKeyListener);
         });
+        load.addActionListener(s -> {
+            levelPersistency();
+            removeKeyListener(menuKeyListener);
+        });
         replay.addActionListener(s -> {
-            Rep2();
-          
+            Recorder.Auto(this);
             removeKeyListener(menuKeyListener);
         });
         playByPlay.addActionListener(s -> {
-            Rep3();
+            Recorder.PlaybPlay(this);
             removeKeyListener(menuKeyListener);
         });
 
@@ -441,20 +455,35 @@ public class ChipVsChap extends JFrame{
         pack();
     }
 
+    private void winner(){
+        var start = new JLabel("WINNER");
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        closePhase.run();
+        closePhase=()->{
+          remove(panel);
+        };
+        panel.add(start);
+        add(panel);
+        setPreferredSize(new Dimension(800,400));    
+        pack();
+    }
+
 
     /**
      * Setting to level one.
      */
 
-    private void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
-    private void levelTwo(){setLevel(Phase.level2(()->menu(), ()->levelOne()),2,180,10); }
+    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
+    public void levelTwo(){setLevel(Phase.level2(()->menu(), ()->{timer.stop(); winner();}),2,180,3); }
+    public void levelPersistency(){setLevel(Phase.levelSave(()->menu(), ()->{timer.stop(); winner();}),2,180,Persistency.getNumChips("levelPers")); }
 
 
     /**
      * Set level function to change between levels.
      * @param p
      */
-    private void setLevel(Phase p, int level,int timer,int numChips){
+    public void setLevel(Phase p, int level,int timer,int numChips){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
@@ -472,14 +501,16 @@ public class ChipVsChap extends JFrame{
     private void run(Phase lvl, int levelNum,int time){
         //Replay
         totalticks=0;
-       
+        s.stop();
+        s.setFile("src/sounds/game.wav");
+        s.play();
         Replay r = new Replay(new LinkedList<GameAction>(),levelNum, "");
 
         //Set model to correct model.
         model = lvl.model();
 
         //Graphical Interface Initialization.
-        var level = Board.getLevelLabel(levelNum);
+        level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
@@ -493,6 +524,12 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         JDialog dialog = Board.getPause();
 
+        //Close Phase
+        closePhase=()->{
+            timer.stop();
+            remove(panel);
+            remove(level);
+        };
         //KeyListener for the chap movement and game functions.
        KeyListener controls = new Keys(){
             @Override
@@ -532,6 +569,9 @@ public class ChipVsChap extends JFrame{
             remove(panel);
             remove(level);
             removeKeyListener(controls);
+            backgroundImage.remove(level);
+            backgroundImage.remove(chips);
+
         };
 
         //Add components to respective panels and labels.
@@ -542,126 +582,6 @@ public class ChipVsChap extends JFrame{
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
         backgroundImage.add(inventory);
-    }   
-
-
-    public void Rep2(){
-    Replay rep = Replay.readXML();
-    var replay = new Checkbox("2x Replay Speed");
-    replay.setBounds(215, 5, 180, 20);
-    replay.addItemListener(new ItemListener() {    
-        public void itemStateChanged(ItemEvent e) {                 
-            if(e.getStateChange()==1){
-                timer.setDelay(25);   
-        }    
-        else{
-            timer.setDelay(50);
-        }
-         }
-     });    
-    this.add(replay);
-    if(rep.getLevel() == 1){
-        levelOne(); 
-    }else{
-        levelTwo();
-    }
-    removeKeyListener(Replistner);
-     ActionListener newone = e -> {
-        if(rep.getMoves().isEmpty()){
-            System.out.println("empty");
-            dispose();
-            System.exit(ABORT);
-        }
-        GameAction r = rep.getMoves().peek();
-
-        if(r.getTime() == totalticks){
-            r = rep.getMoves().remove();
-        try{
-        if(r.getName().equals("Up")){             
-            action(null,model,"Up",()->model.chap().up());
-        }else if(r.getName().equals("Down")){
-            action(null,model,"Down",()->model.chap().down());
-        }else if(r.getName().equals("Left")){
-            action(null,model,"Left",()->model.chap().left());
-        }else if(r.getName().equals("Right")){
-            action(null,model,"Right",()->model.chap().right());
-        }
-    }
-    catch(Error b){
-    }
     }  
-    };
-    timer.addActionListener(newone);
-
-    }
-
-    public void Rep3() {
-        Replay rep = Replay.readXML();
-        if(rep.getLevel() == 1){
-            levelOne(); 
-        }else{
-            levelTwo();
-        }
-        removeKeyListener(Replistner);
-        timer.stop();
-        Mapprint.printMap(model, background.getGraphics());
     
-        KeyListener forward = new Keys(){
-    
-            public void keyPressed(KeyEvent e) {
-    
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-    
-                    if(timePassed % 1000 == 0){
-                        if(count == 0){
-                            timer.stop();
-                            timerLabel.setText("No time");
-                        }else{
-                            int minutes = count /60;
-                            int seconds = count% 60;
-                            timerLabel.setText(String.format("%d:%02d", minutes,seconds) );
-                            count --;
-                        }
-                    }
-                    timePassed += delay;
-                    model.tick();
-                    totalticks++;
-                    Mapprint.printMap(model, background.getGraphics());
-                    printInventory.printIn(model,backgroundImage.getGraphics());
-                    chips.setText("" + (numOfChips - model.chap().heldTreasure()));
-    
-    
-                    if(rep.getMoves().isEmpty()){
-                        System.out.println("empty");
-                        dispose();
-                        System.exit(ABORT);
-                    }
-                    GameAction r = rep.getMoves().peek();
-            
-                    if(r.getTime() == totalticks){
-                        r = rep.getMoves().remove();
-                    try{
-                    if(r.getName().equals("Up")){             
-                        action(null,model,"Up",()->model.chap().up());
-                    }else if(r.getName().equals("Down")){
-                        action(null,model,"Down",()->model.chap().down());
-                    }else if(r.getName().equals("Left")){
-                        action(null,model,"Left",()->model.chap().left());
-                    }else if(r.getName().equals("Right")){
-                        action(null,model,"Right",()->model.chap().right());
-                    }
-                }
-                catch(Error b){
-                }
-                }  
-                }
-            }
-    
-        };
-        addKeyListener(forward);
-    
-        }
-
-    
-   
 }

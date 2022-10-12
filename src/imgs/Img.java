@@ -26,6 +26,10 @@ public enum Img{
     MarcoR,
     MarcoL,
     MarcoBack,
+    craigfront,
+    craigL,
+    craigR,
+    craigback,
     white,
     HomeScreen;
     

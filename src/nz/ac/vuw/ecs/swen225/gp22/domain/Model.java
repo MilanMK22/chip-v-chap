@@ -20,8 +20,9 @@ public class Model {
     public Chap chap(){ return this.chap; }
     public Maze maze(){ return this.maze; }
     public List<Entity> entities(){ return this.entities; }
-    public void win(){System.out.println("Testing");}
+    public void win(){}
     public void loss(){}
+    public boolean onInfo(){ return maze.getTile(chap.getLocation()).getState() instanceof InfoTile; }
 
     public Maze getMaze() { return maze; }
 

@@ -60,7 +60,7 @@ public class PersistencyTest {
     @Test
     public void test8() {
         Tile[][] t = Persistency.readXML("level2");
-        assertEquals(24, t.length);
+        assertEquals(20, t.length);
         assertEquals(20, t[0].length);
         for (int i = 0; i < t.length; i++) {
             for (int j = 0; j < t[0].length; j++) {
@@ -98,5 +98,10 @@ public class PersistencyTest {
         assert(Persistency.getSavedInventory()[0] != null);
         assert(Persistency.getSavedInventory()[1] != null);
         assert(Persistency.getSavedInventory()[2] == null);
+    }
+    @Test
+    public void test13() {
+        assertEquals(5, Persistency.getNumChips("level1"));
+        assertEquals(3, Persistency.getNumChips("level2"));
     }
 }
