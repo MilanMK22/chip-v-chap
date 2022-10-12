@@ -8,23 +8,44 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+//import font library
+import java.awt.Font;
+import imgs.Img;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
+import nz.ac.vuw.ecs.swen225.gp22.font.*;
 
 
 //print a textbox on the screen with a message printable 
-class textbox{
+public class Textbox{
+ 
 
 
-public JLabel printTextBox(String printable, Time t, Graphics g, int x, int y){  
+
+public static void printTextBox(String printable, int charIndex,  Graphics g) {  
     //print the textbox
-    ImageIcon textbox = new ImageIcon("src/imgs/textbox.png");
+  
+    char characters[] =  printable.toCharArray();
+    String combinedtxt ="";
+    if(charIndex < characters.length){
+        String s = String.valueOf(characters[charIndex]);
+        combinedtxt = combinedtxt + s;
+    }
+ 
+
+   
+    ImageIcon textbox = new ImageIcon(Img.textbox.image);
     Image textboxImage = textbox.getImage();
-    g.drawImage(textboxImage, 0, 0, 800, 100, null);
+    g.drawImage(textboxImage, 67, 345, 380, 75, null);
     
     //print the message
-    JLabel message = new JLabel(printable);
+    //Font textfont = createFont.font();
+    JLabel message = new JLabel(combinedtxt);
+    message.setFont(new Font("Arial", Font.PLAIN, 20));
     message.setForeground(Color.WHITE);
-    message.setBounds(x, y, 800, 100);
-    return message;
+    message.setBounds(67, 350, 800, 100);
+    
     
 
 
