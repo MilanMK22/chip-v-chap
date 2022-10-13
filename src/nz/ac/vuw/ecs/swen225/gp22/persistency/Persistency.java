@@ -48,7 +48,7 @@ public class Persistency {
         int hei = 0;
         int tres;
         String board = null;
-        String moves;
+        String moves = "";
         String id;
         String desc;
         String levelPath;
@@ -108,7 +108,7 @@ public class Persistency {
             ioe.printStackTrace();
         }
         // returns board string converted to 2D array
-        return ArrayMaker.makeArray(board, wid, hei, level);
+        return ArrayMaker.makeArray(board, wid, hei, moves);
     }
 
     public static void createPXML(Tile[][] tiles) {
@@ -122,6 +122,7 @@ public class Persistency {
      */
     public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
         String board = strFromArray(tiles);
+        String moves = getCurrentMoves(tiles);
         try {
             // root element
             Element levelElement = new Element("level");
@@ -134,6 +135,8 @@ public class Persistency {
             Element boardElement = new Element("board").setText(board);
             // description element
             Element descElement = new Element("desc").setText("saved progress");
+            // moves element
+            Element movesElement = new Element("moves").setText(moves);
             // id element
             Element idElement = new Element("id").setText("levelSave");
             // inventory element
@@ -150,6 +153,7 @@ public class Persistency {
             doc.getRootElement().addContent(heightElement);
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
+            doc.getRootElement().addContent(movesElement);
             doc.getRootElement().addContent(idElement);
             doc.getRootElement().addContent(invElement);
             XMLOutputter xmlOutput = new XMLOutputter();
@@ -177,6 +181,25 @@ public class Persistency {
             }
         }
         return String.valueOf(boardChars);
+    }
+
+    /**
+     * Returns the moves (if present) of the monsters in the current tile set
+     * 
+     * @param tiles tile set
+     */
+    public static String getCurrentMoves(Tile[][] tiles){
+        for(int i = 0; i < tiles.length ; i++){
+            for(int j = 0; j < tiles[0].length; j++){
+                Tile t = tiles[i][j];
+                if(t.getChar()=='M'){
+                    Monster m = (Monster) t.getEntity();
+                    return m.movesToString();
+                }
+            }
+
+        }
+        return "";
     }
 
     /**
@@ -224,6 +247,11 @@ public class Persistency {
         return keys;
     }
 
+    /**
+     * Returns the number of treasures remaining  in a level
+     * 
+     * @param level 
+     */
     public static int getNumChips(String level){
         try {
             File inputFile = new File("levels/" + level + ".xml");
@@ -248,6 +276,8 @@ public class Persistency {
 
         return 1;
     }
+
+    
 
     public static String getMoves(String level){
         try {
