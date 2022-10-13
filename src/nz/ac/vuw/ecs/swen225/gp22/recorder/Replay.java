@@ -114,6 +114,9 @@ public class Replay {
             //root element
 
             String name = JOptionPane.showInputDialog(null, "Enter Replay Name");
+            if(name == null){
+                return;
+            }
             Name = Name + name + "--";
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yy--HH-mm-ss");
             LocalDateTime now = LocalDateTime.now();

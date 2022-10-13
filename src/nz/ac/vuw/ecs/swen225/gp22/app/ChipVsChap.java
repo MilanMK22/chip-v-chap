@@ -1,8 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.awt.*;
 
-import javax.print.attribute.standard.NumberOfDocuments;
-import javax.swing.Action;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,15 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import org.apache.bcel.generic.LNEG;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
@@ -28,7 +24,6 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Textbox;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
@@ -37,18 +32,17 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Stack;
-import java.util.stream.Stream;
+
 import java.awt.event.*;
 import java.io.IOException;
 /*
  * Game components will run from this class.
  */
 public class ChipVsChap extends JFrame{
-    public Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    public int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
+    public static Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    public static int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
+    public static int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
+    public static Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
@@ -60,7 +54,11 @@ public class ChipVsChap extends JFrame{
     private static final int HEIGHT = 450;
     private static final int WIDTH = 800;
     public static JLabel info;
-    public static String infoString = "Find the keys to collect the coins and escape!";
+    public static String infoString1 = "Find the keys to collect the coins and escape!";
+    public static String infoString2 = "Beware of the monsters!";
+    public static JLabel infoTextLabel = Board.getInfoText(infoString1);
+
+
 
 
     // by ilya 
@@ -73,7 +71,7 @@ public class ChipVsChap extends JFrame{
    
     public Timer timer;
     public int count = 0;
-    public int delay = 50;
+    public int delay;
     public int timePassed = 0;
     public int totalticks=0;
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
@@ -87,7 +85,6 @@ public class ChipVsChap extends JFrame{
     /**
      * Updates the keybindings.
      */
-    private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
     public void setBackGround(){
         background.setOpaque(true);
@@ -176,38 +173,6 @@ public class ChipVsChap extends JFrame{
 
 
 
-    /**
-     * Returns the character relative to the character.
-     * @param e
-     * @return
-     */
-    public Character getArrow(KeyEvent e){
-        switch(e.getKeyCode()){
-            case KeyEvent.VK_UP:
-                return '\u2191';
-            case KeyEvent.VK_DOWN:
-                return '\u2193';
-            case KeyEvent.VK_LEFT:
-                return '\u2190';
-            case KeyEvent.VK_RIGHT:
-                return '\u2192';
-        }
-       return e.getKeyChar();
-    }  
-    public int getCode(Character c){
-        switch(c){
-            case '\u2191':
-                return KeyEvent.VK_UP;
-            case '\u2193':
-                return KeyEvent.VK_DOWN;
-            case '\u2190':
-                return KeyEvent.VK_LEFT;
-            case '\u2192':
-                return KeyEvent.VK_RIGHT;
-        }
-       return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
-    }  
-
 
     /**
      * Starts the timer for the game level.
@@ -243,6 +208,9 @@ public class ChipVsChap extends JFrame{
             
 
         };
+        if(delay != 25){
+            delay = 50;
+        }
         
         timer = new Timer(delay, action);
         if(ReplayListner != null){
@@ -262,45 +230,7 @@ public class ChipVsChap extends JFrame{
      * @return
      */
 
-    public ActionListener reMap(int code, JButton component){
-        return (e) -> {
-                component.setText("Waiting for input");
-                component.addKeyListener(new Keys(){
-                    public void keyPressed(KeyEvent e) {
-                            if(!Arrays.stream(characterControls).anyMatch(c->getArrow(e).equals(c)) && Arrays.stream(arrows).anyMatch(k->k==e.getExtendedKeyCode())){
-                                switch(e.getKeyCode()){
-                                    case KeyEvent.VK_UP:
-                                        characterControls[code] = '\u2191';
-                                        break;
-                                    case KeyEvent.VK_DOWN:
-                                        characterControls[code] = '\u2193';
-                                        break;
-                                    case KeyEvent.VK_LEFT:
-                                        characterControls[code] = '\u2190';
-                                        break;
-                                    case KeyEvent.VK_RIGHT:
-                                        characterControls[code] = '\u2192';
-                                        break;
-                                }
-                                component.setText(""+ characterControls[code]);
-                                component.removeKeyListener(this);
-                            }
-                            else if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar())) && Arrays.stream(characters).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
-                                characterControls[code] = Character.toUpperCase(e.getKeyChar());
-                                component.setText(""+ characterControls[code]);
-                                component.removeKeyListener(this);   
-                            }  
-                            else{
-                            JOptionPane.showMessageDialog(null, "Key is Invalid");
-                            component.setText(""+characterControls[code]);
-                            component.removeKeyListener(this);
-                            }
-                        updateKeys();
-                    }
-                });
-            };
-        };
-
+   
     public Runnable closePhase = () -> {};
 
     public ChipVsChap(){
@@ -354,10 +284,10 @@ public class ChipVsChap extends JFrame{
         frame.add(rightLabel);
         frame.add(right);
 
-        up.addActionListener(reMap(0,up));
-        down.addActionListener(reMap(1,down));
-        left.addActionListener(reMap(2,left));
-        right.addActionListener(reMap(3,right));
+        up.addActionListener(KeyBindHelper.reMap(0,up));
+        down.addActionListener(KeyBindHelper.reMap(1,down));
+        left.addActionListener(KeyBindHelper.reMap(2,left));
+        right.addActionListener(KeyBindHelper.reMap(3,right));
 
         menu.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -475,11 +405,23 @@ public class ChipVsChap extends JFrame{
         pack();
     }
 
+    
+
     private void winner(){
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
         JButton saveReplay = new JButton("Save Replay to Menu");
+
+        ActionListener listener = new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+
+            }
+        };
+        Timer winTimer = new Timer(100, listener);
+        winTimer.setRepeats(false);
+        winTimer.start();
+
 
         restart.setBounds(315, 235, 170, 70);
         panel.setLayout(new FlowLayout());
@@ -493,9 +435,8 @@ public class ChipVsChap extends JFrame{
 
         add(panel);
 
-        saveReplay.addActionListener(s->{
-            replay.saveReplay();
-        });
+        saveReplay.addActionListener(s->{replay.saveReplay();});
+        restart.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
     }
@@ -505,22 +446,22 @@ public class ChipVsChap extends JFrame{
      * Setting to level one.
      */
 
-    public void levelOne(){setLevel(Phase.level1(()->{levelTwo(); infoString = "Beware of monsters!!";}, ()->menu()), 1,120,5); }
-    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3); }
-    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,180,Persistency.getNumChips("levelPers")); }
+    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5, infoString1); }
+    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3, infoString2); }
+    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,180,Persistency.getNumChips("levelPers"),infoString1); }
 
 
     /**
      * Set level function to change between levels.
      * @param p
      */
-    public void setLevel(Phase p, int level,int timer,int numChips){
+    public void setLevel(Phase p, int level,int timer,int numChips,String infoText){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         numOfChips = numChips;
         levelNum = level;
-        run(p,levelNum,timer);
+        run(p,levelNum,timer,infoText);
         pack();                   
       }
     
@@ -529,7 +470,7 @@ public class ChipVsChap extends JFrame{
      * Testing level that is being used to display the game and test the game is functioning as it should.
      */
 
-    private void run(Phase lvl, int levelNum,int time){
+    private void run(Phase lvl, int levelNum,int time, String infoText){
         //Replay
         totalticks=0;
         s.stop();
@@ -545,25 +486,16 @@ public class ChipVsChap extends JFrame{
 
 
         //Graphical Interface Initialization.
-        info = new JLabel();
+        info = Board.getInfo();
+        infoTextLabel = Board.getInfoText(infoText);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
+        info.add(infoTextLabel);
         setBackGround();
        
         //Initalize Timer.
-        info.setBounds(55, 350,400, 60);
-        info.setOpaque(true);
-        info.setVisible(false);
-        Image img = new ImageIcon(Img.textbox.image).getImage().getScaledInstance(info.getWidth(), info.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon textbox = new ImageIcon(img);
-        JLabel infoText = new JLabel(infoString,SwingConstants.CENTER);
-
-        infoText.setBounds(0,20,400,20);
-        info.add(infoText);
-
-        info.setIcon(textbox);
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
@@ -581,10 +513,10 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
@@ -622,7 +554,9 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(controls);
             backgroundImage.remove(level);
             backgroundImage.remove(chips);
-            info.remove(infoText);
+            info.remove(infoTextLabel);
+            backgroundImage.remove(info);
+
         };
 
         //Add components to respective panels and labels.

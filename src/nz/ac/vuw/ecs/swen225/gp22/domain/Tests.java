@@ -69,10 +69,20 @@ public class Tests {
     }
 
     @Test
-    public void testWins(){
+    public void testWins1(){
         Phase p = Phase.level1(()->assertTrue(true), ()->assertTrue(false));
         Model m = p.model();
         completeLevel1(m.chap());
+        m.tick();
+    }
+
+    @Test
+    public void testWins2(){
+        Phase p = Phase.level2(()->assertTrue(true), ()->assertTrue(false));
+        Model m = p.model();
+        Point exit = m.maze().stream().filter(t->t.isExit()).map(t->t.getLocation()).findFirst().get();
+        m.chap().move(exit);
+        m.tick();
     }
 
 
@@ -154,4 +164,5 @@ public class Tests {
         c.left();c.left();c.left();c.left();
         c.up();c.up();
     }
+    
 }
