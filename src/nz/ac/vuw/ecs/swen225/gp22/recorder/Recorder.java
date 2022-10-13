@@ -145,8 +145,12 @@ public class Recorder {
         Replay rep = Replay.readXML();
         if(rep.getLevel() == 1){
             cur.levelOne(); 
-        }else{
+        }
+        else if(rep.getLevel() == 2){
             cur.levelTwo();
+        }
+        else{
+            cur.levelPersistency();
         }
         cur.removeKeyListener(cur.Replistner);
         cur.timer.stop();
