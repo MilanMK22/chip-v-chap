@@ -19,6 +19,8 @@ public enum Img{
     blue_key,
     blue_lock,
     info,
+    savebutton,
+    HomeButton,
     fullmap,
     exitlock,
     coin,
