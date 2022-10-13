@@ -21,6 +21,15 @@ Arrow keys: control your character (re-bindable in GUI)
 
 Control + S: save the game
 
+## Replay Functions
+To save a replay you must complete a game, once completed there will be a button to save replay.
+To load a replay from the main menu either select "Replay" button for automatic replay or Play by Play
+for a Play by play Replay. For a play by play replay the right arrow key will advance the game 1/20th of a second so holding down the button will play through the game at a good speed, but to go slowley simply tap the right arrow key button.
+(the play by play may look as though its not moving as its only advancing 1/20 of a second but just keep tapping and you will be away !). In a automatic Replay you will have a check box at the top to increase replay speed to 2x and toggle it off to go back to normal speed.
+
+Games can only be saved when you have completed a game.
+
+
 ## Team Members
 
 | **Module**  	| **Member Name** 	| **GitLab User** 	|
