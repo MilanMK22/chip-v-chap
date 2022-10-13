@@ -213,7 +213,7 @@ public class ChipVsChap extends JFrame{
 
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu();
         setVisible(true);
         addWindowListener(new WindowAdapter(){
@@ -365,7 +365,7 @@ public class ChipVsChap extends JFrame{
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
-        JButton saveReplay = new JButton("Save Replay to Menu");
+        JButton saveReplay = new JButton("Save Replay");
 
         ActionListener listener = new ActionListener(){
             public void actionPerformed(ActionEvent event){
@@ -453,7 +453,6 @@ public class ChipVsChap extends JFrame{
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
-
         //Pause Dialog Box.
         JDialog dialog = Board.getPause();
 
@@ -471,12 +470,16 @@ public class ChipVsChap extends JFrame{
                 if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
                 if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
                 if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
-                if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
+                if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
+                    dispose();
+                    System.exit(808);
+                }   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
                     replay.saveReplay();
                     replay = null;
                     dispose();
+                    System.exit(808);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);

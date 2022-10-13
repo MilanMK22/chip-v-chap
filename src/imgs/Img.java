@@ -26,6 +26,7 @@ public enum Img{
     coin,
     Marco, 
     MarcoR,
+    win,
     MarcoL,
     MarcoBack,
     craigfront,
