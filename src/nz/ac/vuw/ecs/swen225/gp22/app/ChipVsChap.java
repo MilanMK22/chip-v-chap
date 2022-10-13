@@ -236,7 +236,7 @@ public class ChipVsChap extends JFrame{
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        winner();//CHANGE THIS
+        menu();//CHANGE THIS
         setVisible(true);
         addWindowListener(new WindowAdapter(){
           public void windowClosed(WindowEvent e){closePhase.run();}
