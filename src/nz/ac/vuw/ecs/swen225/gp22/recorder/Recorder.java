@@ -48,7 +48,7 @@ public class Recorder {
      * @param replaySpeed if this check box is present in the replay we want to remove it
      * */
     public static void quitReplay(ChipVsChap cur, Checkbox replaySpeed){
-        ChipVsChap.timerLabel.setText(String.format("%d:%02d", 2,0) );
+        ChipVsChap.timerLabel.setText(String.format("%d:%02d", 1,0) );
         if(replaySpeed != null ){
             cur.remove(replaySpeed);
         }
@@ -100,7 +100,7 @@ public class Recorder {
 
     cur.removeKeyListener(cur.Replistner);
      ActionListener newone = e -> {
-        if(rep.getMoves().isEmpty()){
+        if(rep.getMoves().size() == 1){
             quitReplay(cur, replaySpeed);
             return;
         }
@@ -181,7 +181,7 @@ public class Recorder {
                     ChipVsChap.chips.setText("" + (cur.numOfChips - cur.model.chap().heldTreasure()));
     
     
-                    if(rep.getMoves().isEmpty()){
+                    if(rep.getMoves().size() == 1){
                         quitReplay(cur, null);
                         cur.removeKeyListener(this);
                         return;

@@ -171,7 +171,12 @@ public class ChipVsChap extends JFrame{
                 if(count == 0){
                     timer.stop();
                     timeOut.setVisible(true);
-                    m.loss();
+                    timeOut.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowDeactivated(WindowEvent e) {
+                            m.loss();
+                        }
+                    });
                 }else{
                     int minutes = count /60;
                     int seconds = count% 60;
@@ -179,7 +184,7 @@ public class ChipVsChap extends JFrame{
                     count --;
                 }
             }
-            timePassed += delay;
+            timePassed += 50;
             m.tick();
             totalticks++;
             if(totalticks%2==0 && background.getGraphics()!= null){
