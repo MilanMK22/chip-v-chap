@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+
+/**
+ * This class tests a replay saved to xml file 
+ */
 public class ReadXMLFileTest {
   
     public static void main(String argv[])   

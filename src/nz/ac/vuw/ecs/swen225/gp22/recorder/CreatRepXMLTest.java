@@ -1,9 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import java.util.LinkedList;
-import java.util.Stack;
+/**
+ * Just a test to make sure a replay can be turned into an XML
+ */
 
-// Just a test to make sure a replay can be turned into an XML
 public class CreatRepXMLTest {
 
 

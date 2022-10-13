@@ -7,6 +7,10 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import java.awt.event.*;
 
 
+/**
+ * This class has the functions for a Auto replay 
+ * and A play by play replay
+ */
 public class Recorder {
 
     public static long prev;
@@ -69,7 +73,7 @@ public class Recorder {
      */
     public static void Auto(ChipVsChap cur){
         
-        Replay rep = Replay.readXML();
+    Replay rep = Replay.readXML();
     var replaySpeed = new Checkbox("2x Replay Speed");
     replaySpeed.setBounds(215, 5, 180, 20);
     replaySpeed.addItemListener(new ItemListener() {    
