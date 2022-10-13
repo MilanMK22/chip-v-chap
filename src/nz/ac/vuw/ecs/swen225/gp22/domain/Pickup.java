@@ -61,10 +61,40 @@ public class Pickup{
      * The Treasure Class is a marker for Treasure (Coins) that Chap can interact with to pick up.
      */
     class Treasure implements Entity{
+        ANIM animation;
+        int tickCount = 0;
+        
+        enum ANIM{
+            ONE(Img.coin.image),
+            TWO(Img.coin1L.image),
+            THREE(Img.coin2L.image),
+            FOUR(Img.coinV.image),
+            FIVE(Img.coin2R.image),
+            SIX(Img.coin1R.image);
+
+            public final BufferedImage img;
+
+            ANIM(BufferedImage img){
+                this.img = img;
+            }
+            public BufferedImage getImage(){
+                return this.img;
+            }
+        }
+        
+        @Override
+        public void tick(Maze m){
+            tickCount ++;
+            if(tickCount >=2){
+                tickCount = 0;
+                animation = ANIM.values()[(animation.ordinal()+1)%6];
+            }
+        }
 
         Point location;
 
         Treasure(Point loc){
+            this.animation = ANIM.ONE;
             this.location = loc;
         }
         public boolean isKey(){ return false; }
@@ -72,7 +102,7 @@ public class Pickup{
         public boolean isTreasure() { return true; }
         public boolean isPickup() { return true; }
         public Point getLocation() { return this.location;}
-        public BufferedImage getImage(){ return Img.coin.image; }
+        public BufferedImage getImage(){ return animation.getImage(); }
         public char toChar(){ return 't'; }
     }
 
