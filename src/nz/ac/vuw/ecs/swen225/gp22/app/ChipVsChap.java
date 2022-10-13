@@ -344,6 +344,10 @@ public class ChipVsChap extends JFrame{
                     // opens new game at level 2
                     levelTwo();
                     removeKeyListener(this);
+                }    
+                if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
+                    dispose();
+                    System.exit(ABORT);
                 }        
             }
         };
@@ -462,20 +466,6 @@ public class ChipVsChap extends JFrame{
         JButton saveButton = new JButton("Save");
         JButton quitButton = new JButton("Quit");
 
-        pauseButton.addActionListener(e->{
-            pause.setVisible(true);
-            timer.stop();
-            
-        });
-        saveButton.addActionListener(e->{
-            Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
-            menu();
-        });
-        quitButton.addActionListener(e->{
-            dispose();
-            System.exit(808);
-        });
-
         navBar.add(pauseButton);
         navBar.add(saveButton);
         navBar.add(quitButton);
@@ -514,12 +504,12 @@ public class ChipVsChap extends JFrame{
                 if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
                     dispose();
-                    System.exit(808);
+                    System.exit(ABORT);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
                     dispose();
-                    System.exit(808);
+                    System.exit(ABORT);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
@@ -528,6 +518,21 @@ public class ChipVsChap extends JFrame{
                 } 
             }
         };
+
+        pauseButton.addActionListener(e->{
+            removeKeyListener(controls);
+            pause.setVisible(true);
+            timer.stop();
+        });
+        saveButton.addActionListener(e->{
+            Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
+            menu();
+        });
+        quitButton.addActionListener(e->{
+            dispose();
+            System.exit(ABORT);
+        });
+
         if(ReplayListner == null && PlaybPlayListner == null){
         addKeyListener(controls);
         Replistner = controls;
