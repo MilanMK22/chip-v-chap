@@ -48,7 +48,7 @@ public class Recorder {
      * @param replaySpeed if this check box is present in the replay we want to remove it
      * */
     public static void quitReplay(ChipVsChap cur, Checkbox replaySpeed){
-        ChipVsChap.timerLabel.setText(String.format("%d:%02d", 2,0) );
+        ChipVsChap.timerLabel.setText(String.format("%d:%02d", 1,0) );
         if(replaySpeed != null ){
             cur.remove(replaySpeed);
         }
