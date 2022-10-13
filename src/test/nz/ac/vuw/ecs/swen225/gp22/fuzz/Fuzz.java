@@ -39,42 +39,39 @@ public class Fuzz{
     public void levelTest(int level){
         try{
             SwingUtilities.invokeAndWait(() -> {
-                ChipVsChap chipvchap = new ChipVsChap();
-                chipvchap.fuzzModel(level);                                       // setting the model to be the level being tested on
-                double up = 0.25, down = 0.25, left = 0.25;                     // initai
-                int upmove = 0, downmove = 0, rightmove = 0, leftmove = 0;
-                long time = 0;
                 int x = 0;                                                        // for counting the number of moves done
+                long time = 0;                                                    // for counting the time
+                ChipVsChap chipvchap = new ChipVsChap();                          // new chipvchap instance
+                double up = 0.25, down = 0.25, left = 0.25;                       // initial 
+                int upmove = 0, downmove = 0, rightmove = 0, leftmove = 0;        // for counting the moves performed in the test 
                 long startTime = System.currentTimeMillis();                      // setting the start time
+                chipvchap.fuzzModel(level);                                       // setting the model to be the level being tested on
                 chipvchap.unvisitedTiles();
                 
                 while (true) {
                     x++;
-                    chipvchap.tick();
-                    double randomNum = Math.random();
-                    long milliseconds = System.currentTimeMillis();
-                    time = (milliseconds - startTime + 1000)/1000;
+                    chipvchap.tick();                                             // advancing the game by 1 tick 
+                    double randomNum = Math.random();                             // generating a random number between 0 and 1
+                    time = (System.currentTimeMillis() - startTime + 1000)/1000;  // setting the time 
 
-                    if(randomNum < up) { chipvchap.up(); probability("up"); upmove++;}
-                    else if(randomNum < down + up) { chipvchap.down(); probability("down"); downmove++;}
-                    else if(randomNum < left + down + up) { chipvchap.left(); probability("left"); leftmove++;}
-                    else { chipvchap.right(); probability("right"); rightmove++;}
+                    // doing the moving based on the random number generated
+                    if(randomNum < up) { chipvchap.up(); probability("Up"); upmove++;}
+                    else if(randomNum < down + up) { chipvchap.down(); probability("Down"); downmove++;}
+                    else if(randomNum < left + down + up) { chipvchap.left(); probability("Left"); leftmove++;}
+                    else { chipvchap.right(); probability("Right"); rightmove++;}
                     chipvchap.setVisitedTiles();
-
-                    System.out.println("Test Runtime: " + time + "s");
                    
-                    if(System.currentTimeMillis() >= startTime + 1000) { 
-                        System.out.println("============ TEST COMPLETE! ============"); 
-                        System.out.println("| Number of Moves Done: " + x + "            |");
-                        System.out.println("| Level Has Been Played " + chipvchap.modelCount + " Times        |");
-                        System.out.println("| Unique Tiles Visited In This Run: " + chipvchap.listOfVisitedTiles.stream().map(i -> i.getLocation()).distinct().toList().size() + " |");
-                        System.out.println("| Unvisited Tiles In This Run: " + chipvchap.unvisitedTiles()+ "      |");
-                        System.out.println("| Test Runtime: " + time + "s                     |");
-                        System.out.println("========================================"); 
-                        // System.out.println(chipvchap.chapToString()); 
-                        System.out.println("Up Move: " + upmove+ " | Down Move: " + downmove + " | Left Move: " + leftmove + " | Right Move: " + rightmove);
-
-                        //System.out.println("============ TEST COMPLETE! ============");
+                    if(System.currentTimeMillis() >= startTime + 60000) { 
+                        System.out.println(
+                              "============ TEST COMPLETE! ============\n"
+                            + "| Number of Moves Done: " + x + "            |\n"
+                            + "| Level Has Been Played " + chipvchap.modelCount + " Times        |\n"
+                            + "| Unique Tiles Visited In This Run: " + chipvchap.listOfVisitedTiles.stream().map(i -> i.getLocation()).distinct().toList().size() + " |\n"
+                            + "| Unvisited Tiles In This Run: " + chipvchap.unvisitedTiles()+ "      |\n"
+                            + "| Test Runtime: " + time + "s                     |\n"
+                            + "============ TEST COMPLETE! ============\n"
+                            + "Up Move: " + upmove+ " | Down Move: " + downmove + " | Left Move: " + leftmove + " | Right Move: " + rightmove
+                        );
                         return; 
                     }
                 }
@@ -84,6 +81,7 @@ public class Fuzz{
 
     /**
      * method to calculate probabilities of a random move
+     * 
      * @param move the move being done 
      */
     public void probability(String move){
