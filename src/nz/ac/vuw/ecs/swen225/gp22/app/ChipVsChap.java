@@ -24,33 +24,42 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
+import sounds.sounds.SOUND;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
-
 import java.awt.event.*;
 import java.io.IOException;
-/*
- * Game components will run from this class.
+
+/**
+ * Represents the ChipVsChap game and is constructed in the main class.
+ * This class is in charge of running the game by calling upon every other component.
+ * Displays buttons, game and labels and contains keyListeners as controls. 
+ * Timer is stored here.
  */
 public class ChipVsChap extends JFrame{
     public Runnable closePhase = () -> {};
-    public  JLabel background = new JLabel();
-    public JLabel backgroundImage = Board.getBackgroundImage();
-    public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
+    public JLabel background = new JLabel(); // Background in which the game runs on.
+    public JLabel backgroundImage = Board.getBackgroundImage(); // Background image of the game.
+    public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model(); //contains the objects associated with the game.
     public Model fuzzModel;
+
+    //Number of chips and level number and their respective label objects.
     public int numOfChips = 5;
     public int levelNum = 1;
     public static JLabel chips;
     public static JLabel level;
-    private static final int HEIGHT = 450;
-    private static final int WIDTH = 800;
+
+
+    private static final int HEIGHT = 450; // Height of the game window.
+    private static final int WIDTH = 800; // Width of the game window.
+    //Information box variables.
     public static JLabel info;
     public static String infoString1 = "Find the keys to collect the coins and escape!";
     public static String infoString2 = "Beware of the monsters!";
     public static JLabel infoTextLabel = Board.getInfoText(infoString1);
+    //JDialog box variables.
     JDialog pause = Board.getPause();
     JDialog timeOut = Board.getTimeout();
 
@@ -64,30 +73,38 @@ public class ChipVsChap extends JFrame{
     //jack
     public int txtIndex = 0;
    
+    //Timer variables.
     public Timer timer;
     public int count = 0;
     public int delay;
     public int timePassed = 0;
     public int totalticks=0;
+    public static JLabel timerLabel = new JLabel();
+
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
     public ActionListener ReplayListner;
     public KeyListener PlaybPlayListner;
     public Replay replay;
 
     public sounds s = new sounds();
-    public static JLabel timerLabel = new JLabel();
     
     /**
-     * Updates the keybindings.
+     * This method sets the background to it's respective properties relative to the game window.
      */
-
     public void setBackGround(){
         background.setOpaque(true);
         background.setBounds(67, 52, 380, 280);
         background.setBackground(Color.black);
     }
 
-    public void action(Replay r, Model model, String move, Runnable direction){
+    /**
+     * This method calls upon the Runnable direction interface which contains a function that moves Chap.
+     * 
+     * @param r Replay object that stores the moves made within the game.
+     * @param move Direction in string form.
+     * @param direction Contains the movement function from domain associated with the direction.
+     */
+    public void action(Replay r, String move, Runnable direction){
         if(r != null){r.addMove(new GameAction(move, totalticks));}
         direction.run();
     }
@@ -165,8 +182,13 @@ public class ChipVsChap extends JFrame{
 
     /**
      * Starts the timer for the game level.
-     * timeDone is set in the levels method and can be set to how many seconds needed.
+     * timeDone is set in the levels method and can be set to how many seconds are needed.
+     * Timer label and chips count are changed within the actionListener in the Swing timer.
+     * 
+     * 
      * @param timeDone
+     * @param m
+     * @param chips
      */
     public void startTimer(int timeDone, Model m, JLabel chips){
         ActionListener action = (e) -> {
@@ -307,7 +329,8 @@ public class ChipVsChap extends JFrame{
 
         homeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
         JFileChooser open = new JFileChooser();
-        s.setFile("src/sounds/menu.wav");
+        SOUND.MENU.play();
+        SOUND.MENU.looping();
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -317,7 +340,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(homeScreen);
             remove(panel);
-            s.stop();
+            SOUND.MENU.stop();
         };
        
         homeScreen.add(controls);
@@ -325,7 +348,6 @@ public class ChipVsChap extends JFrame{
         homeScreen.add(start);
         homeScreen.add(load);
         homeScreen.add(replay);
-        s.play();
         add(homeScreen);
        
         this.setFocusable(true);
@@ -445,9 +467,8 @@ public class ChipVsChap extends JFrame{
     private void run(Phase lvl, int levelNum,int time, String infoText){
         //Replay
         totalticks=0;
-        s.stop();
-        s.setFile("src/sounds/game.wav");
-        s.play();
+        SOUND.GAME.play();
+        SOUND.GAME.looping();
 
         if(replay == null){
             this.addRecorder();
@@ -498,10 +519,10 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
                     dispose();
                     System.exit(ABORT);
