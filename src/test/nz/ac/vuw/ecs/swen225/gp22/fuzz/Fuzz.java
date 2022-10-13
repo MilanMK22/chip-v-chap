@@ -61,14 +61,14 @@ public class Fuzz{
                     else { chipvchap.right(); probability("Right"); rightmove++;}
                     chipvchap.setVisitedTiles();
                    
-                    if(System.currentTimeMillis() >= startTime + 60000) { 
+                    if(System.currentTimeMillis() >= startTime + 1000) { 
                         System.out.println(
                               "============ TEST COMPLETE! ============\n"
-                            + "| Number of Moves Done: " + x + "            |\n"
-                            + "| Level Has Been Played " + chipvchap.modelCount + " Times        |\n"
-                            + "| Unique Tiles Visited In This Run: " + chipvchap.listOfVisitedTiles.stream().map(i -> i.getLocation()).distinct().toList().size() + " |\n"
-                            + "| Unvisited Tiles In This Run: " + chipvchap.unvisitedTiles()+ "      |\n"
-                            + "| Test Runtime: " + time + "s                     |\n"
+                            + "| Number of Moves Done: " + x + "\n"
+                            + "| Level Has Been Played " + chipvchap.modelCount + " Times\n"
+                            + "| Unique Tiles Visited In This Run: " + chipvchap.listOfVisitedTiles.stream().map(i -> i.getLocation()).distinct().toList().size() + "\n"
+                            + "| Unvisited Tiles In This Run: " + chipvchap.unvisitedTiles()+ "\n"
+                            + "| Test Runtime: " + time + "s\n"
                             + "============ TEST COMPLETE! ============\n"
                             + "Up Move: " + upmove+ " | Down Move: " + downmove + " | Left Move: " + leftmove + " | Right Move: " + rightmove
                         );
@@ -86,10 +86,10 @@ public class Fuzz{
      */
     public void probability(String move){
         double up = 0.25, down = 0.25, left = 0.25, right = 0.25; // initial move option probabilities
-        if(move.equals("up")){ up -= 0.03; down += 0.01; left += 0.01; right += 0.01; }
-        else if(move.equals("down")){ down -= 0.03; up += 0.01; left += 0.01; right += 0.01; }
-        else if(move.equals("left")){ left -= 0.03; down += 0.01; up += 0.01; right += 0.01; }
-        else if(move.equals("right")){ right -= 0.03; left += 0.01; right += 0.01; up +=0.01; }
+        if(move.equals("Up")){ up -= 0.03; down += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("Down")){ down -= 0.03; up += 0.01; left += 0.01; right += 0.01; }
+        else if(move.equals("Left")){ left -= 0.03; down += 0.01; up += 0.01; right += 0.01; }
+        else if(move.equals("Right")){ right -= 0.03; left += 0.01; right += 0.01; up +=0.01; }
         else { throw new IllegalArgumentException("Invalid move: " + move); }
     }
 }
