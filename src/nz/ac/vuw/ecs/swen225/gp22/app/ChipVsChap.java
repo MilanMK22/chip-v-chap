@@ -184,7 +184,7 @@ public class ChipVsChap extends JFrame{
                     count --;
                 }
             }
-            timePassed += delay;
+            timePassed += 50;
             m.tick();
             totalticks++;
             if(totalticks%2==0 && background.getGraphics()!= null){
