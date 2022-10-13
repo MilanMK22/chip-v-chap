@@ -7,6 +7,8 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import java.awt.event.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * This class has the functions for a Auto replay
  * and A play by play replay
@@ -146,6 +148,8 @@ public class Recorder {
         cur.removeKeyListener(cur.Replistner);
         cur.timer.stop();
         Mapprint.printMap(cur.model, cur.background.getGraphics());
+
+        JOptionPane.showMessageDialog(null, "Hold Right Arrow key \n to step through replay", "InfoBox: " + "Information", JOptionPane.INFORMATION_MESSAGE);
 
         KeyListener forward = new Keys() {
 
