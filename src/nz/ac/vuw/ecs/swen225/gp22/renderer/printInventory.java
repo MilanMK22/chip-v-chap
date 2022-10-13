@@ -1,14 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
-
-import java.awt.Color;
-//import graphics
 import java.awt.Graphics;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 import imgs.Img;
 
 public class printInventory {
