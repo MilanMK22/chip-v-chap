@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Replay>
+  <LevelNumber>1</LevelNumber>
+  <NameAndDate>Replay--null--13-10-22--14-12-55</NameAndDate>
+  <Moves>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>20</Time>
+    </Action>
+    <Action>
+      <ActionName>Down</ActionName>
+      <Time>27</Time>
+    </Action>
+    <Action>
+      <ActionName>Left</ActionName>
+      <Time>28</Time>
+    </Action>
+    <Action>
+      <ActionName>Left</ActionName>
+      <Time>30</Time>
+    </Action>
+    <Action>
+      <ActionName>Up</ActionName>
+      <Time>38</Time>
+    </Action>
+  </Moves>
+</Replay>

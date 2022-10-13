@@ -59,6 +59,7 @@ public class ChipVsChap extends JFrame{
     public static JLabel level;
     private static final int HEIGHT = 450;
     private static final int WIDTH = 800;
+    public static JLabel info;
 
 
 
@@ -255,8 +256,9 @@ public class ChipVsChap extends JFrame{
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
             if(m.onInfo()){
-                Textbox.printTextBox(getName(), txtIndex, backgroundImage.getGraphics());
-                txtIndex++;
+                info.setVisible(true);
+            }else{
+                info.setVisible(false);
             }
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
@@ -556,7 +558,9 @@ public class ChipVsChap extends JFrame{
         //Set model to correct model.
         model = lvl.model();
 
+
         //Graphical Interface Initialization.
+        info = new JLabel("TEST", SwingConstants.CENTER);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
@@ -564,6 +568,9 @@ public class ChipVsChap extends JFrame{
         setBackGround();
        
         //Initalize Timer.
+        info.setBounds(100, 350,200, 60);
+        info.setOpaque(true);
+        info.setForeground(new Color(0,250,0,255));
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
@@ -590,6 +597,7 @@ public class ChipVsChap extends JFrame{
                     dispose();
                     replay.saveReplay();
                     replay = null;
+                    Persistency.createPXML(model.maze().getTiles(), null);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
@@ -631,6 +639,7 @@ public class ChipVsChap extends JFrame{
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
         backgroundImage.add(inventory);
+        backgroundImage.add(info);
     }  
     
 }
