@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.awt.*;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,8 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
@@ -51,6 +48,10 @@ public class ChipVsChap extends JFrame{
     public static String infoString1 = "Find the keys to collect the coins and escape!";
     public static String infoString2 = "Beware of the monsters!";
     public static JLabel infoTextLabel = Board.getInfoText(infoString1);
+    JDialog pause = Board.getPause();
+    JDialog timeOut = Board.getTimeout();
+
+
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
@@ -169,6 +170,7 @@ public class ChipVsChap extends JFrame{
             if(timePassed % 1000 == 0){
                 if(count == 0){
                     timer.stop();
+                    timeOut.setVisible(true);
                     m.loss();
                 }else{
                     int minutes = count /60;
@@ -398,8 +400,8 @@ public class ChipVsChap extends JFrame{
      * Setting to level one.
      */
 
-    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5, infoString1); }
-    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3, infoString2); }
+    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->levelOne()), 1,60,5, infoString1); }
+    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,120,3, infoString2); }
     public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),3,Persistency.getLevelTime("levelPers"),Persistency.getNumChips("levelPers"),infoString1); }
 
 
@@ -452,7 +454,7 @@ public class ChipVsChap extends JFrame{
         startTimer(time,model,chips);
 
         //Pause Dialog Box.
-        JDialog dialog = Board.getPause();
+        pause = Board.getPause();
 
         //Close Phase
         closePhase=()->{
@@ -481,7 +483,7 @@ public class ChipVsChap extends JFrame{
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
-                    dialog.setVisible(true);
+                    pause.setVisible(true);
                     timer.stop();
                 } 
             }
@@ -499,7 +501,7 @@ public class ChipVsChap extends JFrame{
                     timer.start();
             }
         };
-        dialog.addWindowListener(listener);
+        pause.addWindowListener(listener);
 
         //Close Phase
         closePhase=()->{

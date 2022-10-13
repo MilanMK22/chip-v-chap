@@ -42,6 +42,14 @@ public class Board extends JFrame {
         dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         return dialog;
     }
+    public static JDialog getTimeout(){
+        JOptionPane pane = new JOptionPane("Time Out", JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = pane.createDialog(null, "Time Out");
+        dialog.setModal(false);
+        dialog.setVisible(false);
+        dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        return dialog;
+    }
     public static JLabel getInfo(){
         JLabel info = new JLabel();
         info.setBounds(55, 350,400, 60);
