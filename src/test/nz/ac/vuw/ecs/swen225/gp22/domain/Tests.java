@@ -1,6 +1,18 @@
-package nz.ac.vuw.ecs.swen225.gp22.domain;
+package test.nz.ac.vuw.ecs.swen225.gp22.domain;
 import static org.junit.Assert.*;
+
+import java.util.stream.Collectors;
+
 import org.junit.Test;
+
+import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Monster;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.*;
 
 public class Tests {
@@ -86,6 +98,22 @@ public class Tests {
     }
 
 
+    @Test
+    public void testChar(){
+        Maze m = new Maze(buildTestMaze3());
+        String temp = m.stream().map(t-> String.valueOf(t.getChar())).collect(Collectors.joining());
+        assertEquals("CoiBYGRbygrltXM", temp);
+    }
+
+    @Test
+    public void testMonsterString(){
+        String input = "1,12,uuuuuddddd";
+        Tile t = Tile.monsterTile(null, input);
+        Monster m = (Monster) t.getEntity();
+        assertEquals(input, m.movesToString());
+    }
+
+
     /*=============================
      * UTILITY METHODS FOR TESTS *|
     =============================*/
@@ -111,7 +139,30 @@ public class Tests {
                 Tile.freeTile(new Point(4,0)),
                 Tile.freeTile(new Point(5,0)),
                 Tile.freeTile(new Point(6,0)),
-                Tile.monsterTile(new Point(7,0), "l")
+                Tile.monsterTile(new Point(7,0), "0,0,l")
+            }
+        };
+        return testMaze;
+    }
+
+    public Tile[][] buildTestMaze3(){
+        Tile[][] testMaze = new Tile[][]{
+            new Tile[]{
+                Tile.chapTile(new Point(0,0)),
+                Tile.freeTile(new Point(1,0)),
+                Tile.infoTile(new Point(2, 0)),
+                Tile.lockedDoorTile(new Point(3,0), KEYCOLOR.BLUE),
+                Tile.lockedDoorTile(new Point(4,0), KEYCOLOR.YELLOW),
+                Tile.lockedDoorTile(new Point(5,0), KEYCOLOR.GREEN),
+                Tile.lockedDoorTile(new Point(6,0), KEYCOLOR.RED),
+                Tile.keyTile(new Point(7,0), KEYCOLOR.BLUE),
+                Tile.keyTile(new Point(8,0), KEYCOLOR.YELLOW),
+                Tile.keyTile(new Point(9,0), KEYCOLOR.GREEN),
+                Tile.keyTile(new Point(10,0), KEYCOLOR.RED),
+                Tile.exitLockTile(new Point(11,0)),
+                Tile.treasureTile(new Point(12,0)),
+                Tile.exitTile(new Point(13,0)),
+                Tile.monsterTile(new Point(14,0), "0,0,l")
             }
         };
         return testMaze;

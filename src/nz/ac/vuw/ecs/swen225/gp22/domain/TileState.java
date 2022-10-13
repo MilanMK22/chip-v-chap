@@ -9,7 +9,6 @@ public interface TileState{
     default boolean isFree(){ return false; }
     default boolean isExit(){ return false; }
     default boolean hasPickup(){ return false; }
-    default boolean isDoor() { return false; }
     boolean interact(Tile t, Chap c, Maze m);
     public BufferedImage getImage();
     default public char toChar(){ return 'o';}
@@ -93,9 +92,6 @@ class LockedDoorTile implements TileState {
             }
         
     }
-
-    @Override
-    public boolean isDoor(){ return true; }
     @Override
     public BufferedImage getImage() {
         return color.lock();
