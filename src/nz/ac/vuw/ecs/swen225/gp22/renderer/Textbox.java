@@ -45,7 +45,7 @@ public static void printTextBox(String printable, int charIndex,  Graphics g) {
     JLabel message = new JLabel("testing");
     message.setFont(new Font("Arial", Font.PLAIN, 20));
     message.setForeground(Color.WHITE);
-    message.setBounds(67, 350, 800, 100);
+    message.setBounds(67, 350, 380, 75);
     message.setText(combinedtxt);
     //message.setVisible(true);
 
