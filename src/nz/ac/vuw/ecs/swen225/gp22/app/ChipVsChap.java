@@ -116,7 +116,7 @@ public class ChipVsChap extends JFrame{
     public void right(){ getChap().right(); }
 
     public Tile[][] getTiles(){ 
-        return fuzzModel.getMaze().getTiles();
+        return fuzzModel.maze().getTiles();
     }
      // ilya
     // public boolean isVisited() { return true; }

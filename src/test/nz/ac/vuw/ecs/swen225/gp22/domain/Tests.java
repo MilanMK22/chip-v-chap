@@ -133,7 +133,6 @@ public class Tests {
         assertSame(Img.MarcoL.image, c.getImage());
         c.right();
         assertSame(Img.MarcoR.image, c.getImage());
-
     }
 
 
