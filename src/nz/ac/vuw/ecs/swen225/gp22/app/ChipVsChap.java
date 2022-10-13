@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -30,7 +29,6 @@ import sounds.sounds;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import java.awt.event.*;
@@ -39,10 +37,6 @@ import java.io.IOException;
  * Game components will run from this class.
  */
 public class ChipVsChap extends JFrame{
-    public static Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    public static int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public static int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public static Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
@@ -93,10 +87,7 @@ public class ChipVsChap extends JFrame{
     }
 
     public void action(Replay r, Model model, String move, Runnable direction){
-        if(r != null){
-        r.addMove(new GameAction(move, totalticks));
-        }
-        System.out.println(model.chap().getLocation().getX() + " , "+ model.chap().getLocation().getY());
+        if(r != null){r.addMove(new GameAction(move, totalticks));}
         direction.run();
     }
 
@@ -171,9 +162,6 @@ public class ChipVsChap extends JFrame{
         if(level == 2){ fuzzModel = Phase.level2(()->fuzzModel(2), ()->fuzzModel(2)).model(); }
     }
 
-
-
-
     /**
      * Starts the timer for the game level.
      * timeDone is set in the levels method and can be set to how many seconds needed.
@@ -198,24 +186,14 @@ public class ChipVsChap extends JFrame{
             if(totalticks%2==0 && background.getGraphics()!= null){
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
-            if(m.onInfo()){
-                info.setVisible(true);
-            }else{
-                info.setVisible(false);
-            }
+            if(m.onInfo()){info.setVisible(true);}
+            else{info.setVisible(false);}
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
-            
-
         };
-        if(delay != 25){
-            delay = 50;
-        }
-        
+        if(delay != 25){delay = 50;}
         timer = new Timer(delay, action);
-        if(ReplayListner != null){
-            timer.addActionListener(ReplayListner);
-        }
+        if(ReplayListner != null){timer.addActionListener(ReplayListner);}
         timer.setInitialDelay(0);
         count = timeDone;  
         if(PlaybPlayListner == null){
@@ -241,7 +219,6 @@ public class ChipVsChap extends JFrame{
         addWindowListener(new WindowAdapter(){
           public void windowClosed(WindowEvent e){closePhase.run();}
         });
-        
     }
 
     /*
@@ -253,25 +230,16 @@ public class ChipVsChap extends JFrame{
         JPanel frame = new JPanel();
         frame.setLayout(new FlowLayout());
         var upLabel = new JLabel("Up");
-        var up = new JButton("" + characterControls[0]);
+        var up = new JButton("" + Controller.characterControls[0]);
         var downLabel = new JLabel("Down");
-        var down = new JButton("" + characterControls[1]);
+        var down = new JButton("" + Controller.characterControls[1]);
         var leftLabel = new JLabel("Left");
-        var left = new JButton("" + characterControls[2]);
+        var left = new JButton("" + Controller.characterControls[2]);
         var rightLabel = new JLabel("Right");
-        var right = new JButton("" + characterControls[3]);
+        var right = new JButton("" + Controller.characterControls[3]);
         
         closePhase.run();
-        closePhase=()->{
-         remove(controls);
-         remove(menu);
-         remove(frame);
-         remove(up);
-         remove(down);
-         remove(left);
-         remove(right);
-
-         };
+        closePhase=()->{removeAll();};
         add(BorderLayout.CENTER,controls);
         add(frame);
         add(BorderLayout.NORTH,menu);
@@ -284,10 +252,10 @@ public class ChipVsChap extends JFrame{
         frame.add(rightLabel);
         frame.add(right);
 
-        up.addActionListener(KeyBindHelper.reMap(0,up));
-        down.addActionListener(KeyBindHelper.reMap(1,down));
-        left.addActionListener(KeyBindHelper.reMap(2,left));
-        right.addActionListener(KeyBindHelper.reMap(3,right));
+        up.addActionListener(Controller.reMap(0,up));
+        down.addActionListener(Controller.reMap(1,down));
+        left.addActionListener(Controller.reMap(2,left));
+        right.addActionListener(Controller.reMap(3,right));
 
         menu.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -303,41 +271,29 @@ public class ChipVsChap extends JFrame{
     public void menu() {
         System.out.println("Menu Loaded...");
         var start = new JButton();
-        start.setOpaque(false);
-        start.setContentAreaFilled(false);
-        start.setBorderPainted(false);
-        start.setBounds(315, 235, 170, 70);
-
         var controls = new JButton();
-        controls.setOpaque(false);
-        controls.setContentAreaFilled(false);
-        controls.setBorderPainted(false);
-        controls.setBounds(510, 230, 170, 70);
-
         var load = new JButton();
-        load.setOpaque(false);
-        load.setContentAreaFilled(false);
-        load.setBorderPainted(false);
-        load.setBounds(115, 230, 170, 70);
-
         var replay = new JButton();
-        replay.setOpaque(true);
-        replay.setOpaque(false);
-        replay.setContentAreaFilled(false);
-        replay.setBorderPainted(false);
-        replay.setBounds(200, 330, 165, 70);
-
         var playByPlay = new JButton();
-        playByPlay.setOpaque(true);
-        playByPlay.setOpaque(false);
-        playByPlay.setContentAreaFilled(false);
+        var homeScreen = new JLabel();
+
+
+
+        start.setBorderPainted(false);
+        replay.setBorderPainted(false);
+        load.setBorderPainted(false);
+        controls.setBorderPainted(false);
         playByPlay.setBorderPainted(false);
+
+        start.setBounds(315, 235, 170, 70);
+        controls.setBounds(510, 230, 170, 70);
+        load.setBounds(115, 230, 170, 70);
+        replay.setBounds(200, 330, 165, 70);
         playByPlay.setBounds(395, 330, 165, 70);
+        homeScreen.setBounds(0,0,800,375);
 
-        var HomeScreen = new JLabel();
-        HomeScreen.setBounds(0,0,800,375);
-        HomeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
 
+        homeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
         JFileChooser open = new JFileChooser();
         s.setFile("src/sounds/menu.wav");
 
@@ -347,19 +303,18 @@ public class ChipVsChap extends JFrame{
         closePhase=()->{
             remove(start);
             remove(controls);
-            remove(HomeScreen);
+            remove(homeScreen);
             remove(panel);
             s.stop();
         };
        
-        //add(BorderLayout.SOUTH,panel);
-        HomeScreen.add(controls);
-        HomeScreen.add(playByPlay);
-        HomeScreen.add(start);
-        HomeScreen.add(load);
-        HomeScreen.add(replay);
+        homeScreen.add(controls);
+        homeScreen.add(playByPlay);
+        homeScreen.add(start);
+        homeScreen.add(load);
+        homeScreen.add(replay);
         s.play();
-        add(HomeScreen);
+        add(homeScreen);
        
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
@@ -367,7 +322,6 @@ public class ChipVsChap extends JFrame{
                 System.out.println(e.getKeyCode());
                 if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
                     open.showSaveDialog(null);
-
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
@@ -513,10 +467,10 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
