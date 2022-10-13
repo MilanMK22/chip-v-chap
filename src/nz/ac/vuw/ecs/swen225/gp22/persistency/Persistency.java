@@ -55,6 +55,7 @@ public class Persistency {
     public static Tile[][] readXML(String level) {
         int wid = 0;
         int hei = 0;
+        int time = 0;
         int tres;
         String board = "";
         String moves = "";
@@ -92,6 +93,9 @@ public class Persistency {
                     case "id":
                         id = curr.getText();
                         break;
+                    case "time":
+                        time = Integer.parseInt(curr.getText());
+                        break;
                     case "tres":
                         tres = Integer.parseInt(curr.getText());
                         break;
@@ -125,8 +129,8 @@ public class Persistency {
      * 
      * @param tiles current tiles of game
      */
-    public static void createPXML(Tile[][] tiles) {
-        createPXML(tiles, new Pickup.Key[8]);
+    public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
+        createPXML(tiles, inv, 180);
     }
 
     /**
@@ -135,7 +139,7 @@ public class Persistency {
      * @param tiles current tiles of game
      * @param inv inventory of current game
      */
-    public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
+    public static void createPXML(Tile[][] tiles, Pickup.Key[] inv, int time) {
         String board = strFromArray(tiles);
         String moves = getCurrentMoves(tiles);
         try {
@@ -148,6 +152,8 @@ public class Persistency {
             Element heightElement = new Element("height").setText(String.valueOf(tiles[0].length));
             // board element
             Element boardElement = new Element("board").setText(board);
+            // time element
+            Element timeElement = new Element("time").setText(String.valueOf(time));
             // description element
             Element descElement = new Element("desc").setText("saved progress");
             // moves element
@@ -288,7 +294,6 @@ public class Persistency {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
         return 1;
     }
 
@@ -320,5 +325,33 @@ public class Persistency {
             ioe.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * Gets moves of a given level and monster
+     * 
+     * @param level the level identifier e.g. "level1"
+     */
+    public static int getLevelTime(String level){
+        try {
+            File inputFile = new File("levels/" + level + ".xml");
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(inputFile);
+            Element rootElement = document.getRootElement();
+            List<Element> elements = rootElement.getChildren();
+            for (int i = 0; i < elements.size(); i++) {
+               Element curr = elements.get(i);
+                //System.out.println(curr.getName()); //debug
+                if(curr.getName().equals("time")){
+                    //on to right XML element
+                    return Integer.parseInt(curr.getText());
+                }
+            }
+        } catch (JDOMException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return 180;
     }
 }
