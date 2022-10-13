@@ -20,7 +20,7 @@ public class ArrayMaker {
      * @param h     Level height from XML
      * @return
      */
-    public static Tile[][] makeArray(String board, int w, int h) {
+    public static Tile[][] makeArray(String board, int w, int h, String levelID) {
         Tile[][] tiles = new Tile[w][h];
         char[] chars = board.toCharArray();
         for (int j = 0; j < h; j++) {
@@ -68,7 +68,7 @@ public class ArrayMaker {
                         tiles[i][j] = Tile.chapTile(loc);
                         break;
                     case 'M':
-                        tiles[i][j] = Tile.freeTile(loc);
+                        tiles[i][j] = Tile.monsterTile(loc, Persistency.getMoves(levelID));
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid tile char");

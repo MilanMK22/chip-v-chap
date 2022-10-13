@@ -19,44 +19,7 @@ public class Fuzz{
     */
     @Test
     public void test1(){
-        try{
-            SwingUtilities.invokeAndWait(() -> {
-                ChipVsChap chipvchap = new ChipVsChap();
-                double up = 0.25, down = 0.25, left = 0.25;
-                int upmove = 0, downmove = 0, rightmove = 0, leftmove = 0;
-                int x = 0;  // for counting the number of moves done
-                long time = 0;
-                long startTime = System.currentTimeMillis(); // setting the start time
-                chipvchap.unvisitedTiles(1);
-                
-                // doing the moves
-                while (true) {
-                    x++;
-                    double randomNum = Math.random();
-                    long milliseconds = System.currentTimeMillis();
-                    time = (milliseconds - startTime + 1000)/1000;
-
-                    if(randomNum < up) { chipvchap.up(1); probability("up"); upmove++;}
-                    else if(randomNum < down + up) { chipvchap.down(1); probability("down"); downmove++;}
-                    else if(randomNum < left + down + up) { chipvchap.left(1); probability("left"); leftmove++;}
-                    else { chipvchap.right(1); probability("right"); rightmove++;}
-                    chipvchap.setVisitedTiles(1);
-                    
-                    System.out.println("Number of Moves Done: " + x);
-                    System.out.println("Unique Tiles Visited: " + chipvchap.listOfVisitedTiles.stream().distinct().toList().size());
-                    System.out.println("Unvisited Tiles: " + chipvchap.unvisitedTilesList.size());
-                    System.out.println("Test Runtime: " + time + "s");
-                    System.out.println("--------------------------------------");
-                   
-                    if(System.currentTimeMillis() >= startTime + 60000) { 
-                        System.out.println("====== TEST COMPLETE! ======"); 
-                        System.out.println(chipvchap.chapToString(1)); 
-                        System.out.println("Up Move: " + upmove+ " | Down Move: " + downmove + " | Left Move: " + leftmove + " | Right Move: " + rightmove);
-                        return; 
-                    }
-                }
-            });
-        } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e); }
+        help(1);
     }
 
     /**
@@ -64,6 +27,10 @@ public class Fuzz{
      */
     @Test
     public void test2(){
+        help(2);
+    }
+
+    public void help(int level){
         try{
             SwingUtilities.invokeAndWait(() -> {
                 ChipVsChap chipvchap = new ChipVsChap();
@@ -72,7 +39,7 @@ public class Fuzz{
                 int x = 0;  // for counting the number of moves done
                 long time = 0;
                 long startTime = System.currentTimeMillis(); // setting the start time
-                chipvchap.unvisitedTiles(2);
+                chipvchap.unvisitedTiles(level);
                 
                 // doing the moves
                 while (true) {
@@ -81,11 +48,11 @@ public class Fuzz{
                     long milliseconds = System.currentTimeMillis();
                     time = (milliseconds - startTime + 1000)/1000;
 
-                    if(randomNum < up) { chipvchap.up(2); probability("up"); }
-                    else if(randomNum < down + up) { chipvchap.down(2); probability("down"); }
-                    else if(randomNum < left + down + up) { chipvchap.left(2); probability("left"); }
-                    else { chipvchap.right(2); probability("right"); }
-                    chipvchap.setVisitedTiles(2);
+                    if(randomNum < up) { chipvchap.up(level); probability("up"); upmove++;}
+                    else if(randomNum < down + up) { chipvchap.down(level); probability("down"); downmove++;}
+                    else if(randomNum < left + down + up) { chipvchap.left(level); probability("left"); leftmove++;}
+                    else { chipvchap.right(level); probability("right"); rightmove++;}
+                    chipvchap.setVisitedTiles(level);
                     
                     System.out.println("Number of Moves Done: " + x);
                     System.out.println("Unique Tiles Visited: " + chipvchap.listOfVisitedTiles.stream().distinct().toList().size());
@@ -95,12 +62,13 @@ public class Fuzz{
                    
                     if(System.currentTimeMillis() >= startTime + 60000) { 
                         System.out.println("====== TEST COMPLETE! ======"); 
-                        System.out.println(chipvchap.chapToString(2)); 
+                        System.out.println(chipvchap.chapToString(level)); 
                         System.out.println("Up Move: " + upmove+ " | Down Move: " + downmove + " | Left Move: " + leftmove + " | Right Move: " + rightmove);
                         return; 
                     }
-                }});
-        } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 2 failed", e); }
+                }
+            });
+        } catch (Exception e) { e.printStackTrace(); throw new IllegalArgumentException("test 1 failed", e); }
     }
 
     /**

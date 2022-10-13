@@ -108,7 +108,7 @@ public class Persistency {
             ioe.printStackTrace();
         }
         // returns board string converted to 2D array
-        return ArrayMaker.makeArray(board, wid, hei);
+        return ArrayMaker.makeArray(board, wid, hei, level);
     }
 
     public static void createPXML(Tile[][] tiles) {
