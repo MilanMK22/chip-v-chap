@@ -41,5 +41,5 @@ Games can only be saved when you have completed a game.
 | Domain      	| Leo Gaynor      	| @gaynorleo      	|
 | Fuzz        	| Ilya Mashkov    	| @mashkoilya     	|
 
-## License
-no clue lmao
+## Gource Video
+https://myvuwac-my.sharepoint.com/:v:/g/personal/gullivluke_myvuw_ac_nz/EWzFKP73PtpInKveXhKjjBcBrSYAeVLz6tnYU6oLq6gCvQ?e=YV50xH
