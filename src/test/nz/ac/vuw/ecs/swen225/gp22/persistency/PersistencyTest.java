@@ -11,6 +11,9 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
+/**
+ * Class for unit testing the persistency package
+ */
 public class PersistencyTest {
     @Test
     public void test1() {
@@ -24,13 +27,6 @@ public class PersistencyTest {
             }
         }
     }
-
-    // @Test
-    //     public void dirTest() {
-    //       String currentDirectory = System.getProperty("user.dir");
-    //       System.out.println("user.dir: " + currentDirectory);
-    //   }
-
     @Test
     public void test2() {
         assertThrows(Exception.class,()->{Persistency.readXML("levelTest1");});

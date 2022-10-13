@@ -196,6 +196,10 @@ public class Chap implements Entity{
         return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
     }
 
+    public Pickup.Key[] getInvKeys(){
+        return inventory.clone();
+    }
+
     /**
      * Ovewrite chaps inventory
      * 
