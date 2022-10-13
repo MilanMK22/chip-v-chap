@@ -175,6 +175,7 @@ public class Persistency {
             doc.getRootElement().addContent(boardElement);
             doc.getRootElement().addContent(descElement);
             doc.getRootElement().addContent(movesElement);
+            doc.getRootElement().addContent(timeElement);
             doc.getRootElement().addContent(idElement);
             doc.getRootElement().addContent(invElement);
             XMLOutputter xmlOutput = new XMLOutputter();
