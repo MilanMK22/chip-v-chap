@@ -33,6 +33,7 @@ public enum Img{
     exitlock,
     coin,
     coin1L,
+    Controls,
     coin2L,
     coinV,
     coin1R,
