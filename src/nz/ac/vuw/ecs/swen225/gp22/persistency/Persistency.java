@@ -59,7 +59,7 @@ public class Persistency {
                 levelPath = "levels/" + level + ".xml";
             }
 
-            System.out.println(levelPath);
+           // System.out.println(levelPath);
             File inputFile = new File(levelPath);
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
@@ -100,7 +100,7 @@ public class Persistency {
                 throw new JDOMException("Malformed xml, board size does not match width*height");
 
             } else {
-                System.out.println("check-passed\n");
+               // System.out.println("check-passed\n");
             }
         } catch (JDOMException e) {
             e.printStackTrace();

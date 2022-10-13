@@ -2,13 +2,18 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.awt.Color;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import imgs.Img;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import imgs.Img;
+import java.awt.*;
+
+
+
 public class Board extends JFrame {
     public static JLabel getLevelLabel(int levelNum){
         var level = new JLabel("LEVEL "+ levelNum,SwingConstants.CENTER);
@@ -41,9 +46,19 @@ public class Board extends JFrame {
         return dialog;
     }
     public static JLabel getInfo(){
-        var info = new JLabel("TEST");
-        info.setBounds(615, 203,60, 30);
+        JLabel info = new JLabel();
+        info.setBounds(55, 350,400, 60);
+        info.setOpaque(true);
+        info.setVisible(false);
+        Image img = new ImageIcon(Img.textbox.image).getImage().getScaledInstance(info.getWidth(), info.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon textbox = new ImageIcon(img);
+        info.setIcon(textbox);
         return info;
+    }
 
+    public static JLabel getInfoText(String infoString){
+        JLabel infoText = new JLabel(infoString,SwingConstants.CENTER);
+        infoText.setBounds(0,20,400,20);
+        return infoText;
     }
 }
