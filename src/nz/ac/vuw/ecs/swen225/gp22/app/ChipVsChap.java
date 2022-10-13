@@ -389,7 +389,9 @@ public class ChipVsChap extends JFrame{
 
         add(panel);
 
-        saveReplay.addActionListener(s->{replay.saveReplay();});
+        saveReplay.addActionListener(s->{
+            replay.saveReplay();
+            replay = null;});
         restart.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
@@ -476,8 +478,6 @@ public class ChipVsChap extends JFrame{
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
-                    replay.saveReplay();
-                    replay = null;
                     dispose();
                     System.exit(808);
                 }   
