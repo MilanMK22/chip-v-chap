@@ -400,6 +400,7 @@ public class ChipVsChap extends JFrame{
     
 
     private void winner(){
+        SOUND.GAME.stop();
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
