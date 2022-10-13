@@ -560,7 +560,7 @@ public class ChipVsChap extends JFrame{
         });
         saveButton.addActionListener(e->{
             Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
-            dipose();
+            dispose();
             System.exit(ABORT);
         });
         quitButton.addActionListener(e->{
