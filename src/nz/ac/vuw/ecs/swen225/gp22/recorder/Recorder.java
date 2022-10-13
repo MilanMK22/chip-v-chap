@@ -5,6 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp22.app.ChipVsChap;
 import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
+import sounds.sounds.SOUND;
+
 import java.awt.event.*;
 
 import javax.swing.JOptionPane;
@@ -58,7 +60,7 @@ public class Recorder {
         cur.delay = 50;
         cur.timer.setDelay(50);
         cur.closePhase.run();
-        cur.s.stop();
+        SOUND.GAME.stop();
         cur.menu();
         cur.ReplayListner = null;
         cur.PlaybPlayListner = null;

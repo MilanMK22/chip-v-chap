@@ -24,6 +24,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
+import sounds.sounds.SOUND;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -307,7 +308,8 @@ public class ChipVsChap extends JFrame{
 
         homeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
         JFileChooser open = new JFileChooser();
-        s.setFile("src/sounds/menu.wav");
+        SOUND.MENU.play();
+        SOUND.MENU.looping();
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -317,7 +319,7 @@ public class ChipVsChap extends JFrame{
             remove(controls);
             remove(homeScreen);
             remove(panel);
-            s.stop();
+            SOUND.MENU.stop();
         };
        
         homeScreen.add(controls);
@@ -325,7 +327,6 @@ public class ChipVsChap extends JFrame{
         homeScreen.add(start);
         homeScreen.add(load);
         homeScreen.add(replay);
-        s.play();
         add(homeScreen);
        
         this.setFocusable(true);
@@ -445,9 +446,8 @@ public class ChipVsChap extends JFrame{
     private void run(Phase lvl, int levelNum,int time, String infoText){
         //Replay
         totalticks=0;
-        s.stop();
-        s.setFile("src/sounds/game.wav");
-        s.play();
+        SOUND.GAME.play();
+        SOUND.GAME.looping();
 
         if(replay == null){
             this.addRecorder();
