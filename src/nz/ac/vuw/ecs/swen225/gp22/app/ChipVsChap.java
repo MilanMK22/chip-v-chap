@@ -39,10 +39,10 @@ import java.io.IOException;
  * Game components will run from this class.
  */
 public class ChipVsChap extends JFrame{
-    public Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    public int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-    public Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
+    public static Character[] characters = new Character[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    public static int[] arrows = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
+    public static int[] controls = new int[]{KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
+    public static Character[] characterControls = new Character[]{	'\u2191', '\u2193','\u2190','\u2192'};
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
@@ -85,7 +85,6 @@ public class ChipVsChap extends JFrame{
     /**
      * Updates the keybindings.
      */
-    private void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
     public void setBackGround(){
         background.setOpaque(true);
@@ -174,38 +173,6 @@ public class ChipVsChap extends JFrame{
 
 
 
-    /**
-     * Returns the character relative to the character.
-     * @param e
-     * @return
-     */
-    public Character getArrow(KeyEvent e){
-        switch(e.getKeyCode()){
-            case KeyEvent.VK_UP:
-                return '\u2191';
-            case KeyEvent.VK_DOWN:
-                return '\u2193';
-            case KeyEvent.VK_LEFT:
-                return '\u2190';
-            case KeyEvent.VK_RIGHT:
-                return '\u2192';
-        }
-       return e.getKeyChar();
-    }  
-    public int getCode(Character c){
-        switch(c){
-            case '\u2191':
-                return KeyEvent.VK_UP;
-            case '\u2193':
-                return KeyEvent.VK_DOWN;
-            case '\u2190':
-                return KeyEvent.VK_LEFT;
-            case '\u2192':
-                return KeyEvent.VK_RIGHT;
-        }
-       return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
-    }  
-
 
     /**
      * Starts the timer for the game level.
@@ -263,45 +230,7 @@ public class ChipVsChap extends JFrame{
      * @return
      */
 
-    public ActionListener reMap(int code, JButton component){
-        return (e) -> {
-                component.setText("Waiting for input");
-                component.addKeyListener(new Keys(){
-                    public void keyPressed(KeyEvent e) {
-                            if(!Arrays.stream(characterControls).anyMatch(c->getArrow(e).equals(c)) && Arrays.stream(arrows).anyMatch(k->k==e.getExtendedKeyCode())){
-                                switch(e.getKeyCode()){
-                                    case KeyEvent.VK_UP:
-                                        characterControls[code] = '\u2191';
-                                        break;
-                                    case KeyEvent.VK_DOWN:
-                                        characterControls[code] = '\u2193';
-                                        break;
-                                    case KeyEvent.VK_LEFT:
-                                        characterControls[code] = '\u2190';
-                                        break;
-                                    case KeyEvent.VK_RIGHT:
-                                        characterControls[code] = '\u2192';
-                                        break;
-                                }
-                                component.setText(""+ characterControls[code]);
-                                component.removeKeyListener(this);
-                            }
-                            else if(!Arrays.stream(characterControls).anyMatch(c->c==Character.toUpperCase(e.getKeyChar())) && Arrays.stream(characters).anyMatch(c->c==Character.toUpperCase(e.getKeyChar()))){
-                                characterControls[code] = Character.toUpperCase(e.getKeyChar());
-                                component.setText(""+ characterControls[code]);
-                                component.removeKeyListener(this);   
-                            }  
-                            else{
-                            JOptionPane.showMessageDialog(null, "Key is Invalid");
-                            component.setText(""+characterControls[code]);
-                            component.removeKeyListener(this);
-                            }
-                        updateKeys();
-                    }
-                });
-            };
-        };
-
+   
     public Runnable closePhase = () -> {};
 
     public ChipVsChap(){
@@ -355,10 +284,10 @@ public class ChipVsChap extends JFrame{
         frame.add(rightLabel);
         frame.add(right);
 
-        up.addActionListener(reMap(0,up));
-        down.addActionListener(reMap(1,down));
-        left.addActionListener(reMap(2,left));
-        right.addActionListener(reMap(3,right));
+        up.addActionListener(KeyBindHelper.reMap(0,up));
+        down.addActionListener(KeyBindHelper.reMap(1,down));
+        left.addActionListener(KeyBindHelper.reMap(2,left));
+        right.addActionListener(KeyBindHelper.reMap(3,right));
 
         menu.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -584,10 +513,10 @@ public class ChipVsChap extends JFrame{
        KeyListener controls = new Keys(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[0])){action(replay,model,"Up",()->model.chap().up());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[1])){action(replay,model,"Down",()->model.chap().down());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[2])){action(replay,model,"Left",()->model.chap().left());}
+                if(e.getKeyCode() == KeyBindHelper.getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
                     Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
