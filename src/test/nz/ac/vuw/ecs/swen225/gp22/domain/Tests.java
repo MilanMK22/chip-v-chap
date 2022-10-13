@@ -14,6 +14,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.*;
+import java.awt.image.BufferedImage;
 
 public class Tests {
 
@@ -112,6 +113,16 @@ public class Tests {
         Monster m = (Monster) t.getEntity();
         assertEquals(input, m.movesToString());
     }
+
+    @Test
+    public void testImgs(){
+        Model m = new Model(new Maze(buildTestMaze3()));
+        BufferedImage[] temp = m.maze().stream().map(t->t.getImage()).toArray(BufferedImage[]::new);
+        assertArrayEquals(temp, temp);
+    }
+
+    @Test
+    
 
 
     /*=============================

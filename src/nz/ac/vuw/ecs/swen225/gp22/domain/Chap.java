@@ -224,28 +224,5 @@ public class Chap implements Entity{
             case RIGHT: return Img.MarcoR.image;
             default: return Img.Marco.image;
         }
-   
-    
-
-    }
-
-
-
-    @Override
-    public String toString(){
-        String ret = "Chap at: " + this.location.toString() + "\n" +
-        "Chap Collected: \n   Keys \tTreasure \n" + "    " +
-        (maze.totalKeys - maze.keyCount) + "/" + maze.keyCount + "\t" + "          " + 
-        (maze.totalTreasure - heldTreasure) + "/" + maze.totalTreasure + "\n" + "Inventory:\n";
-
-        //inventory to string
-        for(Pickup.Key k: inventory){
-            if(k!= null){
-                ret += k.toString() + "\n";
-            }
-        }
-
-        return ret;
-
     }
 }

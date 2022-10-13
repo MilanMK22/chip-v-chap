@@ -135,9 +135,6 @@ class TreasureTile implements TileState{
     public BufferedImage getImage() {
         return Img.floor_tiles.image;
     }
-    public char toChar(){
-        return 't';
-    }
 }
 
 class ExitLockTile implements TileState{
