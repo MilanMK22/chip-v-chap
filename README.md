@@ -37,7 +37,7 @@ Games can only be saved when you have completed a game.
 | Persistency 	| Luke Gulliver   	| @gullivluke     	|
 | Recorder    	| Milan Kriletich 	| @kriletmila     	|
 | App         	| Calvin Li       	| @licalv         	|
-| Renderer    	| Jack Grunfeld   	| @grunfejack     	|
+| Renderer    	| Jack Grunfeld   	| @grunfejack / jack grunfeld    	|
 | Domain      	| Leo Gaynor      	| @gaynorleo      	|
 | Fuzz        	| Ilya Mashkov    	| @mashkoilya     	|
 
