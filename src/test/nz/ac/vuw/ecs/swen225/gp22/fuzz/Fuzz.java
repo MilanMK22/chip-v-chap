@@ -43,6 +43,7 @@ public class Fuzz{
                 
                 // doing the moves
                 while (true) {
+                    chipvchap.tick(level);
                     x++;
                     double randomNum = Math.random();
                     long milliseconds = System.currentTimeMillis();

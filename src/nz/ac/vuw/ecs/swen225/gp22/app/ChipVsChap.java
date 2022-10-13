@@ -116,6 +116,13 @@ public class ChipVsChap extends JFrame{
         else{ throw new IllegalArgumentException("Invalid level"); }
     }
 
+    //ilya
+    public void tick(int level){
+        if(level == 1){ model.tick(); }
+        else if (level == 2){ model2.tick(); }
+        else{ throw new IllegalArgumentException("Invalid level"); }
+    }
+
     /**
      * move methods for Fuzz to use on the chap deending on the level
      * @param level the level of the game which is being tested
