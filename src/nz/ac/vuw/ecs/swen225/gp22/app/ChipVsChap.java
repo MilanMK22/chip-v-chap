@@ -184,7 +184,7 @@ public class ChipVsChap extends JFrame{
      * Starts the timer for the game level.
      * timeDone is set in the levels method and can be set to how many seconds are needed.
      * Timer label and chips count are changed within the actionListener in the Swing timer.
-     * 
+     * This method is responsible for drawing the rendering module, ticks and information tile popups within the game.
      * 
      * @param timeDone
      * @param m
@@ -231,13 +231,9 @@ public class ChipVsChap extends JFrame{
     }
 
     /**
-     * Updates the keys to be relative to the user input.
-     * @param code
-     * @param component
-     * @return
+     * ChipVsChap constructor that calls the menu function to start off the game.
      */
 
-   
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -250,8 +246,10 @@ public class ChipVsChap extends JFrame{
 
     /*
      * Control frame that allows user to change controls.
+     * Also contains the instructions for the game.
      */
-    public void controls(){
+    public void controlsAndHelp(){
+        //Control variables.
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
         JPanel panel = new JPanel();
@@ -265,6 +263,7 @@ public class ChipVsChap extends JFrame{
         var rightLabel = new JLabel("Right");
         var right = new JButton("" + Controller.characterControls[3]);
 
+        //Instruction variable
         JLabel instructions = new JLabel("<html><p style=\"text-align:center\">Find the keys to unlock the doors<br/><br/>Collect all the coins to escape the maze<p><html>",SwingConstants.CENTER);
         instructions.setBounds(400,225,100,200);
         
@@ -276,6 +275,7 @@ public class ChipVsChap extends JFrame{
             remove(instructions);
         };
 
+        //Adding components to the frame.
         add(BorderLayout.NORTH,panel);
         add(BorderLayout.SOUTH,menu);
         add(BorderLayout.CENTER,instructions);
@@ -288,6 +288,7 @@ public class ChipVsChap extends JFrame{
         panel.add(rightLabel);
         panel.add(right);
 
+        //Adding action listeners.
         up.addActionListener(Controller.reMap(0,up));
         down.addActionListener(Controller.reMap(1,down));
         left.addActionListener(Controller.reMap(2,left));
@@ -296,16 +297,14 @@ public class ChipVsChap extends JFrame{
         menu.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
-
     }
 
 
     /**
-     * Start menu frame.
-     * @throws IOException
+     * Represents the first opening screen containing the buttons required to start,load,replay and settings and help screens.
      */
     public void menu() {
-        System.out.println("Menu Loaded...");
+        //Swing components.
         var start = new JButton();
         var controls = new JButton();
         var load = new JButton();
@@ -313,12 +312,14 @@ public class ChipVsChap extends JFrame{
         var playByPlay = new JButton();
         var homeScreen = new JLabel();
 
+        //Swing component properties set.
         start.setBorderPainted(false);
         replay.setBorderPainted(false);
         load.setBorderPainted(false);
         controls.setBorderPainted(false);
         playByPlay.setBorderPainted(false);
 
+        //Swing component bounds set.
         start.setBounds(315, 235, 170, 70);
         controls.setBounds(510, 230, 170, 70);
         load.setBounds(115, 230, 170, 70);
@@ -327,7 +328,9 @@ public class ChipVsChap extends JFrame{
         homeScreen.setBounds(0,0,800,375);
 
 
+        //Background image set.
         homeScreen.setIcon(new ImageIcon(Img.HomeScreen.image));
+        //File loader for saved games
         JFileChooser open = new JFileChooser();
         SOUND.MENU.play();
         SOUND.MENU.looping();
@@ -343,13 +346,15 @@ public class ChipVsChap extends JFrame{
             SOUND.MENU.stop();
         };
        
+        //Adding swing components to the background.
         homeScreen.add(controls);
         homeScreen.add(playByPlay);
         homeScreen.add(start);
         homeScreen.add(load);
         homeScreen.add(replay);
         add(homeScreen);
-       
+    
+        //KeyListeners
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
             public void keyPressed(KeyEvent e) {
@@ -391,14 +396,17 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(menuKeyListener);
         });
 
-        controls.addActionListener(s->controls());
+        controls.addActionListener(s->controlsAndHelp());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
        
         pack();
     }
 
     
-
+    /**
+     * Winner screen appears when the game is beat.
+     * Allows user to save replay and go back to the main menu.
+     */
     private void winner(){
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
@@ -435,20 +443,32 @@ public class ChipVsChap extends JFrame{
         pack();
     }
 
-
     /**
-     * Setting to level one.
+     * Level One
+     * Changes the level to the level one settings with its respective properties.
      */
-
     public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->levelOne()), 1,60,5, infoString1); }
+    /**
+     * Level Two
+     * Changes the level to the level two settings with its respective properties.
+     */
     public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,120,3, infoString2); }
+    /**
+     * Loaded Level
+     * Changes the level to the loaded level settings with its respective properties.
+     */
     public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),3,Persistency.getLevelTime("levelPers"),Persistency.getNumChips("levelPers"),infoString1); }
 
 
-    /**
-     * Set level function to change between levels.
-     * @param p
-     */
+   /**
+    * Set level function to change between levels and contains variables that need to be changed every level.
+
+    * @param p Phase variable, contains model and chap.
+    * @param level Integer used to set the label.
+    * @param timer Time limit for level.
+    * @param numChips Number of chips required on this level.
+    * @param infoText Information text on this level.
+    */
     public void setLevel(Phase p, int level,int timer,int numChips,String infoText){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
@@ -461,9 +481,14 @@ public class ChipVsChap extends JFrame{
     
 
     /**
-     * Testing level that is being used to display the game and test the game is functioning as it should.
+     * Runs the game using Phase lvl to change between levels
+     * Called everytime a new level is reached but with different arguements.
+     * 
+     * @param lvl Contains the objects on this level.
+     * @param levelNum Level number.
+     * @param time Time allowed on this level.
+     * @param infoText Information text to be shown.
      */
-
     private void run(Phase lvl, int levelNum,int time, String infoText){
         //Replay
         totalticks=0;
@@ -486,20 +511,12 @@ public class ChipVsChap extends JFrame{
         pauseButton.setFocusable(false);
         JButton saveButton = new JButton("Save");
         JButton quitButton = new JButton("Quit");
-
-        navBar.add(pauseButton);
-        navBar.add(saveButton);
-        navBar.add(quitButton);
-
-
         info = Board.getInfo();
         infoTextLabel = Board.getInfoText(infoText);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
-
         JPanel panel = new JPanel(null);
-        info.add(infoTextLabel);
         setBackGround();
        
         //Initalize Timer.
@@ -509,12 +526,6 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         pause = Board.getPause();
 
-        //Close Phase
-        closePhase=()->{
-            timer.stop();
-            remove(panel);
-            remove(level);
-        };
         //KeyListener for the chap movement and game functions.
        KeyListener controls = new Keys(){
             @Override
@@ -540,6 +551,7 @@ public class ChipVsChap extends JFrame{
             }
         };
 
+        //Navbar action listeners.
         pauseButton.addActionListener(e->{
             removeKeyListener(controls);
             pause.setVisible(true);
@@ -560,7 +572,7 @@ public class ChipVsChap extends JFrame{
         Replistner = controls;
         }
 
-        //Pause box closed
+        //Pause box on deactivated.
         WindowListener listener = new WindowAdapter() {
             @Override
             public void windowDeactivated(WindowEvent e) {
@@ -593,6 +605,12 @@ public class ChipVsChap extends JFrame{
         backgroundImage.add(inventory);
         backgroundImage.add(info);
         backgroundImage.add(navBar);
+        navBar.add(pauseButton);
+        navBar.add(saveButton);
+        navBar.add(quitButton);
+        info.add(infoTextLabel);
+
     }  
+
     
 }
