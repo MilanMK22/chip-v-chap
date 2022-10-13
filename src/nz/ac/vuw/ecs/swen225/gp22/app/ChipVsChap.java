@@ -8,6 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import imgs.Img;
@@ -26,6 +27,7 @@ import sounds.sounds;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.LinkedList;
 
 import java.awt.event.*;
@@ -34,6 +36,7 @@ import java.io.IOException;
  * Game components will run from this class.
  */
 public class ChipVsChap extends JFrame{
+    public Runnable closePhase = () -> {};
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
@@ -213,8 +216,6 @@ public class ChipVsChap extends JFrame{
      */
 
    
-    public Runnable closePhase = () -> {};
-
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -231,8 +232,8 @@ public class ChipVsChap extends JFrame{
     public void controls(){
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
-        JPanel frame = new JPanel();
-        frame.setLayout(new FlowLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
         var upLabel = new JLabel("Up");
         var up = new JButton("" + Controller.characterControls[0]);
         var downLabel = new JLabel("Down");
@@ -241,20 +242,29 @@ public class ChipVsChap extends JFrame{
         var left = new JButton("" + Controller.characterControls[2]);
         var rightLabel = new JLabel("Right");
         var right = new JButton("" + Controller.characterControls[3]);
+
+        JLabel instructions = new JLabel("<html><p style=\"text-align:center\">Find the keys to unlock the doors<br/><br/>Collect all the coins to escape the maze<p><html>",SwingConstants.CENTER);
+        instructions.setBounds(400,225,100,200);
         
         closePhase.run();
-        closePhase=()->{removeAll();};
-        add(BorderLayout.CENTER,controls);
-        add(frame);
-        add(BorderLayout.NORTH,menu);
-        frame.add(upLabel);
-        frame.add(up);
-        frame.add(downLabel);
-        frame.add(down);
-        frame.add(leftLabel);
-        frame.add(left);
-        frame.add(rightLabel);
-        frame.add(right);
+        closePhase=()->{
+            remove(panel);
+            remove(menu);
+            remove(controls);
+            remove(instructions);
+        };
+
+        add(BorderLayout.NORTH,panel);
+        add(BorderLayout.SOUTH,menu);
+        add(BorderLayout.CENTER,instructions);
+        panel.add(upLabel);
+        panel.add(up);
+        panel.add(downLabel);
+        panel.add(down);
+        panel.add(leftLabel);
+        panel.add(left);
+        panel.add(rightLabel);
+        panel.add(right);
 
         up.addActionListener(Controller.reMap(0,up));
         down.addActionListener(Controller.reMap(1,down));
@@ -280,8 +290,6 @@ public class ChipVsChap extends JFrame{
         var replay = new JButton();
         var playByPlay = new JButton();
         var homeScreen = new JLabel();
-
-
 
         start.setBorderPainted(false);
         replay.setBorderPainted(false);
@@ -323,7 +331,6 @@ public class ChipVsChap extends JFrame{
         this.setFocusable(true);
         Keys menuKeyListener = new Keys(){
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyCode());
                 if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
                     open.showSaveDialog(null);
                     levelPersistency();
@@ -447,11 +454,39 @@ public class ChipVsChap extends JFrame{
 
 
         //Graphical Interface Initialization.
+        JLabel navBar = new JLabel();
+        navBar.setBounds(0, 0, 800, 30);
+        navBar.setLayout(new FlowLayout());
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.setFocusable(false);
+        JButton saveButton = new JButton("Save");
+        JButton quitButton = new JButton("Quit");
+
+        pauseButton.addActionListener(e->{
+            pause.setVisible(true);
+            timer.stop();
+            
+        });
+        saveButton.addActionListener(e->{
+            Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
+            menu();
+        });
+        quitButton.addActionListener(e->{
+            dispose();
+            System.exit(808);
+        });
+
+        navBar.add(pauseButton);
+        navBar.add(saveButton);
+        navBar.add(quitButton);
+
+
         info = Board.getInfo();
         infoTextLabel = Board.getInfoText(infoText);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
+
         JPanel panel = new JPanel(null);
         info.add(infoTextLabel);
         setBackGround();
@@ -530,6 +565,7 @@ public class ChipVsChap extends JFrame{
         backgroundImage.add(chips);
         backgroundImage.add(inventory);
         backgroundImage.add(info);
+        backgroundImage.add(navBar);
     }  
     
 }

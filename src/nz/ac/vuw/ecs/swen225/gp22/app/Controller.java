@@ -80,6 +80,4 @@ public class Controller {
 
     private static void updateKeys() {for (int i = 0; i < controls.length; i++) {controls[i] = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(characterControls[i]);}}
 
-
-
 }

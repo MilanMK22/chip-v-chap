@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level>
-  <width>11</width>
-  <height>11</height>
-  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWoooooWWWWoWooooCWoWWoWoooooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
+  <width>20</width>
+  <height>20</height>
+  <board>WWWWWWWWWWWWWWWWWWWWWWWooWWooWWWooWWoWWWWWoooWooooWoooWoooWWWooooWooooWoooootoWWWooooWooooWoooooooWWWooooWoooWWWooooooWWWooooWoCoooRooWooooWWooooooooWWWooWWoooWWWoooWioooWoooWWoooWWWWWWWooooWoooWooooWWooWWoooooWooooooooWWoooWooooWWooooooooWWoooWooooWWootoMoooWWoooWooooWWooooooooWWooooooooWWWoooWGWoWWoooWoooWWWWooWWlWWWWoooWooWWWWWooWWoooWWoooWoWWWWWWooWooooWWooWWWWWWWWWoWWooXoWWWWWWWWWWWWWWWWWWWWW</board>
   <desc>saved progress</desc>
-  <moves />
-  <time>33</time>
+  <moves>5,1,udud</moves>
+  <time>66</time>
   <id>levelSave</id>
-  <items>gg</items>
+  <items>rg</items>
 </level>
