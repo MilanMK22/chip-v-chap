@@ -60,7 +60,7 @@ public class Tile{
     //Util methods
     public Point getLocation(){ return this.location; }
     public boolean isFree(){ return state.isFree(); }
-    boolean isExit(){ return state.isExit(); }
+    public boolean isExit(){ return state.isExit(); }
     boolean hasPickup(){ return state.hasPickup(); }
     public boolean hasEntity(){ return entity != null; }
     public Entity getEntity(){ if (hasEntity()) return entity; else throw new Error("No Entity present"); }

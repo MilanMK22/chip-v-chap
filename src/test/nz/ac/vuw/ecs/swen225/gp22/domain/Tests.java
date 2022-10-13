@@ -1,9 +1,18 @@
-package nz.ac.vuw.ecs.swen225.gp22.domain;
+package test.nz.ac.vuw.ecs.swen225.gp22.domain;
 import static org.junit.Assert.*;
 
 import java.util.stream.Collectors;
 
 import org.junit.Test;
+
+import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Monster;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.*;
 
 public class Tests {
@@ -130,7 +139,7 @@ public class Tests {
                 Tile.freeTile(new Point(4,0)),
                 Tile.freeTile(new Point(5,0)),
                 Tile.freeTile(new Point(6,0)),
-                Tile.monsterTile(new Point(7,0), "l")
+                Tile.monsterTile(new Point(7,0), "0,0,l")
             }
         };
         return testMaze;

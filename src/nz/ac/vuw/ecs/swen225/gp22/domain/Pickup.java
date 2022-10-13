@@ -46,7 +46,7 @@ public class Pickup{
     public class Key implements Entity{
         KEYCOLOR color;
         Point location;
-        Key(Point loc, KEYCOLOR col){
+        public Key(Point loc, KEYCOLOR col){
             color = col;
             location = loc;
         }
