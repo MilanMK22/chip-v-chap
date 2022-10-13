@@ -123,7 +123,6 @@ public class Chap implements Entity{
         else{
             SOUND.NOPE.play();
             assert !(maze.getTile(location).getState() instanceof WallTile);
-            //throw new Error("Chap cannot move to this tile." );
         }
     }
     

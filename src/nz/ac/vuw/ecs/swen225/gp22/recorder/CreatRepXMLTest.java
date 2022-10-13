@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 // Just a test to make sure a replay can be turned into an XML
-public class CreatRepXML {
+public class CreatRepXMLTest {
 
 
 

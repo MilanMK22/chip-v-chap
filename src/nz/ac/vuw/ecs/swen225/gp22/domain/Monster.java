@@ -28,6 +28,8 @@ public class Monster implements Entity{
     public void setLocation(Point p){ this.location = p; }
     public void setDirection(String d){ this.direction = DIRECTION.valueOf(d); }
     public void tick(Maze m){ state.tick(m, this); }
+    public char toChar(){ return 'M'; }
+    public String movesToString(){ return state.movesToString(); }
     public BufferedImage getImage(){ 
         switch(this.direction){
             case DOWN: return Img.craigfront.image;
@@ -44,18 +46,18 @@ public class Monster implements Entity{
 
 interface MonsterState{
     public void tick(Maze maze, Monster m);
+    public String movesToString();
 }
 
 class MappedMonster implements MonsterState{
-
+    String mapping;
     char[] moves;
     int tickcount;
     int cycle;
 
     MappedMonster(String mapping){
-        moves = mapping.toCharArray();
-        tickcount = 0;
-        cycle = 0;
+        this.mapping = mapping;
+        mappingToMoves();
     }
 
     @Override
@@ -71,6 +73,22 @@ class MappedMonster implements MonsterState{
         }
     }
 
+    public String movesToString(){
+        return tickcount + "," + cycle + "," + String.copyValueOf(moves);
+    }
+    private void mappingToMoves(){
+        if(mapping == null){tickcount = 0; cycle = 0; moves = "udud".toCharArray(); }
+        else{
+            String[] temp = mapping.split(",");
+            assert temp.length == 3;
+            tickcount = Integer.parseInt(temp[0]);
+            cycle = Integer.parseInt(temp[1]);
+            moves = temp[2].toCharArray();
+
+        }
+
+
+    }
     
     private Point moveFromChar(char move, Monster m){
         switch (move){
