@@ -4,7 +4,15 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
+/**
+ * 
+ * 
+ * @author Jack Grunfeld
+ * @version 1.0
+ * playing sounds
+ *
+ */
+ 
 public class sounds {
     public static enum SOUND{
         COLLECTCOIN,

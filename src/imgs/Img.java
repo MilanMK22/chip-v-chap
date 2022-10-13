@@ -5,7 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * @author Jack Grunfeld
+ * @version 1.0
+ * 
+ * 
+ * 
+ */
+ 
 public enum Img{
     floor_tiles,
     walls,
