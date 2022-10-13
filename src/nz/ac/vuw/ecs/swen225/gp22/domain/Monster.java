@@ -39,7 +39,7 @@ public class Monster implements Entity{
             default: return Img.craigfront.image;
         }
     }
-
+}
 
 
 
@@ -76,18 +76,17 @@ class MappedMonster implements MonsterState{
     public String movesToString(){
         return tickcount + "," + cycle + "," + String.copyValueOf(moves);
     }
+
     private void mappingToMoves(){
-        if(mapping == null){tickcount = 0; cycle = 0; moves = "udud".toCharArray(); return; }
+        if(mapping == null){ tickcount = 0; cycle = 0; moves = "udud".toCharArray(); return; }
         String[] temp = mapping.split(",");
-        if(temp.length != 3){tickcount = 0; cycle = 0; moves = "udud".toCharArray(); return; }
+        if(temp.length != 3){ tickcount = 0; cycle = 0; moves = "udud".toCharArray(); return; }
         else{
             assert temp.length == 3;
             tickcount = Integer.parseInt(temp[0]);
             cycle = Integer.parseInt(temp[1]);
             moves = temp[2].toCharArray();
         }
-
-
     }
     
     private Point moveFromChar(char move, Monster m){
@@ -108,6 +107,4 @@ class MappedMonster implements MonsterState{
         }
         else throw new IllegalArgumentException("Monster "+ m+ " is trying to move to an illegal tile");
     }
-}
-
 }
