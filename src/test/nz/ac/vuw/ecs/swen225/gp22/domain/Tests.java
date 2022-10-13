@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
@@ -13,6 +14,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Chap.DIRECTION;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.*;
 import java.awt.image.BufferedImage;
 
@@ -120,14 +122,25 @@ public class Tests {
         BufferedImage[] temp = m.maze().stream().map(t->t.getImage()).toArray(BufferedImage[]::new);
         assertArrayEquals(temp, temp);
     }
-
     @Test
-    
+    public void testDirections(){
+        Model m = new Model(new Maze(buildTestMaze2()));
+        Chap c = m.chap();
+        assertSame(Img.Marco.image, c.getImage());
+        c.up();
+        assertSame(Img.MarcoBack.image, c.getImage());
+        c.left();
+        assertSame(Img.MarcoL.image, c.getImage());
+        c.right();
+        assertSame(Img.MarcoR.image, c.getImage());
+
+    }
 
 
     /*=============================
      * UTILITY METHODS FOR TESTS *|
     =============================*/
+
     public Tile[][] buildTestMaze(){
         Tile[][] testMaze = new Tile[][]{
         new Tile[]{
