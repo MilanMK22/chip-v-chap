@@ -23,14 +23,22 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
  */
 public class Persistency {
 
+    /**
+     * Method for getting tiles of level1 without parameters
+     */
     public static Tile[][] level1() {
         return readXML("level1");
     }
-
+    /**
+     * Method for getting tiles of level2 without parameters
+     */
     public static Tile[][] level2() {
         return readXML("level2");
     }
 
+    /**
+     * Method for getting tiles of saved level without parameters
+     */
     public static Tile[][] levelSave() {
         return readXML("levelPers");
     }
@@ -111,6 +119,11 @@ public class Persistency {
         return ArrayMaker.makeArray(board, wid, hei, moves);
     }
 
+    /**
+     * Creates a save file when no inventory is available
+     * 
+     * @param tiles current tiles of game
+     */
     public static void createPXML(Tile[][] tiles) {
         createPXML(tiles, new Pickup.Key[8]);
     }
@@ -119,6 +132,7 @@ public class Persistency {
      * Creates an XML file of current state of game, acts as saving feature
      * 
      * @param tiles current tiles of game
+     * @param inv inventory of current game
      */
     public static void createPXML(Tile[][] tiles, Pickup.Key[] inv) {
         String board = strFromArray(tiles);
@@ -279,6 +293,11 @@ public class Persistency {
 
     
 
+    /**
+     * Gets moves of a given level and monster
+     * 
+     * @param level the level identifier e.g. "level1"
+     */
     public static String getMoves(String level){
         try {
             File inputFile = new File("levels/" + level + ".xml");
