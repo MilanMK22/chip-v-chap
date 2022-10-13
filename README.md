@@ -29,7 +29,7 @@ for a Play by play Replay. For a play by play replay the right arrow key will ad
 
 Games can only be saved when you have completed a game.
 
-##render
+## render
 tiles include:
 wall tile: a purple slab unable to be crossed.
 
@@ -45,9 +45,10 @@ rainbow lock: can only be unlcoked once all teh coins are collected.
 
 escape tile: the way out or onto the next level, found behind the ranibow lock. 
 
-## App
-Game starts by creating a ChipVsChap object in the Main class.
-In the ChipVsChap constructor, we ensure we are in the EDT by assertions and we call the menu function which brings up the menu containing the required buttons to play the game. Every frame contains a closePhase runnable that removes it's components to be ready for the next set of components. JLabels were used as background images using the setIcon() method and these acted as a container in which other labels and buttons could sit on. A setLevel method was created to reset the closePhase variable and call the run() method using a Phase as an argument depending on the level. Each level contained a win or loss runnable. When the level is finished setLevel() is called again causing run to be called again but this time with either the win or loss as the phase argument. Eventually when the player finishes the final level will the win screen appear. The movement in this game was controlled by KeyListeners that were constantly waiting for key presses. If a movement key was pressed, it would move chap through a method from the domain module. The timer ticks 20 times a second and every tick checks for a win or a loss. Every second the timer would check if the time is 0 and if it is the level will be restarted. This timer was also used to draw the rendering module on the window every two ticks. Pause functionality was made through making a JDialog appear visible and invisible and stopping and starting the timer accordingly. 
+## Persistency Functions
+The persistency module of this application lets users save the current state of the game, and load back where they left off. 
+
+To use the saving feature, use CTRL + S and the game will exit. Next time you play, click the 'Load Game' button on the menu and it'll pick up right where you left off. It saves the states of tiles & doors, stores Chap's inventory, the number of treasures remaining, and the time remaining in the level.
 
 ## Team Members
 
