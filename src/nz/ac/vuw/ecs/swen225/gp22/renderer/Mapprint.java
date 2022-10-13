@@ -26,7 +26,7 @@ public class Mapprint {
        * @param g
        */
     public static void printMap(Model m, Graphics g){
-        int MapDim = m.getMaze().xlen;
+        int MapDim = m.maze().xlen;
        
 
         int x = 0;
@@ -44,17 +44,17 @@ public class Mapprint {
            
 
                 // getting tile image from domain and pritning it
-                if (i < 0 || j < 0 || i >= m.getMaze().xlen || j >= m.getMaze().ylen) {
+                if (i < 0 || j < 0 || i >= m.maze().xlen || j >= m.maze().ylen) {
                     g.drawImage(Img.walls.image, x, y, size, size, null);
                 } else {
-                    java.awt.image.BufferedImage cur = m.getMaze().getTile(j,i).getImage();
+                    java.awt.image.BufferedImage cur = m.maze().getTile(j,i).getImage();
 
                     g.drawImage(Img.floor_tiles.image, x, y, size, size, null);
                     g.drawImage(cur, x, y, size, size, null);
 
-                    if (m.getMaze().getTile(j,i).hasEntity()) {
-                        if ((m.getMaze().getTile(j,i).getEntity() != m.chap())) {
-                            g.drawImage(m.getMaze().getTile(j,i).getEntity().getImage(), x, y, size, size, null);
+                    if (m.maze().getTile(j,i).hasEntity()) {
+                        if ((m.maze().getTile(j,i).getEntity() != m.chap())) {
+                            g.drawImage(m.maze().getTile(j,i).getEntity().getImage(), x, y, size, size, null);
                         }
                     }
                 }

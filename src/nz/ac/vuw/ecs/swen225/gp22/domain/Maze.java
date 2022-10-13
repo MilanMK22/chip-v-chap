@@ -3,6 +3,7 @@ import java.util.stream.*;
 
 
 /**
+ * @author Leo Gaynor: 300437633
  * The Maze Class represents the state of the maze internally.
  * 
  * It has methods for utility and modifying the maze, as well as standard getters and setters.

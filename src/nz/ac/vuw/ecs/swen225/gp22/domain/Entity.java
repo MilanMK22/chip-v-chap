@@ -5,6 +5,7 @@ import imgs.Img;
 
 
 /**
+ * @author Leo Gaynor: 300437633
  * A public interface for all Entities.
  * <p>
  * An entity is an object that can exist in the maze, and occupy a tile.
