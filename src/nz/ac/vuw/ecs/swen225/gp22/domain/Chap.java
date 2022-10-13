@@ -17,6 +17,7 @@ import imgs.Img;
 /**
  * @author Leo Gaynor: 300437633
  * 
+ * <p>
  * The Chap class represents the internal state of Chap. 
  * 
  * The class provides methods for utility and moving the Chap object through the maze. 

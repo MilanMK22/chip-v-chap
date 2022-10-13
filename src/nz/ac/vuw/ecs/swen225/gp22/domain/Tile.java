@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Tile class is the Container for different Tile States.
  * 
  * As Chap interacts with each Tile, the Tile calls interact on the 

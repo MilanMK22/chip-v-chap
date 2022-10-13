@@ -6,7 +6,7 @@ import imgs.Img;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Pickup Class is the Outer Class of Entities that chap can pick up.
  * 
  * These are Treasure and Keys.

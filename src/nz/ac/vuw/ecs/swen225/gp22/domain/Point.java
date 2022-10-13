@@ -2,7 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Point class is a convinience class to track (x, y) positions within the maze.
  * 
  * It also provides Utility methods to get adjacent tiles in each direction.

@@ -5,6 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import java.awt.image.BufferedImage;
 
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Interface and default methods for TileState
  */
 public interface TileState{
@@ -18,6 +20,8 @@ public interface TileState{
 }
 
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Free Tile.
  */
 class FreeTile implements TileState {
@@ -40,6 +44,8 @@ class FreeTile implements TileState {
 
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Wall Tile.
  */
 class WallTile implements TileState {
@@ -58,6 +64,8 @@ class WallTile implements TileState {
 }
 
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Key Tile.
  */
 class KeyTile implements TileState {;
@@ -82,6 +90,8 @@ class KeyTile implements TileState {;
     }
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Locked Door Tile.
  */
 class LockedDoorTile implements TileState {
@@ -111,6 +121,8 @@ class LockedDoorTile implements TileState {
 
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Information Tile.
  */
 class InfoTile implements TileState{
@@ -129,6 +141,8 @@ class InfoTile implements TileState{
 
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Treasure Tile.
  */
 class TreasureTile implements TileState{
@@ -150,6 +164,8 @@ class TreasureTile implements TileState{
     }
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Exit Lock Tile.
  */
 class ExitLockTile implements TileState{
@@ -169,6 +185,8 @@ class ExitLockTile implements TileState{
     }
 }
 /**
+ * @author Leo Gaynor: 300437633
+ * <p>
  * The Exit Tile.
  */
 class ExitTile implements TileState{

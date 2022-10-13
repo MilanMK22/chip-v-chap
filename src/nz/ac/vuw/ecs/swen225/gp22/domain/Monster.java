@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Monster class implements Entity and represents a Monster within the maze.
  */
 public class Monster implements Entity{

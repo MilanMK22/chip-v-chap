@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Model Class Provides a centralized place for all essential parts of the game state.
  * 
  * It provides methods for getting various parts of the game logic, and calls win and loss methods.

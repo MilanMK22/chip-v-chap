@@ -4,7 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 
 /**
  * @author Leo Gaynor: 300437633
- * 
+ * <p>
  * The Phase record is used to Statically generate the required Maze and 
  * track what the program should do on a Win or Loss.
  * 
