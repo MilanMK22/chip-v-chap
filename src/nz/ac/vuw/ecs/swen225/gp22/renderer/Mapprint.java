@@ -2,13 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
-
-import java.awt.Graphics2D;
-import java.util.Map;
-
-import javax.swing.JLabel;
-
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 /**
