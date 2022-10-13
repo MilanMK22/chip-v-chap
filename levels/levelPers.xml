@@ -2,10 +2,10 @@
 <level>
   <width>11</width>
   <height>11</height>
-  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWooCooWWWWoWgooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
+  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWoooooWWWWoWgoCooWoWWoWoooooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
   <desc>saved progress</desc>
   <moves />
-  <time>16</time>
+  <time>51</time>
   <id>levelSave</id>
-  <items />
+  <items>g</items>
 </level>
