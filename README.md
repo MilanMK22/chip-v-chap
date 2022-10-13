@@ -29,6 +29,21 @@ for a Play by play Replay. For a play by play replay the right arrow key will ad
 
 Games can only be saved when you have completed a game.
 
+##render
+tiles include:
+wall tile: a purple slab unable to be crossed.
+
+lock tile: diifrfent coulor tiles which ave keys holes waiting for the macthing key inorder to be entered.
+
+keys: the keys which are required to unlock the lock tiles. 
+
+coins: collect theses in oder to complete levels, be sure you havent forgotten any.
+
+info tile: a point of information for when your lost, stuck or confused. 
+
+rainbow lock: can only be unlcoked once all teh coins are collected. 
+
+escape tile: the way out or onto the next level, found behind the ranibow lock. 
 
 ## Team Members
 
