@@ -91,9 +91,13 @@ public class Recorder {
     cur.add(replaySpeed);
     if(rep.getLevel() == 1){ 
         cur.levelOne();
-    }else{
+    }else if(rep.getLevel() == 2){
         cur.levelTwo();
     }
+    else{
+        cur.levelPersistency();
+    }
+
     cur.removeKeyListener(cur.Replistner);
      ActionListener newone = e -> {
         if(rep.getMoves().isEmpty()){

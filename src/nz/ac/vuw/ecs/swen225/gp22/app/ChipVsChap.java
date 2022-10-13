@@ -399,7 +399,7 @@ public class ChipVsChap extends JFrame{
 
     public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5, infoString1); }
     public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3, infoString2); }
-    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,Persistency.getLevelTime("levelPers"),Persistency.getNumChips("levelPers"),infoString1); }
+    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),3,Persistency.getLevelTime("levelPers"),Persistency.getNumChips("levelPers"),infoString1); }
 
 
     /**
@@ -472,7 +472,7 @@ public class ChipVsChap extends JFrame{
                     System.exit(808);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
-                    Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
+                    Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
                     replay.saveReplay();
                     replay = null;
                     dispose();
