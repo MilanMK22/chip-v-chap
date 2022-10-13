@@ -4,6 +4,11 @@ import imgs.Img;
 import java.awt.image.BufferedImage;
 
 
+/**
+ * @author Leo Gaynor: 300437633
+ * 
+ * The Monster class implements Entity and represents a Monster within the maze.
+ */
 public class Monster implements Entity{
 
     MonsterState state;
@@ -16,12 +21,19 @@ public class Monster implements Entity{
         RIGHT;
     }
 
+    /**
+     * Create a monster at a Point 'location' in the maze.
+     * It will move as described in the passed String 'moves'
+     * @param location
+     * @param moves
+     */
     Monster(Point location, String moves){
         this.location = location;
         this.state = new MappedMonster(moves);
         this.direction = DIRECTION.DOWN;
     }
 
+    
     @Override
     public Point getLocation() { return location; }
     public void setState(MonsterState s){ this.state = s; }
@@ -43,23 +55,36 @@ public class Monster implements Entity{
 
 
 
-
+/**
+ * An interface for monster states.
+ */
 interface MonsterState{
     public void tick(Maze maze, Monster m);
     public String movesToString();
 }
 
+/**
+ * A Mapped Monster is a MonsterState, it uses the mapping String to determine its behavior.
+ */
 class MappedMonster implements MonsterState{
     String mapping;
     char[] moves;
     int tickcount;
     int cycle;
 
+    /**
+     * Create a MappedMonster.
+     * @param mapping to determine behavior.
+     */
     MappedMonster(String mapping){
         this.mapping = mapping;
         mappingToMoves();
     }
 
+
+    /**
+     * Check when the next monster move should occur.
+     */
     @Override
     public void tick(Maze maze, Monster m){
         tickcount ++;
@@ -73,10 +98,16 @@ class MappedMonster implements MonsterState{
         }
     }
 
+    /**
+     * return the Monster's current state (Utility for Saving games).
+     */
     public String movesToString(){
         return tickcount + "," + cycle + "," + String.copyValueOf(moves);
     }
 
+    /**
+     * Decode the mapping into the correct Moveset for this monster.
+     */
     private void mappingToMoves(){
         if(mapping == null){ tickcount = 0; cycle = 0; moves = "udud".toCharArray(); return; }
         String[] temp = mapping.split(",");
@@ -89,6 +120,12 @@ class MappedMonster implements MonsterState{
         }
     }
     
+    /**
+     * Get a Move from the next Character in the move list.
+     * @param move The Character
+     * @param m the Monster to move.
+     * @return The Point to move to.
+     */
     private Point moveFromChar(char move, Monster m){
         switch (move){
             case 'u': m.setDirection("UP"); return m.getLocation().up();
@@ -99,6 +136,12 @@ class MappedMonster implements MonsterState{
         }
     }
 
+    /**
+     * Move the Monster to the specified Point.
+     * @param p The Point to move to.
+     * @param maze The Maze that the monster is part on.
+     * @param m The Monster to move.
+     */
     private void move(Point p, Maze maze, Monster m){
         if(maze.getTile(p).isFree() && !maze.getTile(p).hasPickup()){
             maze.getTile(m.getLocation()).removeEntity();

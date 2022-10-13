@@ -1,6 +1,15 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 
+
+/**
+ * @author Leo Gaynor: 300437633
+ * 
+ * The Phase record is used to Statically generate the required Maze and 
+ * track what the program should do on a Win or Loss.
+ * 
+ * It also gives access to the Model.
+ */
 public record Phase(Model model) {
     public static Phase level1(Runnable win, Runnable loss){
         try{

@@ -36,7 +36,11 @@ public class Maze {
         this.xlen = tiles[0].length;
     }
     
-    // by ilya - to test something 
+
+    /**
+     * Method for Ilya
+     * @return Tile[][] of all tiles.
+     */
     public Tile[][] getTiles() { return tiles; }
 
 

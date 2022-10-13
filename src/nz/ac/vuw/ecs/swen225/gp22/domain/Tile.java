@@ -2,6 +2,14 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import java.awt.image.BufferedImage;
 
+/**
+ * @author Leo Gaynor: 300437633
+ * 
+ * The Tile class is the Container for different Tile States.
+ * 
+ * As Chap interacts with each Tile, the Tile calls interact on the 
+ * TileState, which determines the correct action to take.
+ */
 public class Tile{
 
 
@@ -9,15 +17,27 @@ public class Tile{
     TileState state;
     public Entity entity;
 
-    //ilya
+    /**
+     * For fuzz testing.
+     */
     public boolean visited = false;
 
+    /**
+     * Create a Tile with a particular TileState.
+     * @param tileState The TileState of the Tile.
+     * @param location The Location of the Tile.
+     */
     Tile(TileState tileState, Point location){
         this.state = tileState;
         this.location = location;
     }
 
-
+    /**
+     * Create a Tile with a particular TileState and an Entity.
+     * @param entity The Entity that exists on the Tile.
+     * @param tileState The TileState of the Tile.
+     * @param location The Location of the Tile.
+     */
     Tile (Entity entity, TileState tileState, Point location){
         this.state = tileState;
         this.entity = entity;
@@ -25,7 +45,7 @@ public class Tile{
     }
 
 
-    //Factory Patterns
+    //Factory Patterns for TileStates
     static public Tile wallTile(Point location){ return new Tile(new WallTile(), location); }
     static public Tile freeTile(Point location){ return new Tile(new FreeTile(), location); }
     static public Tile keyTile(Point location, KEYCOLOR color){ return new Tile(new Pickup().new Key(location, color), new KeyTile(), location); }
@@ -39,20 +59,43 @@ public class Tile{
     
 
 
+    /**
+     * Set the Entity of the Tile.
+     * @param e The new Entity.
+     */
     public void setEntity(Entity e){
         this.entity = e;
     }
+
+    /**
+     * Remove this tiles Entity.
+     */
     public void removeEntity(){
         this.entity = null;
     }
     
+    /**
+     * Let Chap interact with this Tile's TileState.
+     * @param c The Chap Object
+     * @param m The Maze
+     * @return Whether Chap can move to this Tile.
+     */
     public boolean interact(Chap c, Maze m){
         return state.interact(this, c, m); 
     }
 
+    /**
+     * Set this Tile's State to a new state.
+     * @param newState The new State.
+     */
     public void setState(TileState newState){
         this.state = newState;
     }
+
+    /**
+     * Get this Tile's TileState.
+     * @return The TileState.
+     */
     public TileState getState(){
         return this.state;
     }
@@ -72,10 +115,16 @@ public class Tile{
         return state.toChar();
     }
 
-    //ilya
+    /**
+     * Fuzz Testing Method
+     * @param status
+     */
     public void visited(boolean status){
         this.visited = status;
     }
+    /**
+     * Fuzz Testing Method
+     */
     public boolean getVisited(){
         return this.visited;
     }

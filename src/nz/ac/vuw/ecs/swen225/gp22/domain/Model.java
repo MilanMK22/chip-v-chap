@@ -38,6 +38,11 @@ public class Model {
      */
     public boolean onInfo(){ return maze.getTile(chap.getLocation()).getState() instanceof InfoTile; }
 
+    /**
+     * Apply the tick() Method to all entities.
+     * 
+     * This method also runs win() or loss() if appropriate.
+     */
     public void tick(){
         entities.forEach(e->e.tick(maze));
         if(maze.getTile(chap.getLocation()).isExit()){

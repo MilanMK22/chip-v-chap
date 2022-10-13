@@ -4,6 +4,9 @@ import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 import java.awt.image.BufferedImage;
 
+/**
+ * The Interface and default methods for TileState
+ */
 public interface TileState{
 
     default boolean isFree(){ return false; }
@@ -14,11 +17,12 @@ public interface TileState{
     default public char toChar(){ return 'o';}
 }
 
+/**
+ * The Free Tile.
+ */
 class FreeTile implements TileState {
 
-    public FreeTile(){
-
-    }
+    public FreeTile(){}
 
     @Override
     public boolean isFree(){ return true; }
@@ -35,12 +39,12 @@ class FreeTile implements TileState {
     }
 
 }
-
+/**
+ * The Wall Tile.
+ */
 class WallTile implements TileState {
 
-    public WallTile(){
-
-    }
+    public WallTile(){}
     public boolean interact(Tile t, Chap c, Maze m){
         return false;       
     }
@@ -53,6 +57,9 @@ class WallTile implements TileState {
     }
 }
 
+/**
+ * The Key Tile.
+ */
 class KeyTile implements TileState {;
 
     public KeyTile(){}
@@ -74,7 +81,9 @@ class KeyTile implements TileState {;
         return Img.floor_tiles.image;
     }
 }
-
+/**
+ * The Locked Door Tile.
+ */
 class LockedDoorTile implements TileState {
     KEYCOLOR color;
     boolean locked;
@@ -101,7 +110,9 @@ class LockedDoorTile implements TileState {
     }
 
 }
-
+/**
+ * The Information Tile.
+ */
 class InfoTile implements TileState{
     @Override
     public boolean isFree() { return true; }
@@ -117,7 +128,9 @@ class InfoTile implements TileState{
     }
 
 }
-
+/**
+ * The Treasure Tile.
+ */
 class TreasureTile implements TileState{
 
     @Override
@@ -136,7 +149,9 @@ class TreasureTile implements TileState{
         return Img.floor_tiles.image;
     }
 }
-
+/**
+ * The Exit Lock Tile.
+ */
 class ExitLockTile implements TileState{
     @Override
     public boolean interact(Tile t, Chap c, Maze m){
@@ -153,7 +168,9 @@ class ExitLockTile implements TileState{
         return 'l';
     }
 }
-
+/**
+ * The Exit Tile.
+ */
 class ExitTile implements TileState{
 
 
