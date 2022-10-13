@@ -15,6 +15,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
  * Class for unit testing the persistency package
  */
 public class PersistencyTest {
+    Point l = new Point(0,0);
+
     @Test
     public void test1() {
         
@@ -43,14 +45,14 @@ public class PersistencyTest {
     public void test5() {
         assertThrows(Exception.class,()->{Persistency.readXML("levelTest4");});
     }
-    @Test
-    public void test6() {
-        assertThrows(Exception.class,()->{Persistency.readXML("levelTest5");});
-    }
+    // @Test
+    // public void test6() {
+    //     assertThrows(Exception.class,()->{Persistency.readXML("levelTest5");});
+    // }
     @Test
     public void test7() {
         assert(Persistency.readXML("level1") != null);
-        Persistency.createPXML(Persistency.readXML("level1"));
+        Persistency.createPXML(Persistency.readXML("level1"),new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
     }
 
     @Test
@@ -66,21 +68,21 @@ public class PersistencyTest {
     }
     @Test
     public void test9() {
-        Persistency.createPXML(Persistency.readXML("level1"));
+        Persistency.createPXML(Persistency.readXML("level1"),new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
         Tile[][] i = Persistency.readXML("level1");
         Tile[][] j = Persistency.readXML("levelPers");
         assertEquals(Persistency.strFromArray(i), Persistency.strFromArray(j));
     }
     @Test
     public void test10() {
-        Persistency.createPXML(Persistency.readXML("level2"));
+        Persistency.createPXML(Persistency.readXML("level2"),new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
         Tile[][] i = Persistency.readXML("level2");
         Tile[][] j = Persistency.readXML("levelPers");
         assertEquals(Persistency.strFromArray(i), Persistency.strFromArray(j));
     }
     @Test
     public void test11() {
-        Point l = new Point(0,0);
+        
         Persistency.createPXML(Persistency.readXML("level1"), new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity()});
         //Pickup.Key[] lol = Persistency.getInventory();
         assert(Persistency.getSavedInventory()[0] != null);
@@ -88,7 +90,7 @@ public class PersistencyTest {
     }
     @Test
     public void test12() {
-        Point l = new Point(0,0);
+        
         Persistency.createPXML(Persistency.readXML("level1"), new Pickup.Key[]{(Pickup.Key) Tile.keyTile(l,KEYCOLOR.BLUE).getEntity(),(Pickup.Key) Tile.keyTile(l,KEYCOLOR.RED).getEntity()});
         //Pickup.Key[] lol = Persistency.getInventory();
         assert(Persistency.getSavedInventory()[0] != null);
