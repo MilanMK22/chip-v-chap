@@ -257,7 +257,7 @@ public class ChipVsChap extends JFrame{
         menu.setBounds((WIDTH/2)-100,HEIGHT-150,200,50);
         JLabel panel = new JLabel();
         panel.setLayout(new FlowLayout());
-        panel.setBounds(0,0,WIDTH,50);
+        panel.setBounds(0,50,WIDTH,50);
         var upLabel = new JLabel("Up");
         var up = new JButton("" + Controller.characterControls[0]);
         var downLabel = new JLabel("Down");
