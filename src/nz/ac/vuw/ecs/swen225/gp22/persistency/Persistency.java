@@ -1,13 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-// import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jdom2.*;
 import org.jdom2.Element;
@@ -15,7 +12,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import nz.ac.vuw.ecs.swen225.gp22.app.Board;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
@@ -55,12 +51,8 @@ public class Persistency {
     public static Tile[][] readXML(String level) {
         int wid = 0;
         int hei = 0;
-        int time = 0;
-        int tres;
         String board = "";
         String moves = "";
-        String id;
-        String desc;
         String levelPath;
         try {
             if (level.contains(".")) {
@@ -68,8 +60,6 @@ public class Persistency {
             } else {
                 levelPath = "levels/" + level + ".xml";
             }
-
-           // System.out.println(levelPath);
             File inputFile = new File(levelPath);
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
@@ -88,16 +78,12 @@ public class Persistency {
                         board = curr.getText();
                         break;
                     case "desc":
-                        desc = curr.getText();
                         break;
                     case "id":
-                        id = curr.getText();
                         break;
                     case "time":
-                        time = Integer.parseInt(curr.getText());
                         break;
                     case "tres":
-                        tres = Integer.parseInt(curr.getText());
                         break;
                     case "moves":
                         moves = curr.getText();
@@ -283,7 +269,6 @@ public class Persistency {
             List<Element> elements = rootElement.getChildren();
             for (int i = 0; i < elements.size(); i++) {
                Element curr = elements.get(i);
-                //System.out.println(curr.getName()); //debug
                 if(curr.getName().equals("board")){
                     //on to right XML element
                     String bs = curr.getText();
@@ -314,7 +299,6 @@ public class Persistency {
             List<Element> elements = rootElement.getChildren();
             for (int i = 0; i < elements.size(); i++) {
                Element curr = elements.get(i);
-                //System.out.println(curr.getName()); //debug
                 if(curr.getName().equals("moves")){
                     //on to right XML element
                     return curr.getText();
@@ -342,7 +326,6 @@ public class Persistency {
             List<Element> elements = rootElement.getChildren();
             for (int i = 0; i < elements.size(); i++) {
                Element curr = elements.get(i);
-                //System.out.println(curr.getName()); //debug
                 if(curr.getName().equals("time")){
                     //on to right XML element
                     return Integer.parseInt(curr.getText());
