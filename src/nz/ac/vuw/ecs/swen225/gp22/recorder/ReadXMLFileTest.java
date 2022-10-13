@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-public class ReadXMLFile {
+public class ReadXMLFileTest {
   
     public static void main(String argv[])   
     {  

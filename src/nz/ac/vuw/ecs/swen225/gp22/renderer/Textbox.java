@@ -44,15 +44,7 @@ public static JLabel printTextBox(String printable, int charIndex,  Graphics g) 
     //Font textfont = createFont.font();
     JLabel message = new JLabel("testing");
     message.setFont(new Font("Arial", Font.PLAIN, 20));
-<<<<<<< HEAD
-    message.setForeground(Color.WHITE);
-    message.setBounds(67, 350, 800, 100);
-    message.setText(combinedtxt);
-    //message.setVisible(true);
-
-=======
     test.add(message);
->>>>>>> 38d8e41 (info box logic added)
 
     return test;
     }
