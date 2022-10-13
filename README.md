@@ -29,7 +29,7 @@ for a Play by play Replay. For a play by play replay the right arrow key will ad
 
 Games can only be saved when you have completed a game.
 
-##render
+## render
 tiles include:
 wall tile: a purple slab unable to be crossed.
 
@@ -44,6 +44,11 @@ info tile: a point of information for when your lost, stuck or confused.
 rainbow lock: can only be unlcoked once all teh coins are collected. 
 
 escape tile: the way out or onto the next level, found behind the ranibow lock. 
+
+## Persistency Functions
+The persistency module of this application lets users save the current state of the game, and load back where they left off. 
+
+To use the saving feature, use CTRL + S and the game will exit. Next time you play, click the 'Load Game' button on the menu and it'll pick up right where you left off. It saves the states of tiles & doors, stores Chap's inventory, the number of treasures remaining, and the time remaining in the level.
 
 ## Team Members
 
