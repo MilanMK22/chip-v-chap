@@ -1,5 +1,6 @@
 
 package nz.ac.vuw.ecs.swen225.gp22.app;
+import java.awt.Color;
 import java.awt.event.WindowListener;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -38,5 +39,11 @@ public class Board extends JFrame {
         dialog.setVisible(false);
         dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         return dialog;
+    }
+    public static JLabel getInfo(){
+        var info = new JLabel("TEST");
+        info.setBounds(615, 203,60, 30);
+        return info;
+
     }
 }

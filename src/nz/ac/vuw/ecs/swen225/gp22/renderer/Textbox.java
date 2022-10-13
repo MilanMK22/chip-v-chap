@@ -24,7 +24,7 @@ public class Textbox{
 
 
 
-public static void printTextBox(String printable, int charIndex,  Graphics g) {  
+public static JLabel printTextBox(String printable, int charIndex,  Graphics g) {  
     //print the textbox
   
     char characters[] =  printable.toCharArray();
@@ -33,22 +33,19 @@ public static void printTextBox(String printable, int charIndex,  Graphics g) {
         String s = String.valueOf(characters[charIndex]);
         combinedtxt = combinedtxt + s;
     }
- 
 
-   
+    System.out.println("test");
     ImageIcon textbox = new ImageIcon(Img.textbox.image);
-    Image textboxImage = textbox.getImage();
-    g.drawImage(textboxImage, 67, 345, 380, 75, null);
+    JLabel test = new JLabel();
+    test.setBounds(200, 350, 500, 100);
+    test.setIcon(textbox);
     
     //print the message
     //Font textfont = createFont.font();
     JLabel message = new JLabel("testing");
     message.setFont(new Font("Arial", Font.PLAIN, 20));
-    message.setForeground(Color.WHITE);
-    message.setBounds(67, 350, 380, 75);
-    message.setText(combinedtxt);
-    //message.setVisible(true);
+    test.add(message);
 
-
+    return test;
     }
 }

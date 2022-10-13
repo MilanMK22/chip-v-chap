@@ -123,7 +123,6 @@ public class Chap implements Entity{
         else{
             SOUND.NOPE.play();
             assert !(maze.getTile(location).getState() instanceof WallTile);
-            //throw new Error("Chap cannot move to this tile." );
         }
     }
     
@@ -194,6 +193,10 @@ public class Chap implements Entity{
      */
     public List<BufferedImage> inventory(){
         return Stream.of(inventory).filter(i->i != null).map(e->e.getImage()).toList();
+    }
+
+    public Pickup.Key[] getInvKeys(){
+        return inventory.clone();
     }
 
     /**

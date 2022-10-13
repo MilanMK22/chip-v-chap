@@ -77,4 +77,7 @@ public class Tile{
     public void visited(boolean status){
         this.visited = status;
     }
+    public boolean getVisited(){
+        return this.visited;
+    }
 }

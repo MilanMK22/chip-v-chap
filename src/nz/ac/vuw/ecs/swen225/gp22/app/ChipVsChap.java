@@ -52,19 +52,21 @@ public class ChipVsChap extends JFrame{
     public  JLabel background = new JLabel();
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
-    public Model model2 = Phase.level2(null, null).model();
+    public Model fuzzModel;
     public static int numOfChips = 5;
     public static int levelNum = 1;
     public static JLabel chips;
     public static JLabel level;
     private static final int HEIGHT = 450;
     private static final int WIDTH = 800;
+    public static JLabel info;
 
 
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
     public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
+    public int modelCount = 0;
     
     //jack
     public int txtIndex = 0;
@@ -110,25 +112,26 @@ public class ChipVsChap extends JFrame{
      * @param level the level of the game
      * @return a chap 
      */
-    public Chap getChap(int level){
-        if(level == 1){ return model.chap(); }
-        else if (level == 2){ return model2.chap(); }
-        else{ throw new IllegalArgumentException("Invalid level"); }
+    public Chap getChap(){
+        return fuzzModel.chap();
+    }
+
+    //ilya
+    public void tick(){
+        fuzzModel.tick();
     }
 
     /**
      * move methods for Fuzz to use on the chap deending on the level
      * @param level the level of the game which is being tested
      */
-    public void up(int level){ getChap(level).up(); }
-    public void down(int level){ getChap(level).down(); }
-    public void left(int level){ getChap(level).left(); }
-    public void right(int level){ getChap(level).right(); }
+    public void up(){ getChap().up(); }
+    public void down(){ getChap().down(); }
+    public void left(){ getChap().left(); }
+    public void right(){ getChap().right(); }
 
-    public Tile[][] getTiles(int level){ 
-        if(level == 1){ return model.getMaze().getTiles();}
-        else if (level == 2){ return model2.getMaze().getTiles(); }
-        else{ throw new IllegalArgumentException("Invalid level"); }
+    public Tile[][] getTiles(){ 
+        return fuzzModel.getMaze().getTiles();
     }
      // ilya
     // public boolean isVisited() { return true; }
@@ -139,53 +142,36 @@ public class ChipVsChap extends JFrame{
     //     else{ throw new IllegalArgumentException("Invalid level"); }
     // }
     // ilya
-    public Tile getTileAtLocation(Point location, int level) {
+    public Tile getTileAtLocation(Point location) {
         Tile[][] tiles;
-        if(level == 1){ 
-            tiles = getTiles(level);
-            return tiles[location.getX()][location.getY()];
-        }
-        else if (level == 2){
-            tiles = getTiles(level);
-            return tiles[location.getX()][location.getY()];
-        }
-        else{ throw new IllegalArgumentException("Invalid level"); }
+        tiles = getTiles();
+        return tiles[location.getX()][location.getY()];
     }
 
     //ilya
-    public void setVisitedTiles(int level){
+    public void setVisitedTiles(){
         Tile tile;
-        if (level == 1){ 
-            tile = getTileAtLocation(model.chap().getLocation(), level); 
-            unvisitedTilesList.remove(tile);
-            listOfVisitedTiles.add(tile);
-            tile.visited(true);
-        }
-        else if (level == 2){ 
-            tile = getTileAtLocation(model2.chap().getLocation(), level); 
-            unvisitedTilesList.remove(tile);
-            listOfVisitedTiles.add(tile);
-            tile.visited(true);
-        }
-        else{ throw new IllegalArgumentException("Invalid level"); }
+        tile = getTileAtLocation(fuzzModel.chap().getLocation()); 
+        unvisitedTilesList.remove(tile);
+        listOfVisitedTiles.add(tile);
+        tile.visited(true);
     }
 //ilya
-    public void unvisitedTiles(int level){
-        Tile[][] tiles = getTiles(level);
-        for(int i = 0; i < tiles.length; i++) {
-            for(int j = 0; j < tiles[i].length; j++) {
-                if(tiles[i][j].isFree()){
-                    unvisitedTilesList.add(tiles[i][j]);
-                }
-            }
-        }
+    public int unvisitedTiles(){
+        return (int)fuzzModel.maze().stream().filter(i->!i.getVisited() && i.isFree()).count();
     }
 
     //ilya
-    public String chapToString(int level){
-        if(level == 1){ return model.chap().toString(); }
-        else if(level == 2){ return model2.chap().toString(); }
-        else{ throw new IllegalArgumentException("invalid level");}
+    public String chapToString(){
+        return fuzzModel.chap().toString();
+    }
+
+    public void fuzzModel(int level){
+        modelCount++;
+        listOfVisitedTiles = new ArrayList<>();
+        unvisitedTilesList = new ArrayList<>();
+        if(level == 1){ fuzzModel = Phase.level1(()->fuzzModel(1), ()->fuzzModel(1)).model(); }
+        if(level == 2){ fuzzModel = Phase.level2(()->fuzzModel(2), ()->fuzzModel(2)).model(); }
     }
 
 
@@ -248,8 +234,9 @@ public class ChipVsChap extends JFrame{
             Mapprint.printMap(m, background.getGraphics());
             printInventory.printIn(m,backgroundImage.getGraphics());
             if(m.onInfo()){
-                Textbox.printTextBox(getName(), txtIndex, backgroundImage.getGraphics());
-                txtIndex++;
+                info.setVisible(true);
+            }else{
+                info.setVisible(false);
             }
             }
             chips.setText("" + (numOfChips - model.chap().heldTreasure()));
@@ -549,7 +536,9 @@ public class ChipVsChap extends JFrame{
         //Set model to correct model.
         model = lvl.model();
 
+
         //Graphical Interface Initialization.
+        info = new JLabel("TEST", SwingConstants.CENTER);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
@@ -557,6 +546,9 @@ public class ChipVsChap extends JFrame{
         setBackGround();
        
         //Initalize Timer.
+        info.setBounds(100, 350,200, 60);
+        info.setOpaque(true);
+        info.setForeground(new Color(0,250,0,255));
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
@@ -583,6 +575,7 @@ public class ChipVsChap extends JFrame{
                     dispose();
                     replay.saveReplay();
                     replay = null;
+                    Persistency.createPXML(model.maze().getTiles(), null);
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
@@ -624,6 +617,7 @@ public class ChipVsChap extends JFrame{
         backgroundImage.add(timerLabel);
         backgroundImage.add(chips);
         backgroundImage.add(inventory);
+        backgroundImage.add(info);
     }  
     
 }
