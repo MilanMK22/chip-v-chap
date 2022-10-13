@@ -77,7 +77,7 @@ public class Recorder {
 
         Replay rep = Replay.readXML();
         var replaySpeed = new Checkbox("2x Replay Speed");
-        replaySpeed.setBounds(215, 5, 180, 20);
+        replaySpeed.setBounds(190, 5, 180, 20);
         replaySpeed.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == 1) {
