@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 //import font library
 import java.awt.Font;
 import imgs.Img;
+import nz.ac.vuw.ecs.swen225.gp22.app.ChipVsChap;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 
 
@@ -41,14 +42,12 @@ public static void printTextBox(String printable, int charIndex,  Graphics g) {
     
     //print the message
     //Font textfont = createFont.font();
-    JLabel message = new JLabel(combinedtxt);
+    JLabel message = new JLabel("testing");
     message.setFont(new Font("Arial", Font.PLAIN, 20));
     message.setForeground(Color.WHITE);
     message.setBounds(67, 350, 800, 100);
-    
-    
-
-
+    message.setText(combinedtxt);
+    //message.setVisible(true);
 
 
     }
