@@ -181,7 +181,8 @@ public class ChipVsChap extends JFrame{
     /**
      * Starts the timer for the game level.
      * timeDone is set in the levels method and can be set to how many seconds are needed.
-     * Timer label is changed within the actionListener in the Swing timer.
+     * Timer label and chips count are changed within the actionListener in the Swing timer.
+     * 
      * 
      * @param timeDone
      * @param m
