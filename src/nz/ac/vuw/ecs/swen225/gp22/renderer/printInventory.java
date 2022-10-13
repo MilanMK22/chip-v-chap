@@ -3,7 +3,16 @@ package nz.ac.vuw.ecs.swen225.gp22.renderer;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import java.awt.Graphics;
 import imgs.Img;
-
+/**
+ * 
+ * 
+ * @author Jack Grunfeld
+ * @version 1.0
+ * pritning map and enititys for chap to interract with
+ * @param m
+ * @param g
+ */
+ 
 public class printInventory {
     
     public static void printIn(Model m, Graphics g){
