@@ -60,7 +60,7 @@ public class ChipVsChap extends JFrame{
     private static final int HEIGHT = 450;
     private static final int WIDTH = 800;
     public static JLabel info;
-
+    public static String infoString = "Find the keys to collect the coins and escape!";
 
 
     // by ilya 
@@ -498,9 +498,9 @@ public class ChipVsChap extends JFrame{
      * Setting to level one.
      */
 
-    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5); }
+    public void levelOne(){setLevel(Phase.level1(()->{levelTwo(); infoString = "Beware of monsters!!";}, ()->menu()), 1,120,5); }
     public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3); }
-    public void levelPersistency(){setLevel(Phase.levelSave(()->menu(), ()->{timer.stop(); winner();}),2,180,Persistency.getNumChips("levelPers")); }
+    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,180,Persistency.getNumChips("levelPers")); }
 
 
     /**
@@ -538,7 +538,7 @@ public class ChipVsChap extends JFrame{
 
 
         //Graphical Interface Initialization.
-        info = new JLabel("TEST", SwingConstants.CENTER);
+        info = new JLabel();
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
@@ -546,9 +546,17 @@ public class ChipVsChap extends JFrame{
         setBackGround();
        
         //Initalize Timer.
-        info.setBounds(100, 350,200, 60);
+        info.setBounds(55, 350,400, 60);
         info.setOpaque(true);
-        info.setForeground(new Color(0,250,0,255));
+        info.setVisible(false);
+        Image img = new ImageIcon(Img.textbox.image).getImage().getScaledInstance(info.getWidth(), info.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon textbox = new ImageIcon(img);
+        JLabel infoText = new JLabel(infoString,SwingConstants.CENTER);
+
+        infoText.setBounds(0,20,400,20);
+        info.add(infoText);
+
+        info.setIcon(textbox);
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
@@ -572,10 +580,10 @@ public class ChipVsChap extends JFrame{
                 if(e.getKeyCode() == getCode(characterControls[3]) ){action(replay,model,"Right",()->model.chap().right());}
                 if((e.getKeyCode() == KeyEvent.VK_C) && e.isControlDown()){dispose();}   
                 if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
-                    dispose();
+                    Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys());
                     replay.saveReplay();
                     replay = null;
-                    Persistency.createPXML(model.maze().getTiles(), null);
+                    dispose();
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_SPACE)){
                     removeKeyListener(this);
@@ -607,6 +615,7 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(controls);
             backgroundImage.remove(level);
             backgroundImage.remove(chips);
+            info.remove(infoText);
         };
 
         //Add components to respective panels and labels.
