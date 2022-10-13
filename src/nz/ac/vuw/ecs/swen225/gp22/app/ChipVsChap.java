@@ -52,9 +52,6 @@ public class ChipVsChap extends JFrame{
     public static String infoString2 = "Beware of the monsters!";
     public static JLabel infoTextLabel = Board.getInfoText(infoString1);
 
-
-
-
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
     public List<Tile> unvisitedTilesList = new ArrayList<Tile>();
@@ -74,7 +71,7 @@ public class ChipVsChap extends JFrame{
     public Replay replay;
 
     public sounds s = new sounds();
-    public static JLabel timerLabel = new JLabel("test");
+    public static JLabel timerLabel = new JLabel();
     
     /**
      * Updates the keybindings.
