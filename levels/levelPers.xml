@@ -2,8 +2,9 @@
 <level>
   <width>11</width>
   <height>11</height>
-  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWooCooWWWWoWgooogWoWWoWootooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
+  <board>WWWWWWWWWWWWotoWXWotoWWWWGWlWGWWWWoBoooooRoWWtWboiorWtWWWWoooooWWWWoWooooCWoWWoWoooooWoWWWWWWWWWWWWWoWooWooWoWWWWWWWWWWWW</board>
   <desc>saved progress</desc>
+  <moves />
   <id>levelSave</id>
-  <items />
+  <items>gg</items>
 </level>

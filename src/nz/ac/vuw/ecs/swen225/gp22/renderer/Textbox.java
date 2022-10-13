@@ -36,6 +36,7 @@ public static JLabel printTextBox(String printable, int charIndex,  Graphics g) 
 
     System.out.println("test");
     ImageIcon textbox = new ImageIcon(Img.textbox.image);
+    Image img = textbox.getImage();
     JLabel test = new JLabel();
     test.setBounds(200, 350, 500, 100);
     test.setIcon(textbox);

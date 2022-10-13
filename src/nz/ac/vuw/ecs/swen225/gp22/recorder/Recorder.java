@@ -8,6 +8,8 @@ import java.awt.event.*;
 
 
 public class Recorder {
+
+    public static long prev;
     /**
      * This function decides what action to do based on the 
      * string that is given by GameAction.
@@ -46,6 +48,8 @@ public class Recorder {
         if(replaySpeed != null ){
             cur.remove(replaySpeed);
         }
+        cur.delay = 50;
+        cur.timer.setDelay(50);
         cur.closePhase.run();
         cur.s.stop();
         cur.menu();
@@ -71,9 +75,11 @@ public class Recorder {
     replaySpeed.addItemListener(new ItemListener() {    
         public void itemStateChanged(ItemEvent e) {                 
             if(e.getStateChange()==1){
+                cur.delay = 25;
                 cur.timer.setDelay(25);   
         }    
         else{
+            cur.delay =50;
             cur.timer.setDelay(50);
         }
          }
@@ -92,8 +98,19 @@ public class Recorder {
         }
         GameAction r = rep.getMoves().peek();
         if(r.getTime() == cur.totalticks){
+            prev = r.getTime();
             r = rep.getMoves().remove();
             doAction(cur,r);
+
+            r = rep.getMoves().peek();
+
+            if(r != null){
+                while(r.getTime() == prev){
+                    prev = r.getTime();
+                    r = rep.getMoves().remove();
+                    doAction(cur,r);
+                }
+            }
     }  
     };
     cur.timer.addActionListener(newone);
@@ -149,7 +166,7 @@ public class Recorder {
                     cur.totalticks++;
                     Mapprint.printMap(cur.model, cur.background.getGraphics());
                     printInventory.printIn(cur.model,cur.backgroundImage.getGraphics());
-                    ChipVsChap.chips.setText("" + (ChipVsChap.numOfChips - cur.model.chap().heldTreasure()));
+                    ChipVsChap.chips.setText("" + (cur.numOfChips - cur.model.chap().heldTreasure()));
     
     
                     if(rep.getMoves().isEmpty()){
@@ -160,8 +177,19 @@ public class Recorder {
                     GameAction r = rep.getMoves().peek();
             
                     if(r.getTime() == cur.totalticks){
+                        prev = r.getTime();
                         r = rep.getMoves().remove();
                         doAction(cur,r);
+            
+                        r = rep.getMoves().peek();
+            
+                        if(r != null){
+                            while(r.getTime() == prev){
+                                prev = r.getTime();
+                                r = rep.getMoves().remove();
+                                doAction(cur,r);
+                            }
+                        }
                 }  
                 }
             }
