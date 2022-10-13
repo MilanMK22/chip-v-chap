@@ -15,6 +15,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.Board;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pickup.KEYCOLOR;
 
@@ -55,7 +56,7 @@ public class Persistency {
         int wid = 0;
         int hei = 0;
         int tres;
-        String board = null;
+        String board = "";
         String moves = "";
         String id;
         String desc;

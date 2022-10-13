@@ -153,7 +153,7 @@ public class Recorder {
                     cur.totalticks++;
                     Mapprint.printMap(cur.model, cur.background.getGraphics());
                     printInventory.printIn(cur.model,cur.backgroundImage.getGraphics());
-                    ChipVsChap.chips.setText("" + (ChipVsChap.numOfChips - cur.model.chap().heldTreasure()));
+                    ChipVsChap.chips.setText("" + (cur.numOfChips - cur.model.chap().heldTreasure()));
     
     
                     if(rep.getMoves().isEmpty()){
