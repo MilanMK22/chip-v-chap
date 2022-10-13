@@ -41,8 +41,8 @@ public class ChipVsChap extends JFrame{
     public JLabel backgroundImage = Board.getBackgroundImage();
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model();
     public Model fuzzModel;
-    public static int numOfChips = 5;
-    public static int levelNum = 1;
+    public int numOfChips = 5;
+    public int levelNum = 1;
     public static JLabel chips;
     public static JLabel level;
     private static final int HEIGHT = 450;
