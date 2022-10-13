@@ -248,11 +248,16 @@ public class ChipVsChap extends JFrame{
      * Also contains the instructions for the game.
      */
     public void controlsAndHelp(){
+        var container = new JLabel("a");
+        container.setIcon(new ImageIcon(Img.Controls.image));
+
         //Control variables.
         var controls = new JLabel("Control Panel");
         var menu = new JButton("Back to main menu");
-        JPanel panel = new JPanel();
+        menu.setBounds((WIDTH/2)-100,HEIGHT-150,200,50);
+        JLabel panel = new JLabel();
         panel.setLayout(new FlowLayout());
+        panel.setBounds(0,0,WIDTH,50);
         var upLabel = new JLabel("Up");
         var up = new JButton("" + Controller.characterControls[0]);
         var downLabel = new JLabel("Down");
@@ -264,20 +269,23 @@ public class ChipVsChap extends JFrame{
 
         //Instruction variable
         JLabel instructions = new JLabel("<html><p style=\"text-align:center\">Find the keys to unlock the doors<br/><br/>Collect all the coins to escape the maze<p><html>",SwingConstants.CENTER);
-        instructions.setBounds(400,225,100,200);
+        instructions.setBounds((WIDTH/2) - 200,(HEIGHT/2) - 75,400,200);
         
         closePhase.run();
         closePhase=()->{
             remove(panel);
+            remove(container);
             remove(menu);
             remove(controls);
             remove(instructions);
         };
 
         //Adding components to the frame.
-        add(BorderLayout.NORTH,panel);
-        add(BorderLayout.SOUTH,menu);
-        add(BorderLayout.CENTER,instructions);
+        add(container);
+        
+        container.add(panel);
+        container.add(menu);
+        container.add(instructions);
         panel.add(upLabel);
         panel.add(up);
         panel.add(downLabel);
