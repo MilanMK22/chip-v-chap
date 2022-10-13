@@ -1,8 +1,5 @@
 
 package nz.ac.vuw.ecs.swen225.gp22.app;
-import java.awt.Color;
-import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
 import imgs.Img;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -17,7 +14,7 @@ import java.awt.*;
 public class Board extends JFrame {
     public static JLabel getLevelLabel(int levelNum){
         var level = new JLabel("LEVEL "+ levelNum,SwingConstants.CENTER);
-        level.setBounds(615, 75, 60, 30);
+        level.setBounds(613, 77, 60, 30);
         return level;
     }
     public static JLabel getChipLabel(int numOfChips){
