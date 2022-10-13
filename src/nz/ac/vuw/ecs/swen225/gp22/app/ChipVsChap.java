@@ -73,7 +73,7 @@ public class ChipVsChap extends JFrame{
    
     public Timer timer;
     public int count = 0;
-    public int delay = 50;
+    public int delay;
     public int timePassed = 0;
     public int totalticks=0;
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
@@ -243,6 +243,9 @@ public class ChipVsChap extends JFrame{
             
 
         };
+        if(delay != 25){
+            delay = 50;
+        }
         
         timer = new Timer(delay, action);
         if(ReplayListner != null){
