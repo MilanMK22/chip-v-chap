@@ -1,8 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.awt.*;
 
-import javax.print.attribute.standard.NumberOfDocuments;
-import javax.swing.Action;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,15 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import org.apache.bcel.generic.LNEG;
 
 import imgs.Img;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chap;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Maze;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Phase;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
@@ -28,7 +24,6 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameAction;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Textbox;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import sounds.sounds;
@@ -37,8 +32,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Stack;
-import java.util.stream.Stream;
+
 import java.awt.event.*;
 import java.io.IOException;
 /*
@@ -60,7 +54,11 @@ public class ChipVsChap extends JFrame{
     private static final int HEIGHT = 450;
     private static final int WIDTH = 800;
     public static JLabel info;
-    public static String infoString = "Find the keys to collect the coins and escape!";
+    public static String infoString1 = "Find the keys to collect the coins and escape!";
+    public static String infoString2 = "Beware of the monsters!";
+    public static JLabel infoTextLabel = Board.getInfoText(infoString1);
+
+
 
 
     // by ilya 
@@ -478,11 +476,23 @@ public class ChipVsChap extends JFrame{
         pack();
     }
 
+    
+
     private void winner(){
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
         JButton saveReplay = new JButton("Save Replay to Menu");
+
+        ActionListener listener = new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+
+            }
+        };
+        Timer winTimer = new Timer(100, listener);
+        winTimer.setRepeats(false);
+        winTimer.start();
+
 
         restart.setBounds(315, 235, 170, 70);
         panel.setLayout(new FlowLayout());
@@ -496,9 +506,8 @@ public class ChipVsChap extends JFrame{
 
         add(panel);
 
-        saveReplay.addActionListener(s->{
-            replay.saveReplay();
-        });
+        saveReplay.addActionListener(s->{replay.saveReplay();});
+        restart.addActionListener(s->menu());
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
     }
@@ -508,22 +517,22 @@ public class ChipVsChap extends JFrame{
      * Setting to level one.
      */
 
-    public void levelOne(){setLevel(Phase.level1(()->{levelTwo(); infoString = "Beware of monsters!!";}, ()->menu()), 1,120,5); }
-    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3); }
-    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,180,Persistency.getNumChips("levelPers")); }
+    public void levelOne(){setLevel(Phase.level1(()->levelTwo(), ()->menu()), 1,120,5, infoString1); }
+    public void levelTwo(){setLevel(Phase.level2(()->{timer.stop(); winner();}, ()->levelTwo()),2,180,3, infoString2); }
+    public void levelPersistency(){setLevel(Phase.levelSave(()->levelTwo(), ()->levelOne()),2,180,Persistency.getNumChips("levelPers"),infoString1); }
 
 
     /**
      * Set level function to change between levels.
      * @param p
      */
-    public void setLevel(Phase p, int level,int timer,int numChips){
+    public void setLevel(Phase p, int level,int timer,int numChips,String infoText){
         closePhase.run();//close phase before adding any element of the new phase
         closePhase=()->{};
         setPreferredSize(getSize());
         numOfChips = numChips;
         levelNum = level;
-        run(p,levelNum,timer);
+        run(p,levelNum,timer,infoText);
         pack();                   
       }
     
@@ -532,7 +541,7 @@ public class ChipVsChap extends JFrame{
      * Testing level that is being used to display the game and test the game is functioning as it should.
      */
 
-    private void run(Phase lvl, int levelNum,int time){
+    private void run(Phase lvl, int levelNum,int time, String infoText){
         //Replay
         totalticks=0;
         s.stop();
@@ -548,25 +557,16 @@ public class ChipVsChap extends JFrame{
 
 
         //Graphical Interface Initialization.
-        info = new JLabel();
+        info = Board.getInfo();
+        infoTextLabel = Board.getInfoText(infoText);
         level = Board.getLevelLabel(levelNum);
         chips= Board.getChipLabel(numOfChips);
         var inventory = Board.getInventory();
         JPanel panel = new JPanel(null);
+        info.add(infoTextLabel);
         setBackGround();
        
         //Initalize Timer.
-        info.setBounds(55, 350,400, 60);
-        info.setOpaque(true);
-        info.setVisible(false);
-        Image img = new ImageIcon(Img.textbox.image).getImage().getScaledInstance(info.getWidth(), info.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon textbox = new ImageIcon(img);
-        JLabel infoText = new JLabel(infoString,SwingConstants.CENTER);
-
-        infoText.setBounds(0,20,400,20);
-        info.add(infoText);
-
-        info.setIcon(textbox);
         timerLabel.setBounds(630, 140,60, 30);
         startTimer(time,model,chips);
 
@@ -625,7 +625,9 @@ public class ChipVsChap extends JFrame{
             removeKeyListener(controls);
             backgroundImage.remove(level);
             backgroundImage.remove(chips);
-            info.remove(infoText);
+            info.remove(infoTextLabel);
+            backgroundImage.remove(info);
+
         };
 
         //Add components to respective panels and labels.
