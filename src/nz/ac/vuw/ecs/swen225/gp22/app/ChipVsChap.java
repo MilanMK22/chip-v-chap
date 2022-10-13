@@ -529,6 +529,7 @@ public class ChipVsChap extends JFrame{
             menu();
         });
         quitButton.addActionListener(e->{
+            replay = null;
             dispose();
             System.exit(ABORT);
         });
