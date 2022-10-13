@@ -479,6 +479,8 @@ public class ChipVsChap extends JFrame{
         var start = new JLabel("WINNER");
         JPanel panel = new JPanel();
         JButton restart = new JButton("Back to Menu");
+        JButton saveReplay = new JButton("Save Replay to Menu");
+
         restart.setBounds(315, 235, 170, 70);
         panel.setLayout(new FlowLayout());
         closePhase.run();
@@ -487,8 +489,13 @@ public class ChipVsChap extends JFrame{
         };
         panel.add(start);
         panel.add(restart);
+        panel.add(saveReplay);
 
         add(panel);
+
+        saveReplay.addActionListener(s->{
+            replay.saveReplay();
+        });
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         pack();
     }
