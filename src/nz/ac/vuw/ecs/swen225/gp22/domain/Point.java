@@ -45,4 +45,7 @@ public class Point {
         }
         return false;
     }
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

@@ -166,7 +166,7 @@ public class Chap implements Entity{
             heldItems -= 1;
         }
         else{
-            throw new IllegalArgumentException("No key of type " + color + " present in inventory: \n" + inventory.toString());
+            throw new IllegalArgumentException("No key of type " + color + " present in inventory.");
         }
     }
 
