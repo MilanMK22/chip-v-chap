@@ -61,7 +61,7 @@ public class Fuzz{
                     else { chipvchap.right(); probability("Right"); rightmove++;}
                     chipvchap.setVisitedTiles();
                    
-                    if(System.currentTimeMillis() >= startTime + 1000) { 
+                    if(System.currentTimeMillis() >= startTime + 60000) { 
                         System.out.println(
                               "============ TEST COMPLETE! ============\n"
                             + "| Number of Moves Done: " + x + "\n"
