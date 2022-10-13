@@ -8,6 +8,8 @@ import java.awt.event.*;
 
 
 public class Recorder {
+
+    public static long prev;
     /**
      * This function decides what action to do based on the 
      * string that is given by GameAction.
@@ -96,8 +98,19 @@ public class Recorder {
         }
         GameAction r = rep.getMoves().peek();
         if(r.getTime() == cur.totalticks){
+            prev = r.getTime();
             r = rep.getMoves().remove();
             doAction(cur,r);
+
+            r = rep.getMoves().peek();
+
+            if(r != null){
+                while(r.getTime() == prev){
+                    prev = r.getTime();
+                    r = rep.getMoves().remove();
+                    doAction(cur,r);
+                }
+            }
     }  
     };
     cur.timer.addActionListener(newone);
@@ -164,8 +177,19 @@ public class Recorder {
                     GameAction r = rep.getMoves().peek();
             
                     if(r.getTime() == cur.totalticks){
+                        prev = r.getTime();
                         r = rep.getMoves().remove();
                         doAction(cur,r);
+            
+                        r = rep.getMoves().peek();
+            
+                        if(r != null){
+                            while(r.getTime() == prev){
+                                prev = r.getTime();
+                                r = rep.getMoves().remove();
+                                doAction(cur,r);
+                            }
+                        }
                 }  
                 }
             }
