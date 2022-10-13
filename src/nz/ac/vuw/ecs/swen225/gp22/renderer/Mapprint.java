@@ -19,7 +19,6 @@ public class Mapprint {
        * @param g
        */
     public static void printMap(Model m, Graphics g){
-        int MapDim = m.maze().xlen;
        
 
         int x = 0;
