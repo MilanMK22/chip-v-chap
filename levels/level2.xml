@@ -2,7 +2,7 @@
 <level>
   <width>20</width>
   <height>20</height>
-  <moves>udud</moves>
+  <moves>0,0,udud</moves>
   <board>WWWWWWWWWWWWWWWWWWWWWWWooWWooWWWooWWoWWWWWoooWooooWoooWoooWWWorooWooooWoooootoWWWooooWooooWoooooooWWWooooWoooWWWooooooWWWorooWoooooRooWooooWWooooBoooWWWooWWoooWWWoooWioooWoooWWoooWWWWWWWooooWoooWooooWWooWWooCooWooooooooWWoooWooooWWooooooooWWotoWooooWWootoooooWWoooWobooWWooooMoooWWoooRooooWWWoooWGWoWWoooWoooWWWWooWWlWWWWogoWooWWWWWooWWoooWWoooWoWWWWWWooWooooWWooWWWWWWWWWoWWooXoWWWWWWWWWWWWWWWWWWWWW</board>
   <desc>level 2: medium</desc>
   <id>level2</id>
