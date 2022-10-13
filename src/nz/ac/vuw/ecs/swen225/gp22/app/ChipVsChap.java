@@ -319,6 +319,7 @@ public class ChipVsChap extends JFrame{
                 System.out.println(e.getKeyCode());
                 if((e.getKeyCode() == KeyEvent.VK_R) && e.isControlDown()){
                     open.showSaveDialog(null);
+                    levelPersistency();
                 }   
                 if((e.getKeyCode() == KeyEvent.VK_1) && e.isControlDown()){
                     // opens new game at level 1
