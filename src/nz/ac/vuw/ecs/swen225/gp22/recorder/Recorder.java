@@ -100,7 +100,7 @@ public class Recorder {
 
     cur.removeKeyListener(cur.Replistner);
      ActionListener newone = e -> {
-        if(rep.getMoves().isEmpty()){
+        if(rep.getMoves().size() == 1){
             quitReplay(cur, replaySpeed);
             return;
         }
@@ -181,7 +181,7 @@ public class Recorder {
                     ChipVsChap.chips.setText("" + (cur.numOfChips - cur.model.chap().heldTreasure()));
     
     
-                    if(rep.getMoves().isEmpty()){
+                    if(rep.getMoves().size() == 1){
                         quitReplay(cur, null);
                         cur.removeKeyListener(this);
                         return;
