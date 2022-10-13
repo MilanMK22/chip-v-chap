@@ -56,7 +56,7 @@ public class sounds {
     public Clip clip;
     AudioInputStream sound;
     public void setFile(String soundFileName) {
-   ß     try {
+       try {
             File file = new File(soundFileName);
             AudioInputStream sound = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
