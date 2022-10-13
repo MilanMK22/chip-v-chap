@@ -80,21 +80,21 @@ public class Maze {
      * @return number of tiles that have pickups on them.
      */
     public int getNumPickups(){
-        return (int)stream().filter(t->t.hasEntity()).filter(t->t.getEntity().isPickup()).count();
+        return getPickups().length;
     }
     /**
      * Get number of tiles with Treasure on them.
      * @return number of tiles that have Treasure on them.
      */
     public int getNumTreasure(){
-        return (int)stream().filter(t->t.hasEntity()).filter(t->t.getEntity().isTreasure()).count();
+        return getTreasure().length;
     }
     /**
      * Get number of tiles with Keys on them.
      * @return number of tiles that have Keys on them.
      */
     public int getNumKey(){
-        return (int)stream().filter(t->t.hasEntity()).filter(t->t.getEntity().isPickup() && !t.getEntity().isTreasure()).count();
+        return getKeys().length;
     }
 
 
@@ -141,20 +141,13 @@ public class Maze {
         else return Tile.wallTile(new Point(x, y));
         // throw new Error("Chap cannot move off of the map"); 
     }
-
-    /**
-     * Check that a point is within the maze.
-     * @param p the Point to check.
-     * @return the boolean evaluation of this expression.
-     */
-    public boolean bound(Point p){ return bound(p.getX(), p.getY()); }
     /**
      * Check that a point (x, y) is within the maze. 
      * @param x int of the x position.
      * @param y int of the y position.
      * @return the boolean evaluation of this expression.
      */
-    public boolean bound(int x, int y){ return x >= 0 && x < xlen && y >= 0 && y < ylen; }
+    public boolean bound(int x, int y){ return x >= 0 && x < getXLen() && y >= 0 && y < getYLen(); }
 
     /**
      * Set the tile at point (x, y) to {@code tile}
