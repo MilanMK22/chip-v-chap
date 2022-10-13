@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.awt.event.*;
-import java.io.IOException;
 
 /**
  * Represents the ChipVsChap game and is constructed in the main class.
@@ -237,7 +236,7 @@ public class ChipVsChap extends JFrame{
     public ChipVsChap(){
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu();
+        winner();//CHANGE THIS
         setVisible(true);
         addWindowListener(new WindowAdapter(){
           public void windowClosed(WindowEvent e){closePhase.run();}
@@ -409,32 +408,25 @@ public class ChipVsChap extends JFrame{
      */
     private void winner(){
         SOUND.GAME.stop();
-        var start = new JLabel("WINNER");
-        JPanel panel = new JPanel();
-        JButton restart = new JButton("Back to Menu");
-        JButton saveReplay = new JButton("Save Replay");
+        var endScreen = new JLabel();
+        endScreen.setIcon(new ImageIcon(Img.win.image));
+        endScreen.setBounds(0,0,WIDTH,HEIGHT);
+        JButton restart = new JButton();
+        JButton saveReplay = new JButton();
+        restart.setBounds(212,304,165,70);
+        restart.setBorderPainted(false);
+  
 
-        ActionListener listener = new ActionListener(){
-            public void actionPerformed(ActionEvent event){
-
-            }
-        };
-        Timer winTimer = new Timer(100, listener);
-        winTimer.setRepeats(false);
-        winTimer.start();
-
-
-        restart.setBounds(315, 235, 170, 70);
-        panel.setLayout(new FlowLayout());
+        saveReplay.setBounds(415, 304, 165, 70);
+        saveReplay.setBorderPainted(false);
         closePhase.run();
         closePhase=()->{
-          remove(panel);
+          remove(endScreen);
         };
-        panel.add(start);
-        panel.add(restart);
-        panel.add(saveReplay);
+        endScreen.add(restart);
+        endScreen.add(saveReplay);
 
-        add(panel);
+        add(endScreen);
 
         saveReplay.addActionListener(s->{
             replay.saveReplay();
