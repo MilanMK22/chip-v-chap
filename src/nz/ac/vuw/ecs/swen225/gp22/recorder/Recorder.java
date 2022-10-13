@@ -46,6 +46,8 @@ public class Recorder {
         if(replaySpeed != null ){
             cur.remove(replaySpeed);
         }
+        cur.delay = 50;
+        cur.timer.setDelay(50);
         cur.closePhase.run();
         cur.s.stop();
         cur.menu();
@@ -71,9 +73,11 @@ public class Recorder {
     replaySpeed.addItemListener(new ItemListener() {    
         public void itemStateChanged(ItemEvent e) {                 
             if(e.getStateChange()==1){
+                cur.delay = 25;
                 cur.timer.setDelay(25);   
         }    
         else{
+            cur.delay =50;
             cur.timer.setDelay(50);
         }
          }
