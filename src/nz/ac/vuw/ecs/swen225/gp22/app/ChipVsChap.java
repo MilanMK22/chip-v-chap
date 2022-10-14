@@ -43,6 +43,31 @@ public class ChipVsChap extends JFrame{
     public JLabel backgroundImage = Board.getBackgroundImage(); // Background image of the game.
     public Model model = Phase.level1(()->levelTwo(), ()->levelOne()).model(); //contains the objects associated with the game.
     public Model fuzzModel;
+    public static JButton pauseButton = new JButton("Pause");
+
+    Keys controls = new Keys(){
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,"Up",()->model.chap().up());}
+            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,"Down",()->model.chap().down());}
+            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,"Left",()->model.chap().left());}
+            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,"Right",()->model.chap().right());}
+            if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
+                dispose();
+                System.exit(ABORT);
+            }   
+            if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
+                Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
+                dispose();
+                System.exit(ABORT);
+            }   
+            if((e.getKeyCode() == KeyEvent.VK_SPACE)){
+                removeKeyListener(this);
+                pause.setVisible(true);
+                timer.stop();
+            } 
+        }
+    };
 
     //Number of chips and level number and their respective label objects.
     public int numOfChips = 5;
@@ -61,8 +86,6 @@ public class ChipVsChap extends JFrame{
     //JDialog box variables.
     JDialog pause = Board.getPause();
     JDialog timeOut = Board.getTimeout();
-
-
 
     // by ilya 
     public List<Tile> listOfVisitedTiles = new ArrayList<Tile>();
@@ -87,6 +110,8 @@ public class ChipVsChap extends JFrame{
 
     public sounds s = new sounds();
     
+
+
     /**
      * This method sets the background to it's respective properties relative to the game window.
      */
@@ -94,6 +119,11 @@ public class ChipVsChap extends JFrame{
         background.setOpaque(true);
         background.setBounds(67, 52, 380, 280);
         background.setBackground(Color.black);
+    }
+    public void setButton(JButton button){
+        button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
     }
 
     /**
@@ -320,11 +350,11 @@ public class ChipVsChap extends JFrame{
         var homeScreen = new JLabel();
 
         //Swing component properties set.
-        start.setBorderPainted(false);
-        replay.setBorderPainted(false);
-        load.setBorderPainted(false);
-        controls.setBorderPainted(false);
-        playByPlay.setBorderPainted(false);
+        setButton(start);
+        setButton(controls);
+        setButton(load);
+        setButton(replay);
+        setButton(playByPlay);
 
         //Swing component bounds set.
         start.setBounds(315, 235, 170, 70);
@@ -423,7 +453,9 @@ public class ChipVsChap extends JFrame{
         JButton saveReplay = new JButton();
         restart.setBounds(212,304,165,70);
         restart.setBorderPainted(false);
-  
+
+        setButton(restart);
+        setButton(saveReplay);
 
         saveReplay.setBounds(415, 304, 165, 70);
         saveReplay.setBorderPainted(false);
@@ -527,33 +559,8 @@ public class ChipVsChap extends JFrame{
         //Pause Dialog Box.
         pause = Board.getPause();
 
-        //KeyListener for the chap movement and game functions.
-       KeyListener controls = new Keys(){
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,"Up",()->model.chap().up());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,"Down",()->model.chap().down());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,"Left",()->model.chap().left());}
-                if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,"Right",()->model.chap().right());}
-                if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
-                    dispose();
-                    System.exit(ABORT);
-                }   
-                if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
-                    Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
-                    dispose();
-                    System.exit(ABORT);
-                }   
-                if((e.getKeyCode() == KeyEvent.VK_SPACE)){
-                    removeKeyListener(this);
-                    pause.setVisible(true);
-                    timer.stop();
-                } 
-            }
-        };
-
         //Navbar action listeners.
-        pauseButton.addActionListener(e->{
+        pauseButton.addActionListener( e->{
             removeKeyListener(controls);
             pause.setVisible(true);
             timer.stop();
@@ -570,6 +577,7 @@ public class ChipVsChap extends JFrame{
         });
 
         if(ReplayListner == null && PlaybPlayListner == null){
+            System.out.println("added controls");
         addKeyListener(controls);
         Replistner = controls;
         }
@@ -578,8 +586,8 @@ public class ChipVsChap extends JFrame{
         WindowListener listener = new WindowAdapter() {
             @Override
             public void windowDeactivated(WindowEvent e) {
-                    addKeyListener(controls);
-                    timer.start();
+                addKeyListener(controls);
+                timer.start();
             }
         };
         pause.addWindowListener(listener);
@@ -590,11 +598,11 @@ public class ChipVsChap extends JFrame{
             remove(panel);
             remove(level);
             removeKeyListener(controls);
+            removeWindowListener(listener);
             backgroundImage.remove(level);
             backgroundImage.remove(chips);
             info.remove(infoTextLabel);
             backgroundImage.remove(info);
-
         };
 
         //Add components to respective panels and labels.
