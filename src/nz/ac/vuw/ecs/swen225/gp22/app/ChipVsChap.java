@@ -45,29 +45,7 @@ public class ChipVsChap extends JFrame{
     public Model fuzzModel;
     public static JButton pauseButton = new JButton("Pause");
 
-    Keys controls = new Keys(){
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){action(replay,"Up",()->model.chap().up());}
-            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){action(replay,"Down",()->model.chap().down());}
-            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){action(replay,"Left",()->model.chap().left());}
-            if(e.getKeyCode() == Controller.getCode(Controller.characterControls[3]) ){action(replay,"Right",()->model.chap().right());}
-            if((e.getKeyCode() == KeyEvent.VK_X) && e.isControlDown()){
-                dispose();
-                System.exit(ABORT);
-            }   
-            if((e.getKeyCode() == KeyEvent.VK_S) && e.isControlDown()){
-                Persistency.createPXML(model.maze().getTiles(), model.maze().getChap().getInvKeys(),count);
-                dispose();
-                System.exit(ABORT);
-            }   
-            if((e.getKeyCode() == KeyEvent.VK_SPACE)){
-                removeKeyListener(this);
-                pause.setVisible(true);
-                timer.stop();
-            } 
-        }
-    };
+    Controller controls = new Controller(this, model);
 
     //Number of chips and level number and their respective label objects.
     public int numOfChips = 5;
@@ -84,7 +62,7 @@ public class ChipVsChap extends JFrame{
     public static String infoString2 = "Beware of the monsters!";
     public static JLabel infoTextLabel = Board.getInfoText(infoString1);
     //JDialog box variables.
-    JDialog pause = Board.getPause();
+    static JDialog pause = Board.getPause();
     JDialog timeOut = Board.getTimeout();
 
     // by ilya 
@@ -96,17 +74,17 @@ public class ChipVsChap extends JFrame{
     public int txtIndex = 0;
    
     //Timer variables.
-    public Timer timer;
-    public int count = 0;
+    public static Timer timer;
+    public static int count = 0;
     public int delay;
     public int timePassed = 0;
-    public int totalticks=0;
+    public static int totalticks=0;
     public static JLabel timerLabel = new JLabel();
 
     public KeyListener Replistner; //so we can remove the key listner when doing a replay
     public ActionListener ReplayListner;
     public KeyListener PlaybPlayListner;
-    public Replay replay;
+    public static Replay replay;
 
     public sounds s = new sounds();
     
@@ -126,17 +104,7 @@ public class ChipVsChap extends JFrame{
         button.setContentAreaFilled(false);
     }
 
-    /**
-     * This method calls upon the Runnable direction interface which contains a function that moves Chap.
-     * 
-     * @param r Replay object that stores the moves made within the game.
-     * @param move Direction in string form.
-     * @param direction Contains the movement function from domain associated with the direction.
-     */
-    public void action(Replay r, String move, Runnable direction){
-        if(r != null){r.addMove(new GameAction(move, totalticks));}
-        direction.run();
-    }
+
 
     public void addRecorder(){
         replay = new Replay(new LinkedList<GameAction>(),levelNum, "");
@@ -534,6 +502,7 @@ public class ChipVsChap extends JFrame{
         
         //Set model to correct model.
         model = lvl.model();
+        controls = new Controller(this, lvl.model());
 
 
         //Graphical Interface Initialization.

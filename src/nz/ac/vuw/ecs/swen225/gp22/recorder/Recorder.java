@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import java.awt.*;
 import nz.ac.vuw.ecs.swen225.gp22.app.ChipVsChap;
+import nz.ac.vuw.ecs.swen225.gp22.app.Controller;
 import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Mapprint;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.printInventory;
@@ -31,13 +32,13 @@ public class Recorder {
 
         try {
             if (r.getName().equals("Up")) {
-                cur.action(null, "Up", () -> cur.model.chap().up());
+                Controller.action(null, "Up", () -> cur.model.chap().up());
             } else if (r.getName().equals("Down")) {
-                cur.action(null, "Down", () -> cur.model.chap().down());
+                Controller.action(null, "Down", () -> cur.model.chap().down());
             } else if (r.getName().equals("Left")) {
-                cur.action(null, "Left", () -> cur.model.chap().left());
+                Controller.action(null, "Left", () -> cur.model.chap().left());
             } else if (r.getName().equals("Right")) {
-                cur.action(null, "Right", () -> cur.model.chap().right());
+                Controller.action(null, "Right", () -> cur.model.chap().right());
             }
         } catch (Error b) {
         }
