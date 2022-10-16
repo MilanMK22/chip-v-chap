@@ -59,7 +59,7 @@ public class Recorder {
             cur.remove(replaySpeed);
         }
         cur.delay = 50;
-        cur.timer.setDelay(50);
+        ChipVsChap.timer.setDelay(50);
         cur.closePhase.run();
         SOUND.GAME.stop();
         cur.menu();
@@ -85,10 +85,10 @@ public class Recorder {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == 1) {
                     cur.delay = 25;
-                    cur.timer.setDelay(25);
+                    ChipVsChap.timer.setDelay(25);
                 } else {
                     cur.delay = 50;
-                    cur.timer.setDelay(50);
+                    ChipVsChap.timer.setDelay(50);
                 }
             }
         });
@@ -108,7 +108,7 @@ public class Recorder {
                 return;
             }
             GameAction r = rep.getMoves().peek();
-            if (r.getTime() == cur.totalticks) {
+            if (r.getTime() == ChipVsChap.totalticks) {
                 prev = r.getTime();
                 r = rep.getMoves().remove();
                 doAction(cur, r);
@@ -124,7 +124,7 @@ public class Recorder {
                 }
             }
         };
-        cur.timer.addActionListener(newone);
+        ChipVsChap.timer.addActionListener(newone);
         cur.ReplayListner = newone;
 
     }
@@ -149,7 +149,7 @@ public class Recorder {
             cur.levelPersistency();
         }
         cur.removeKeyListener(cur.Replistner);
-        cur.timer.stop();
+        ChipVsChap.timer.stop();
         Mapprint.printMap(cur.model, cur.background.getGraphics());
 
         JOptionPane.showMessageDialog(null, "Hold Right Arrow key \n to step through replay", "InfoBox: " + "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -161,19 +161,19 @@ public class Recorder {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 
                     if (cur.timePassed % 1000 == 0) {
-                        if (cur.count == 0) {
-                            cur.timer.stop();
+                        if (ChipVsChap.count == 0) {
+                            ChipVsChap.timer.stop();
                             ChipVsChap.timerLabel.setText("No time");
                         } else {
-                            int minutes = cur.count / 60;
-                            int seconds = cur.count % 60;
+                            int minutes = ChipVsChap.count / 60;
+                            int seconds = ChipVsChap.count % 60;
                             ChipVsChap.timerLabel.setText(String.format("%d:%02d", minutes, seconds));
-                            cur.count--;
+                            ChipVsChap.count--;
                         }
                     }
                     cur.timePassed += cur.delay;
                     cur.model.tick();
-                    cur.totalticks++;
+                    ChipVsChap.totalticks++;
                     Mapprint.printMap(cur.model, cur.background.getGraphics());
                     printInventory.printIn(cur.model, cur.backgroundImage.getGraphics());
                     ChipVsChap.chips.setText("" + (cur.numOfChips - cur.model.chap().heldTreasure()));
@@ -185,7 +185,7 @@ public class Recorder {
                     }
                     GameAction r = rep.getMoves().peek();
 
-                    if (r.getTime() == cur.totalticks) {
+                    if (r.getTime() == ChipVsChap.totalticks) {
                         prev = r.getTime();
                         r = rep.getMoves().remove();
                         doAction(cur, r);

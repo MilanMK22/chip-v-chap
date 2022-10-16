@@ -128,7 +128,6 @@ public class Controller implements Keys{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
         if(e.getKeyCode() == Controller.getCode(Controller.characterControls[0])){Controller.action(ChipVsChap.replay,"Up",()->model.chap().up()); System.out.println("test");}
         if(e.getKeyCode() == Controller.getCode(Controller.characterControls[1])){Controller.action(ChipVsChap.replay,"Down",()->model.chap().down());}
         if(e.getKeyCode() == Controller.getCode(Controller.characterControls[2])){Controller.action(ChipVsChap.replay,"Left",()->model.chap().left());}
